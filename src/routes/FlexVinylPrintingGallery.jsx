@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import vinyl and flex printing images
-import Vinyl1 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 3.56.36 PM.jpeg";
-import Vinyl2 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.40.41 PM.jpeg";
-import Vinyl3 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.43.56 PM.jpeg";
-import Vinyl4 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.52.53 PM.jpeg";
-import Vinyl5 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.53.59 PM (1).jpeg";
-import Vinyl6 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.53.59 PM.jpeg";
-import Vinyl7 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.00 PM (1).jpeg";
-import Vinyl8 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.00 PM (2).jpeg";
-import Vinyl9 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.00 PM.jpeg";
-import Vinyl10 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.56 PM (1).jpeg";
-import Vinyl11 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.56 PM.jpeg";
-import Vinyl12 from "../assets/printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.58.36 PM.jpeg";
+import Vinyl1 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 3.56.36 PM.jpeg";
+import Vinyl2 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.40.41 PM.jpeg";
+import Vinyl3 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.43.56 PM.jpeg";
+import Vinyl4 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.52.53 PM.jpeg";
+import Vinyl5 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.53.59 PM (1).jpeg";
+import Vinyl6 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.53.59 PM.jpeg";
+import Vinyl7 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.00 PM (1).jpeg";
+import Vinyl8 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.00 PM (2).jpeg";
+import Vinyl9 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.00 PM.jpeg";
+import Vinyl10 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.56 PM (1).jpeg";
+import Vinyl11 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.54.56 PM.jpeg";
+import Vinyl12 from "../assets/Printing/vinyl & Flex/WhatsApp Image 2025-06-10 at 4.58.36 PM.jpeg";
 
 const FlexVinylPrintingGallery = createGalleryTemplate({
   title: "Flex & Vinyl Printing Gallery",

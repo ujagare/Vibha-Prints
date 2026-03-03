@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import sticker and hangtags printing images
-import Sticker1 from "../assets/printing/Sticker & Hangtags/A Avacado Honey.png";
-import Sticker2 from "../assets/printing/Sticker & Hangtags/B Lavendor Honey.png";
-import Sticker3 from "../assets/printing/Sticker & Hangtags/Beautiful autumn badge collection.jpg";
-import Sticker4 from "../assets/printing/Sticker & Hangtags/Hand drawn floral wedding badges collection.jpg";
-import Sticker5 from "../assets/printing/Sticker & Hangtags/Original Honey.jpg";
-import Sticker6 from "../assets/printing/Sticker & Hangtags/PSD rounded stickers mockup.jpg";
-import Sticker7 from "../assets/printing/Sticker & Hangtags/Pack of christmas sale stickers.jpg";
-import Sticker8 from "../assets/printing/Sticker & Hangtags/Vintage new year 2018  label collection in red.jpg";
-import Sticker9 from "../assets/printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.26.37 PM.jpeg";
-import Sticker10 from "../assets/printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.27.01 PM.jpeg";
-import Sticker11 from "../assets/printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.28.53 PM.jpeg";
-import Sticker12 from "../assets/printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.29.33 PM.jpeg";
+import Sticker1 from "../assets/Printing/Sticker & Hangtags/A Avacado Honey.png";
+import Sticker2 from "../assets/Printing/Sticker & Hangtags/B Lavendor Honey.png";
+import Sticker3 from "../assets/Printing/Sticker & Hangtags/Beautiful autumn badge collection.jpg";
+import Sticker4 from "../assets/Printing/Sticker & Hangtags/Hand drawn floral wedding badges collection.jpg";
+import Sticker5 from "../assets/Printing/Sticker & Hangtags/Original Honey.jpg";
+import Sticker6 from "../assets/Printing/Sticker & Hangtags/PSD rounded stickers mockup.jpg";
+import Sticker7 from "../assets/Printing/Sticker & Hangtags/Pack of christmas sale stickers.jpg";
+import Sticker8 from "../assets/Printing/Sticker & Hangtags/Vintage new year 2018  label collection in red.jpg";
+import Sticker9 from "../assets/Printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.26.37 PM.jpeg";
+import Sticker10 from "../assets/Printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.27.01 PM.jpeg";
+import Sticker11 from "../assets/Printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.28.53 PM.jpeg";
+import Sticker12 from "../assets/Printing/Sticker & Hangtags/WhatsApp Image 2025-06-09 at 4.29.33 PM.jpeg";
 
 const StickerHangtagsLanyardPrintingGallery = createGalleryTemplate({
   title: "Sticker, Hangtags & Lanyard Printing Gallery",

@@ -13,8 +13,8 @@ import Corporate7 from "../assets/Corporate/Free-Corporate-Identity-PSD-Mockup-s
 import Corporate8 from "../assets/Corporate/Free-corporate-identity-mockup.jpg";
 import Corporate9 from "../assets/Corporate/Holt-Case-study-09.webp";
 import Corporate10 from "../assets/Corporate/Name-Corporate-Identity-Pack-Design-Template-1.webp";
-import Corporate11 from "../assets/Corporate/brand-identity-banner-envelope-and-invoice-set-design-with-creative-shapes-digital-marketing-and-brand-promotion-template-bundle-with-green-and-dark-colors-corporate-identity-design-collection-vect.jpg";
-import Corporate12 from "../assets/Corporate/business-stationery-and-branding-design-with-orange-and-black-colors-fashion-brand-promotion-template-with-creative-shapes-corporate-brand-identity-design-with-envelope-and-invoice-vector-500x500.jpg";
+import Corporate11 from "../assets/Corporate/brand-identity-banner.jpg";
+import Corporate12 from "../assets/Corporate/business-stationery.jpg";
 import Corporate13 from "../assets/Corporate/corporate-identity-branding-mockup-in-top-view.jpg";
 import Corporate14 from "../assets/Corporate/corporate-identity-of-the-construction-company-corporate-identity-stationary-items-free-vector.jpg";
 import Corporate15 from "../assets/Corporate/corporate-identity-set-branding-template-design-kit-editable-brand-identity-with-abstract-background-color-for-business-company-free-vector.jpg";

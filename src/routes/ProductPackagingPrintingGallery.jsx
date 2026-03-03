@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import product packaging printing images
-import Package1 from "../assets/printing/product packaging/1865228026.jpg";
-import Package2 from "../assets/printing/product packaging/3D packaged mockup realistic colorful image.jpg";
-import Package3 from "../assets/printing/product packaging/A Honey 01 Avacado.png";
-import Package4 from "../assets/printing/product packaging/B Honey 02 Lavender.jpg";
-import Package5 from "../assets/printing/product packaging/Beauty product mockup.jpg";
-import Package6 from "../assets/printing/product packaging/Cosmetic packaging plastic tube Sun cream balm cosmetic cream with cardboard packaging Design template in orange.jpg";
-import Package7 from "../assets/printing/product packaging/Honey 03 Original.jpg";
-import Package8 from "../assets/printing/product packaging/Jewelery_Box_Mockup_1-1.jpg";
-import Package9 from "../assets/printing/product packaging/Premium Herbal Tea Packaging Label design.jpg";
-import Package10 from "../assets/printing/product packaging/View of cosmetic product in dropper bottle with mock-up packaging.jpg";
-import Package11 from "../assets/printing/product packaging/View of cosmetic product with mock-up packaging.jpg";
-import Package12 from "../assets/printing/product packaging/pkg211-Pasta-Bag-Packaging-Mockup.jpg";
+import Package1 from "../assets/Printing/product packaging/1865228026.jpg";
+import Package2 from "../assets/Printing/product packaging/3D packaged mockup realistic colorful image.jpg";
+import Package3 from "../assets/Printing/product packaging/A Honey 01 Avacado.png";
+import Package4 from "../assets/Printing/product packaging/B Honey 02 Lavender.jpg";
+import Package5 from "../assets/Printing/product packaging/Beauty product mockup.jpg";
+import Package6 from "../assets/Printing/product packaging/Cosmetic packaging plastic tube Sun cream balm cosmetic cream with cardboard packaging Design template in orange.jpg";
+import Package7 from "../assets/Printing/product packaging/Honey 03 Original.jpg";
+import Package8 from "../assets/Printing/product packaging/Jewelery_Box_Mockup_1-1.jpg";
+import Package9 from "../assets/Printing/product packaging/Premium Herbal Tea Packaging Label design.jpg";
+import Package10 from "../assets/Printing/product packaging/View of cosmetic product in dropper bottle with mock-up packaging.jpg";
+import Package11 from "../assets/Printing/product packaging/View of cosmetic product with mock-up packaging.jpg";
+import Package12 from "../assets/Printing/product packaging/pkg211-Pasta-Bag-Packaging-Mockup.jpg";
 
 const ProductPackagingPrintingGallery = createGalleryTemplate({
   title: "Product Packaging Printing Gallery",

@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import bags and t-shirts printing images
-import BagTshirt1 from "../assets/printing/Bags & T-Shirts/0004-Free-Indoor-Light-Hanging-T-Shirt-Mockup.jpg";
-import BagTshirt2 from "../assets/printing/Bags & T-Shirts/167759603.jpg";
-import BagTshirt3 from "../assets/printing/Bags & T-Shirts/Cropped_T-Shirt_Mockup.jpg";
-import BagTshirt4 from "../assets/printing/Bags & T-Shirts/Female-T-Shirt-Mockup-Free-Psd-01.jpg";
-import BagTshirt5 from "../assets/printing/Bags & T-Shirts/Free-Hang-Tag-T-Shirt-Packaging-Box-Mockup-PSD.jpg";
-import BagTshirt6 from "../assets/printing/Bags & T-Shirts/Free-T-Shirt-Mockup-for-Logo-Branding.jpg";
-import BagTshirt7 from "../assets/printing/Bags & T-Shirts/Free-Young-Kid-T-Shirt-MockUp-PSD.jpg";
-import BagTshirt8 from "../assets/printing/Bags & T-Shirts/Screen2-2.jpg";
-import BagTshirt9 from "../assets/printing/Bags & T-Shirts/View of backpack mock-up.jpg";
-import BagTshirt10 from "../assets/printing/Bags & T-Shirts/baby-t-shirt-psd-mockup_full_preview_retina.jpg";
-import BagTshirt11 from "../assets/printing/Bags & T-Shirts/backpack-mockup_373676-3918.jpg";
-import BagTshirt12 from "../assets/printing/Bags & T-Shirts/t-shirt-mockup-front-and-back-photoshop-template_434267-original.jpg";
+import BagTshirt1 from "../assets/Printing/Bags & T-Shirts/0004-Free-Indoor-Light-Hanging-T-Shirt-Mockup.jpg";
+import BagTshirt2 from "../assets/Printing/Bags & T-Shirts/167759603.jpg";
+import BagTshirt3 from "../assets/Printing/Bags & T-Shirts/Cropped_T-Shirt_Mockup.jpg";
+import BagTshirt4 from "../assets/Printing/Bags & T-Shirts/Female-T-Shirt-Mockup-Free-Psd-01.jpg";
+import BagTshirt5 from "../assets/Printing/Bags & T-Shirts/Free-Hang-Tag-T-Shirt-Packaging-Box-Mockup-PSD.jpg";
+import BagTshirt6 from "../assets/Printing/Bags & T-Shirts/Free-T-Shirt-Mockup-for-Logo-Branding.jpg";
+import BagTshirt7 from "../assets/Printing/Bags & T-Shirts/Free-Young-Kid-T-Shirt-MockUp-PSD.jpg";
+import BagTshirt8 from "../assets/Printing/Bags & T-Shirts/Screen2-2.jpg";
+import BagTshirt9 from "../assets/Printing/Bags & T-Shirts/View of backpack mock-up.jpg";
+import BagTshirt10 from "../assets/Printing/Bags & T-Shirts/baby-t-shirt-psd-mockup_full_preview_retina.jpg";
+import BagTshirt11 from "../assets/Printing/Bags & T-Shirts/backpack-mockup_373676-3918.jpg";
+import BagTshirt12 from "../assets/Printing/Bags & T-Shirts/t-shirt-mockup-front-and-back-photoshop-template_434267-original.jpg";
 
 const BagsTshirtsPrintingGallery = createGalleryTemplate({
   title: "Bags & T-Shirts Printing Gallery",

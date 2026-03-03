@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import brochure and booklet printing images
-import Brochure1 from "../assets/printing/Broucher & Booklet/A5 bifold.jpg";
-import Brochure2 from "../assets/printing/Broucher & Booklet/Brochure template layout.jpg";
-import Brochure3 from "../assets/printing/Broucher & Booklet/Coffee shop bifold.jpg";
-import Brochure4 from "../assets/printing/Broucher & Booklet/Corporate  bifold brochure template design.jpg";
-import Brochure5 from "../assets/printing/Broucher & Booklet/Dietary program brochure template psd.jpg";
-import Brochure6 from "../assets/printing/Broucher & Booklet/Geometric the paradise hotel bifold brochure.jpg";
-import Brochure7 from "../assets/printing/Broucher & Booklet/Global food rescue charity trifold brochure.jpg";
-import Brochure8 from "../assets/printing/Broucher & Booklet/Great leaflet template with blue shapes.jpg";
-import Brochure9 from "../assets/printing/Broucher & Booklet/Marketing  brochure template design.jpg";
-import Brochure10 from "../assets/printing/Broucher & Booklet/Top side view of cover of Bifold Mockup.jpg";
-import Brochure11 from "../assets/printing/Broucher & Booklet/US LETTER BROCHURE MOCKUP.jpg";
-import Brochure12 from "../assets/printing/Broucher & Booklet/trifold brochure or invitation mockup still life concept.jpg";
+import Brochure1 from "../assets/Printing/Broucher & Booklet/A5 bifold.jpg";
+import Brochure2 from "../assets/Printing/Broucher & Booklet/Brochure template layout.jpg";
+import Brochure3 from "../assets/Printing/Broucher & Booklet/Coffee shop bifold.jpg";
+import Brochure4 from "../assets/Printing/Broucher & Booklet/Corporate  bifold brochure template design.jpg";
+import Brochure5 from "../assets/Printing/Broucher & Booklet/Dietary program brochure template psd.jpg";
+import Brochure6 from "../assets/Printing/Broucher & Booklet/Geometric the paradise hotel bifold brochure.jpg";
+import Brochure7 from "../assets/Printing/Broucher & Booklet/Global food rescue charity trifold brochure.jpg";
+import Brochure8 from "../assets/Printing/Broucher & Booklet/Great leaflet template with blue shapes.jpg";
+import Brochure9 from "../assets/Printing/Broucher & Booklet/Marketing  brochure template design.jpg";
+import Brochure10 from "../assets/Printing/Broucher & Booklet/Top side view of cover of Bifold Mockup.jpg";
+import Brochure11 from "../assets/Printing/Broucher & Booklet/US LETTER BROCHURE MOCKUP.jpg";
+import Brochure12 from "../assets/Printing/Broucher & Booklet/trifold brochure or invitation mockup still life concept.jpg";
 
 const BrochureBookletPrintingGallery = createGalleryTemplate({
   title: "Brochure & Booklet Printing Gallery",

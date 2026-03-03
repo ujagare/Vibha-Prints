@@ -3,27 +3,27 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import corporate stationary printing images
-import Corporate1 from "../assets/printing/Corporate Stationary/5-Free-ID-Card-Holder-Mockup-PSD-Files-1.jpg";
-import Corporate2 from "../assets/printing/Corporate Stationary/Blue polygonal identity corporative.jpg";
-import Corporate3 from "../assets/printing/Corporate Stationary/Branding-Notebook-and-Vertical-Business-Card-Mockup-PSD-Free-Download.webp";
-import Corporate4 from "../assets/printing/Corporate Stationary/Cup mock up.jpg";
-import Corporate5 from "../assets/printing/Corporate Stationary/Flat design business stationery template.jpg";
-import Corporate6 from "../assets/printing/Corporate Stationary/Front view of luxury pen mockup isolated.jpg";
-import Corporate7 from "../assets/printing/Corporate Stationary/Hot drink paper cup with mockup sleeve.jpg";
-import Corporate8 from "../assets/printing/Corporate Stationary/Modern business corporate identity stationery.jpg";
-import Corporate9 from "../assets/printing/Corporate Stationary/Realistic notebook.jpg";
-import Corporate10 from "../assets/printing/Corporate Stationary/Stylish business stationery items set in blue color.jpg";
-import Corporate11 from "../assets/printing/Corporate Stationary/Two luxury pens mockup.jpg";
-import Corporate12 from "../assets/printing/Corporate Stationary/black-glossy-11oz-mug-mockup.jpg";
-import Corporate13 from "../assets/printing/Corporate Stationary/pin-button-badge-mockup-002.jpg";
-import Corporate14 from "../assets/printing/Corporate Stationary/professional-id-card-mockup-vector.jpg";
-import Corporate15 from "../assets/printing/Corporate Stationary/three-pin-button-badge-mockups-1.jpg";
-import Corporate16 from "../assets/printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.18 PM (1).jpeg";
-import Corporate17 from "../assets/printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.18 PM (2).jpeg";
-import Corporate18 from "../assets/printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.18 PM.jpeg";
-import Corporate19 from "../assets/printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.19 PM (1).jpeg";
-import Corporate20 from "../assets/printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.19 PM.jpeg";
-import Corporate21 from "../assets/printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.19 PM (2).jpeg";
+import Corporate1 from "../assets/Printing/Corporate Stationary/5-Free-ID-Card-Holder-Mockup-PSD-Files-1.jpg";
+import Corporate2 from "../assets/Printing/Corporate Stationary/Blue polygonal identity corporative.jpg";
+import Corporate3 from "../assets/Printing/Corporate Stationary/Branding-Notebook-and-Vertical-Business-Card-Mockup-PSD-Free-Download.webp";
+import Corporate4 from "../assets/Printing/Corporate Stationary/Cup mock up.jpg";
+import Corporate5 from "../assets/Printing/Corporate Stationary/Flat design business stationery template.jpg";
+import Corporate6 from "../assets/Printing/Corporate Stationary/Front view of luxury pen mockup isolated.jpg";
+import Corporate7 from "../assets/Printing/Corporate Stationary/Hot drink paper cup with mockup sleeve.jpg";
+import Corporate8 from "../assets/Printing/Corporate Stationary/Modern business corporate identity stationery.jpg";
+import Corporate9 from "../assets/Printing/Corporate Stationary/Realistic notebook.jpg";
+import Corporate10 from "../assets/Printing/Corporate Stationary/Stylish business stationery items set in blue color.jpg";
+import Corporate11 from "../assets/Printing/Corporate Stationary/Two luxury pens mockup.jpg";
+import Corporate12 from "../assets/Printing/Corporate Stationary/black-glossy-11oz-mug-mockup.jpg";
+import Corporate13 from "../assets/Printing/Corporate Stationary/pin-button-badge-mockup-002.jpg";
+import Corporate14 from "../assets/Printing/Corporate Stationary/professional-id-card-mockup-vector.jpg";
+import Corporate15 from "../assets/Printing/Corporate Stationary/three-pin-button-badge-mockups-1.jpg";
+import Corporate16 from "../assets/Printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.18 PM (1).jpeg";
+import Corporate17 from "../assets/Printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.18 PM (2).jpeg";
+import Corporate18 from "../assets/Printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.18 PM.jpeg";
+import Corporate19 from "../assets/Printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.19 PM (1).jpeg";
+import Corporate20 from "../assets/Printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.19 PM.jpeg";
+import Corporate21 from "../assets/Printing/Corporate Stationary/WhatsApp Image 2025-06-10 at 5.02.19 PM (2).jpeg";
 
 const CorporateStationaryPrintingGallery = createGalleryTemplate({
   title: "Corporate Stationary Printing Gallery",
