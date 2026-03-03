@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="40px" viewBox="0 0 120 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Client Logo 4</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g fill="#333333" fill-rule="nonzero">
+            <path d="M10,15 L15,15 L15,20 L20,15 L26,15 L20,20 L26,25 L20,25 L15,20 L15,25 L10,25 L10,15 Z"></path>
+            <path d="M30,15 L35,15 L35,21 L40,21 L40,15 L45,15 L45,25 L40,25 L40,23 L35,23 L35,25 L30,25 L30,15 Z"></path>
+            <path d="M50,15 L55,15 L55,20 L60,15 L66,15 L60,20 L66,25 L60,25 L55,20 L55,25 L50,25 L50,15 Z"></path>
+            <path d="M70,15 L75,15 L75,21 L80,21 L80,15 L85,15 L85,25 L80,25 L80,23 L75,23 L75,25 L70,25 L70,15 Z"></path>
+            <path d="M90,15 L95,15 L95,20 L100,15 L106,15 L100,20 L106,25 L100,25 L95,20 L95,25 L90,25 L90,15 Z"></path>
+        </g>
+    </g>
+</svg>
