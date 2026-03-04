@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -105,6 +105,8 @@ const TickerItem = ({ item }) => (
 
 const EnhancedContact = () => {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [isFormInView, setIsFormInView] = useState(false);
+  const formSectionRef = useRef(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -155,9 +157,35 @@ const EnhancedContact = () => {
     }
   };
 
+  useEffect(() => {
+    const element = formSectionRef.current;
+    if (!element) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFormInView(entry.isIntersecting);
+      },
+      {
+        root: null,
+        threshold: 0.1,
+        rootMargin: "-100px 0px 0px 0px",
+      }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="relative min-h-screen bg-[#fafafa] pt-[6.5rem]">
-      <aside className="z-10 w-full border-b border-black/5 bg-[#f5f5f5] p-8">
+    <div className="relative min-h-screen bg-[#fafafa] pt-[6.5rem] md:grid md:grid-cols-[40%_60%] lg:grid-cols-[30%_70%]">
+      <aside
+        className={`z-10 w-full border-b border-black/5 bg-[#f5f5f5] p-8 md:border-b-0 md:border-r ${
+          isFormInView
+            ? "md:relative md:top-auto"
+            : "md:sticky md:top-[6.5rem] md:self-start"
+        }`}
+      >
         <div className="flex h-full flex-col justify-between">
           <div className="space-y-6">
             <div>
@@ -292,6 +320,7 @@ const EnhancedContact = () => {
 
           <motion.section
             id="contact-form"
+            ref={formSectionRef}
             className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm md:p-8"
             {...fadeInUp}
           >
