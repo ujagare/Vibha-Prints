@@ -156,8 +156,8 @@ const EnhancedContact = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#fafafa] pt-[6.5rem] md:grid md:grid-cols-[40%_60%] lg:grid-cols-[30%_70%]">
-      <aside className="z-10 w-full border-b border-black/5 bg-[#f5f5f5] p-8 md:sticky md:top-[6.5rem] md:h-[calc(100vh-6.5rem)] md:self-start md:overflow-y-auto md:border-b-0 md:border-r">
+    <div className="relative min-h-screen bg-[#fafafa] pt-[6.5rem]">
+      <aside className="z-10 w-full border-b border-black/5 bg-[#f5f5f5] p-8">
         <div className="flex h-full flex-col justify-between">
           <div className="space-y-6">
             <div>
