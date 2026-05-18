@@ -1,6 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaLightbulb, FaPencilAlt, FaDesktop, FaCheck } from "react-icons/fa";
+import {
+  Lightbulb as FaLightbulb,
+  Pencil as FaPencilAlt,
+  Monitor as FaDesktop,
+  Check as FaCheck,
+} from "lucide-react";
 
 const ProcessSection = () => {
   // Process steps

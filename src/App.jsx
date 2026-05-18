@@ -22,12 +22,21 @@ import Loader from "./components/Loader";
 import HotjarScript from "./components/HotjarScript";
 import GoogleAdsScript from "./components/GoogleAdsScript";
 import EnhancedChatBot from "./components/EnhancedChatBot";
+import WhatsAppOrderWidget from "./components/WhatsAppOrderWidget";
+import WhatsAppChatbot from "./components/WhatsAppChatbot";
+import { ToastProvider } from "./components/ui/ToastProvider";
 
 // Lazy load components for better performance
 const Home = lazy(() => import("./routes/Home"));
 const EnhancedAbout = lazy(() => import("./routes/EnhancedAbout"));
 const EnhancedContact = lazy(() => import("./routes/EnhancedContact"));
 const Printing = lazy(() => import("./routes/Printing"));
+const DigitalMarketing = lazy(() => import("./routes/DigitalMarketing"));
+const WebDevelopment = lazy(() => import("./routes/WebDevelopment"));
+const ServiceGalleryCollection = lazy(() =>
+  import("./routes/ServiceGalleryCollection"),
+);
+const ServicePage = lazy(() => import("./routes/ServicePage"));
 const DigitalPrint = lazy(() => import("./routes/DigitalPrint"));
 const LogoDesignGallery = lazy(() => import("./routes/LogoDesignGallery"));
 const Terms = lazy(() => import("./routes/Terms"));
@@ -118,7 +127,7 @@ function SecurityHeaders() {
           "font-src",
           "connect-src",
           "frame-src",
-        ].includes(key)
+        ].includes(key),
       )
       .map(([key, values]) => `${key} ${values.join(" ")}`)
       .join("; ");
@@ -189,22 +198,22 @@ function ScrollToTop() {
 function RootLayout() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
-  const showFaqSection = pathname === "/" || pathname === "/contact";
+  const showFaqSection = pathname === "/";
 
   const defaultSEO = {
-    title: "Vibha Art - Creative Design & Printing Services",
+    title: "Vibha Prints - Creative Design & Printing Services",
     description:
-      "Vibha Art offers professional graphic design, printing, and branding services. From logo design to large format printing, we help businesses create stunning visual identities.",
+      "Vibha Prints offers professional graphic design, printing, and branding services. From logo design to large format printing, we help businesses create stunning visual identities.",
     keywords:
       "graphic design, printing services, logo design, branding, marketing materials, digital printing, offset printing",
     image: "/logo.png",
-    url: "https://vibhaart.com",
+    url: import.meta.env.VITE_APP_URL || "https://vibhaprints.com",
   };
 
   // Enable Lenis smooth scrolling globally
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
+      "(prefers-reduced-motion: reduce)",
     ).matches;
 
     if (prefersReducedMotion) return undefined;
@@ -258,9 +267,14 @@ function RootLayout() {
         <SecurityHeaders />
         <CursorEffect />
         <BackToTop />
-        <HotjarScript hotjarId="3851307" />
-        <GoogleAdsScript conversionId="123456789" />
+        <HotjarScript hotjarId={import.meta.env.VITE_HOTJAR_ID || "3851307"} />
+        <GoogleAdsScript
+          conversionId={
+            import.meta.env.VITE_GOOGLE_ADS_CONVERSION_ID || "AW-123456789"
+          }
+        />
         <EnhancedChatBot />
+        <WhatsAppChatbot />
         <Helmet
           defaultTitle={defaultSEO.title}
           titleTemplate="%s | Vibha Art"
@@ -290,12 +304,16 @@ function RootLayout() {
         <ScrollToTop />
         <ScrollRestoration />
         <AnimatePresence mode="wait">
-          <main className="flex-1 w-full max-w-full overflow-x-hidden bg-brand-white-100" key="main-content">
+          <main
+            className="flex-1 w-full max-w-full overflow-x-hidden bg-brand-white-100"
+            key="main-content"
+          >
             <Suspense fallback={null}>
               <Outlet />
             </Suspense>
           </main>
         </AnimatePresence>
+        <WhatsAppOrderWidget />
         {showFaqSection && <FaqSection />}
         <Footer />
       </div>
@@ -354,6 +372,82 @@ const router = createBrowserRouter(
       <Route path="privacy-policy" element={<PrivacyPolicy />} />
       <Route path="sitemap" element={<SitemapPage />} />
       <Route path="printing" element={<Printing />} />
+      <Route path="digital-marketing" element={<DigitalMarketing />} />
+      <Route path="web-development" element={<WebDevelopment />} />
+      <Route path="web-developmen" element={<WebDevelopment />} />
+      <Route
+        path="seo-gallery"
+        element={<ServiceGalleryCollection galleryKey="digital-seo" />}
+      />
+      <Route
+        path="smm-gallery"
+        element={<ServiceGalleryCollection galleryKey="digital-smm" />}
+      />
+      <Route
+        path="ppc-gallery"
+        element={<ServiceGalleryCollection galleryKey="digital-ppc" />}
+      />
+      <Route
+        path="content-marketing-gallery"
+        element={
+          <ServiceGalleryCollection galleryKey="digital-content-marketing" />
+        }
+      />
+      <Route
+        path="email-marketing-gallery"
+        element={
+          <ServiceGalleryCollection galleryKey="digital-email-marketing" />
+        }
+      />
+      <Route
+        path="cro-gallery"
+        element={<ServiceGalleryCollection galleryKey="digital-cro" />}
+      />
+      <Route
+        path="orm-gallery"
+        element={<ServiceGalleryCollection galleryKey="digital-orm" />}
+      />
+      <Route
+        path="analytics-reporting-gallery"
+        element={
+          <ServiceGalleryCollection galleryKey="digital-analytics-reporting" />
+        }
+      />
+      <Route
+        path="custom-website-development-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-custom-development" />}
+      />
+      <Route
+        path="ecommerce-development-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-ecommerce-development" />}
+      />
+      <Route
+        path="responsive-web-design-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-responsive-design" />}
+      />
+      <Route
+        path="cms-development-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-cms-development" />}
+      />
+      <Route
+        path="web-application-development-gallery"
+        element={
+          <ServiceGalleryCollection galleryKey="web-application-development" />
+        }
+      />
+      <Route
+        path="api-integration-development-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-api-integration" />}
+      />
+      <Route
+        path="website-speed-optimization-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-speed-optimization" />}
+      />
+      <Route
+        path="website-maintenance-support-gallery"
+        element={<ServiceGalleryCollection galleryKey="web-maintenance-support" />}
+      />
+      <Route path="services/:slug" element={<ServicePage />} />
       <Route path="digital-print" element={<DigitalPrint />} />
       <Route path="logo-design-gallery" element={<LogoDesignGallery />} />
       <Route path="logo-gallery" element={<LogoDesignGallery />} />
@@ -424,15 +518,17 @@ const router = createBrowserRouter(
       />
       <Route path="website-design-gallery" element={<WebsiteDesignGallery />} />
       <Route path="*" element={<NotFound />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );
 
 function App() {
   return (
     <QueryProvider>
       <HelmetProvider>
-        <RouterProvider router={router} />
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
       </HelmetProvider>
     </QueryProvider>
   );

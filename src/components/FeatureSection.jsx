@@ -1,6 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaPalette, FaPrint, FaLaptop, FaRocket, FaChartLine, FaHandshake } from 'react-icons/fa';
+import {
+  Palette as FaPalette,
+  Printer as FaPrint,
+  Monitor as FaLaptop,
+  Rocket as FaRocket,
+  ChartLine as FaChartLine,
+  Handshake as FaHandshake,
+} from "lucide-react";
 import ParallaxEffect from './ParallaxEffect';
 
 const FeatureSection = () => {

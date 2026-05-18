@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
+import {
+  ArrowRight as FaArrowRight,
+} from "lucide-react";
 
 const PortfolioPreview = () => {
   // Portfolio items

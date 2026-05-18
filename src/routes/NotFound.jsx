@@ -1,7 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaHome, FaEnvelope, FaArrowLeft } from "react-icons/fa";
+import {
+  House as FaHome,
+  Mail as FaEnvelope,
+  ArrowLeft as FaArrowLeft,
+} from "lucide-react";
 
 const NotFound = () => {
   return (

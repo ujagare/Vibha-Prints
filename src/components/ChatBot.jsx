@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaComments, FaTimes, FaPaperPlane, FaSpinner } from 'react-icons/fa';
+import {
+  MessageCircle as FaComments,
+  X as FaTimes,
+  Send as FaPaperPlane,
+  LoaderCircle as FaSpinner,
+} from "lucide-react";
 
 // Predefined responses for the chatbot
 const botResponses = {
@@ -13,7 +18,7 @@ const botResponses = {
     "We offer a range of graphic design and printing services including logo design, business cards, brochures, and more. Would you like to know more about any specific service?"
   ],
   contact: [
-    "You can reach us at vibhart07@gmail.com or call us at +91 86259 48046. Would you like us to contact you?"
+    "You can reach us at info@vibhaprints.com or call us at +91 86259 48046. Would you like us to contact you?"
   ],
   pricing: [
     "Our pricing varies based on the specific requirements of your project. Would you like to get a custom quote for your project?"

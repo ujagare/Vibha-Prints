@@ -1,34 +1,42 @@
-import React, { useRef, useEffect, useMemo, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { FaPaintBrush, FaPrint, FaArrowRight, FaRocket } from "react-icons/fa";
+import { motion } from "framer-motion";
 import {
-  FiBox,
-  FiCircle,
-  FiHexagon,
-  FiEye,
-  FiPackage,
-  FiLayers,
-  FiTarget,
-  FiCrosshair,
-} from "react-icons/fi";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
-import "./EnhancedHero.css";
-import AnimatedButton from "./AnimatedButton";
-import ParallaxEffect from "./ParallaxEffect";
+  ArrowRight as FaArrowRight,
+  Play as FaPlay,
+  CalendarCheck as FaRegCalendarCheck,
+  Handshake as FaRegHandshake,
+  Star as FaRegStar,
+  Users as FaUsers,
+} from "lucide-react";
+import {
+  Box as FiBox,
+  Circle as FiCircle,
+  Crosshair as FiCrosshair,
+  Eye as FiEye,
+  Hexagon as FiHexagon,
+  Layers as FiLayers,
+  Package as FiPackage,
+  Target as FiTarget,
+} from "lucide-react";
 import Testimonials from "./Testimonials";
-import ProcessSection from "./ProcessSection";
-import { LandingAccordionItem } from "./ui/interactive-image-accordion";
-import VibhaBrochurePdf from "../assets/Brouchers/Vibha_Printing Media.pdf";
-import heroSlideOne from "../assets/vibha contact1.png";
-import heroSlideTwo from "../assets/vibha contact2.png";
-import heroSlideThree from "../assets/vibha contact.png";
-import { submitBrochureLead } from "../services/supabaseLeadService";
+import heroShowcase from "../assets/Home/ChatGPT Image May 16, 2026, 04_34_55 PM.png";
+import heroShowcaseMobile from "../assets/Home/Mobile/ChatGPT Image May 18, 2026, 12_53_59 AM.png";
+import darkPattern from "../assets/Home/ChatGPT Image May 16, 2026, 04_50_15 PM.png";
+import packageWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_54_38 PM.png";
+import brandWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_55_27 PM.png";
+import websiteWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_57_33 PM.png";
+import marketingWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_58_15 PM.png";
+import ctaShowcase from "../assets/Home/ChatGPT Image May 16, 2026, 05_07_33 PM.png";
+import ctaShowcaseMobile from "../assets/Home/Mobile/ChatGPT Image May 18, 2026, 12_54_46 AM.png";
+import designIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_39_19 PM.png";
+import printIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_41_01 PM.png";
+import marketingIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_41_38 PM.png";
+import websiteIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_42_17 PM.png";
+import creativeIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_44_31 PM.png";
+import qualityIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_45_09 PM.png";
+import deliveryIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_45_44 PM.png";
+import supportIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_47_29 PM.png";
 
 const pngLogoModules = import.meta.glob("../assets/png logos/*.png", {
   eager: true,
@@ -44,96 +52,78 @@ const formatLogoName = (path) =>
     .replace(/\s+/g, " ")
     .trim() ?? "Brand logo";
 
-const ServiceCard = ({ title, description, icon, link, image }) => {
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        duration: 0.8,
-      },
-    },
-    hover: {
-      y: -10,
-      boxShadow: "0 20px 40px rgba(106, 17, 203, 0.15)",
-      transition: {
-        type: "spring",
-        stiffness: 500,
-        damping: 30,
-      },
-    },
-  };
+const SectionLabel = ({ children, dark = false }) => (
+  <span
+    className={`inline-flex items-center rounded-full border px-4 py-1 text-[11px] font-bold uppercase tracking-[0.2em] ${
+      dark
+        ? "border-[#7b4cff]/70 bg-white/5 text-white/80"
+        : "border-[#d6dce8] bg-white text-[#0b1830]"
+    }`}
+  >
+    {children}
+  </span>
+);
 
-  return (
-    <motion.div
-      className="modern-card h-auto min-h-[480px] sm:min-h-[520px] lg:min-h-[560px] flex flex-col"
-      variants={cardVariants}
-      initial="hidden"
-      whileInView="visible"
-      whileHover="hover"
-      viewport={{ once: true, amount: 0.2 }}
-    >
-      <div className="relative h-48 sm:h-56 md:h-64 lg:h-72 overflow-hidden rounded-t-xl">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-brand-primary-900/50"></div>
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/90 backdrop-blur-sm p-2 sm:p-3 rounded-full shadow-lg">
-          <div className="text-xl sm:text-2xl text-brand-primary-600">{icon}</div>
-        </div>
-      </div>
-      <div className="p-5 sm:p-6 lg:p-8 flex-grow flex flex-col justify-between bg-white rounded-b-xl">
-        <div>
-          <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">{title}</h3>
-          <p className="text-gray-600 mb-5 sm:mb-6 text-sm sm:text-base leading-relaxed">
-            {description}
-          </p>
-        </div>
-        <AnimatedButton to={link} variant="primary" icon={<FaArrowRight />}>
-          Learn More
-        </AnimatedButton>
-      </div>
-    </motion.div>
-  );
-};
+const services = [
+  {
+    number: "01",
+    title: "Graphic Design",
+    description:
+      "Stunning visuals that communicate your brand message with impact.",
+    icon: designIcon,
+    color: "#ff525d",
+    link: "/graphic-design",
+  },
+  {
+    number: "02",
+    title: "Printing Services",
+    description:
+      "High-quality prints for business cards, brochures, packaging and more.",
+    icon: printIcon,
+    color: "#9b5cff",
+    link: "/printing",
+  },
+  {
+    number: "03",
+    title: "Website Development",
+    description: "Responsive websites that are fast, modern and built to convert.",
+    icon: websiteIcon,
+    color: "#2f92ff",
+    link: "/website-design-gallery",
+  },
+  {
+    number: "04",
+    title: "Digital Marketing",
+    description:
+      "Smart marketing strategies to increase visibility, engage audience and drive sales.",
+    icon: marketingIcon,
+    color: "#54d873",
+    link: "/social-media-design-gallery",
+  },
+];
+
+const whyItems = [
+  { title: "Creative Designers", icon: creativeIcon },
+  { title: "Quality Assurance", icon: qualityIcon },
+  { title: "On-Time Delivery", icon: deliveryIcon },
+  { title: "Customer Support", icon: supportIcon },
+];
+
+const workItems = [
+  { title: "Brand Identity", image: brandWork },
+  { title: "Product Packaging", image: packageWork },
+  { title: "Website Design", image: websiteWork },
+  { title: "Digital Marketing", image: marketingWork },
+];
+
+const stats = [
+  { value: "250+", label: "Projects Completed", icon: FaRegHandshake },
+  { value: "98%", label: "Client Satisfaction", icon: FaRegStar },
+  { value: "10+", label: "Years Experience", icon: FaRegCalendarCheck },
+  { value: "50+", label: "Brands Empowered", icon: FaUsers },
+];
 
 const EnhancedHero = () => {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  const heroSlides = [
-    {
-      title: "Creative Design Solutions",
-      description:
-        "Transform your vision into a powerful brand identity that resonates with your audience",
-      image: heroSlideOne,
-    },
-    {
-      title: "Professional Printing Services",
-      description:
-        "High-quality printing solutions for all your marketing and branding needs",
-      image: heroSlideTwo,
-    },
-    {
-      title: "Comprehensive Branding",
-      description:
-        "End-to-end branding solutions to establish a strong market presence",
-      image: heroSlideThree,
-    },
-  ];
-
   const trustedBrands = [
     { name: "TechFlow", icon: FiBox, gradient: "from-blue-600 to-indigo-700" },
     {
@@ -196,136 +186,143 @@ const EnhancedHero = () => {
     return trustedBrandPngLogos.slice(midpoint);
   }, [trustedBrandPngLogos]);
 
-  const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
-  const [brochureForm, setBrochureForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-  });
-  const [formError, setFormError] = useState("");
-
-  useEffect(() => {
-    if (!isBrochureModalOpen) return undefined;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [isBrochureModalOpen]);
-
-  const handleBrochureInputChange = (event) => {
-    const { name, value } = event.target;
-    setBrochureForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const closeBrochureModal = () => {
-    setIsBrochureModalOpen(false);
-    setFormError("");
-  };
-
-  const handleBrochureSubmit = async (event) => {
-    event.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!brochureForm.name.trim()) {
-      setFormError("Please enter your full name.");
-      return;
-    }
-
-    if (!emailRegex.test(brochureForm.email.trim())) {
-      setFormError("Please enter a valid email address.");
-      return;
-    }
-
-    if (!brochureForm.phone.trim()) {
-      setFormError("Please enter your phone number.");
-      return;
-    }
-
-    try {
-      await submitBrochureLead({
-        name: brochureForm.name.trim(),
-        email: brochureForm.email.trim(),
-        phone: brochureForm.phone.trim(),
-        company: brochureForm.company.trim(),
-        brochure_name: "Vibha_Printing Media",
-        source: "hero-download-brochure",
-      });
-    } catch (error) {
-      // Download should still work even if lead capture fails.
-      console.error("Brochure lead save failed:", error);
-    }
-
-    const link = document.createElement("a");
-    link.href = VibhaBrochurePdf;
-    link.download = "Vibha_Printing Media.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    setBrochureForm({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-    });
-    closeBrochureModal();
-  };
-
   return (
-    <div className="bg-white overflow-x-hidden">
-      {/* Interactive Accordion Hero Section */}
-      <LandingAccordionItem />
+    <div className="bg-white text-[#071124]">
+      <section className="relative min-h-[820px] overflow-hidden bg-[#050d1d] text-white lg:min-h-[900px]">
+        <picture>
+          <source media="(max-width: 640px)" srcSet={heroShowcaseMobile} />
+          <img
+            src={heroShowcase}
+            alt="Vibha brand stationery, tablet and print mockups"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            fetchpriority="high"
+          />
+        </picture>
 
-      {/* Trusted Brands Section */}
-      <section className="relative z-10 py-10 sm:py-12 md:py-16 bg-gradient-to-br from-white via-brand-primary-50 to-white overflow-hidden">
+        <div className="container relative z-10 mx-auto flex min-h-[820px] items-start px-5 pb-16 pt-24 sm:items-center sm:px-6 sm:py-24 lg:min-h-[900px] lg:px-8">
+          <motion.div
+            className="max-w-2xl drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)]"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <p className="mb-5 text-sm font-semibold text-white/90">
+              We Design. We Print. We Grow Brands.
+            </p>
+            <h1
+              className="mb-6 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl"
+              style={{ WebkitTextFillColor: "currentColor" }}
+            >
+              Creative Solutions
+              <span className="block text-[#ff525d]">
+                That Drive Results.
+              </span>
+            </h1>
+            <p className="max-w-xl text-base leading-8 text-white/78 sm:text-lg">
+              From eye-catching designs to high-quality prints and powerful
+              digital strategies, we help businesses stand out and achieve real
+              growth.
+            </p>
+            <div className="mt-8 flex w-full flex-col items-stretch gap-4 sm:w-auto sm:flex-row sm:items-center">
+              <Link
+                to="/graphic-design"
+                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#ff525d] px-6 py-3 text-sm font-bold text-white shadow-xl shadow-[#ff525d]/25 transition hover:-translate-y-0.5 hover:bg-[#ff6871] sm:justify-start"
+              >
+                Explore Services <FaArrowRight />
+              </Link>
+              <Link
+                to="/logo-design-gallery"
+                className="inline-flex items-center justify-center gap-3 rounded-full border border-white/35 bg-white/5 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:bg-white/10 sm:justify-start"
+              >
+                View Our Work
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff525d]">
+                  <FaPlay className="ml-0.5 text-[10px]" />
+                </span>
+              </Link>
+            </div>
+            <div className="mt-12 hidden max-w-2xl grid-cols-2 gap-x-4 gap-y-6 sm:grid sm:grid-cols-4 sm:gap-5">
+              {stats.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={stat.label} className="flex items-center gap-3">
+                    <Icon className="text-2xl text-[#ff525d]" />
+                    <div className="min-w-0">
+                      <p className="text-xl font-extrabold text-white">
+                        {stat.value}
+                      </p>
+                      <p className="max-w-[110px] text-[10px] leading-tight text-white/65 sm:text-[11px]">
+                        {stat.label}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section
+        className="relative z-10 overflow-hidden bg-[#f7f9fc] py-16 sm:py-20"
+        aria-label="Trusted by leading brands"
+      >
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,36,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(7,17,36,0.04)_1px,transparent_1px)] bg-[size:44px_44px]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9e0ec] to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#d9e0ec] to-transparent" />
         <div className="relative w-full max-w-full">
           <motion.div
-            className="text-center mb-6 sm:mb-8 px-4"
+            className="mx-auto mb-10 max-w-3xl px-5 text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-sm sm:text-base font-medium text-brand-primary-600">
-              TRUSTED BY LEADING BRANDS
-            </p>
+            <span className="inline-flex items-center rounded-full border border-[#d6dce8] bg-white px-4 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#071124] shadow-sm">
+              Trusted Brands
+            </span>
+            <h2 className="mt-4 text-3xl font-extrabold leading-tight text-[#071124] sm:text-4xl">
+              Trusted by Leading{" "}
+              <span className="text-[#ff525d]">Brands & Businesses</span>
+            </h2>
           </motion.div>
-          <div className="relative overflow-hidden w-full max-w-full">
-            <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-brand-primary-50 via-brand-primary-50/80 to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-brand-primary-50 via-brand-primary-50/80 to-transparent z-10 pointer-events-none"></div>
+          <div className="relative w-full overflow-hidden border-y border-[#e2e7f0] bg-white/78 py-6 shadow-[0_24px_70px_rgba(7,17,36,0.08)] backdrop-blur">
+            <div className="absolute left-0 top-0 bottom-0 z-10 w-24 bg-gradient-to-r from-white via-white/92 to-transparent pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 z-10 w-24 bg-gradient-to-l from-white via-white/92 to-transparent pointer-events-none"></div>
             {trustedBrandPngLogos.length > 0 ? (
-              <div className="py-2 space-y-3 sm:space-y-4">
-                <div className="hero-trusted-ticker-track flex items-center gap-6 sm:gap-8">
+              <div className="space-y-4">
+                <div className="hero-trusted-ticker-track flex items-center gap-8">
                   {[...firstLogoRow, ...firstLogoRow].map((brand, index) => (
                     <div
                       key={`row1-${brand.name}-${index}`}
-                      className="shrink-0 flex items-center justify-center h-16 w-40 sm:h-20 sm:w-52"
+                      className="flex h-24 w-56 shrink-0 items-center justify-center rounded-lg border border-[#edf1f7] bg-white px-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#ff525d]/35 hover:shadow-xl hover:shadow-slate-200/70"
                     >
                       <img
                         src={brand.src}
                         alt={brand.name}
-                        className="max-h-10 sm:max-h-14 w-auto object-contain"
+                        className="max-h-14 w-auto object-contain"
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
                   ))}
                 </div>
-                <div className="hero-trusted-ticker-track hero-trusted-ticker-track-reverse flex items-center gap-6 sm:gap-8">
+                <div className="hero-trusted-ticker-track hero-trusted-ticker-track-reverse flex items-center gap-8">
                   {[
-                    ...(secondLogoRow.length > 0 ? secondLogoRow : firstLogoRow),
-                    ...(secondLogoRow.length > 0 ? secondLogoRow : firstLogoRow),
+                    ...(secondLogoRow.length > 0
+                      ? secondLogoRow
+                      : firstLogoRow),
+                    ...(secondLogoRow.length > 0
+                      ? secondLogoRow
+                      : firstLogoRow),
                   ].map((brand, index) => (
                     <div
                       key={`row2-${brand.name}-${index}`}
-                      className="shrink-0 flex items-center justify-center h-16 w-40 sm:h-20 sm:w-52"
+                      className="flex h-24 w-56 shrink-0 items-center justify-center rounded-lg border border-[#edf1f7] bg-white px-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#ff525d]/35 hover:shadow-xl hover:shadow-slate-200/70"
                     >
                       <img
                         src={brand.src}
                         alt={brand.name}
-                        className="max-h-10 sm:max-h-14 w-auto object-contain"
+                        className="max-h-14 w-auto object-contain"
                         loading="lazy"
                         decoding="async"
                       />
@@ -334,20 +331,20 @@ const EnhancedHero = () => {
                 </div>
               </div>
             ) : (
-              <div className="hero-trusted-ticker-track flex items-center gap-10 sm:gap-16 py-2 sm:py-3">
+              <div className="hero-trusted-ticker-track flex items-center gap-16 py-3">
                 {[...trustedBrands, ...trustedBrands].map((brand, index) => {
                   const Icon = brand.icon;
                   return (
                     <div
                       key={`${brand.name}-${index}`}
-                      className="flex items-center gap-2 sm:gap-3 text-zinc-400 hover:text-brand-primary-700 transition-colors duration-300 shrink-0"
+                      className="flex shrink-0 items-center gap-3 rounded-lg border border-[#edf1f7] bg-white px-7 py-5 text-zinc-500 shadow-sm transition duration-300 hover:-translate-y-1 hover:text-[#071124] hover:shadow-xl hover:shadow-slate-200/70"
                     >
                       <div
-                        className={`h-6 w-6 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br ${brand.gradient} flex items-center justify-center`}
+                        className={`h-8 w-8 rounded-lg bg-gradient-to-br ${brand.gradient} flex items-center justify-center`}
                       >
-                        <Icon className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                        <Icon className="h-4 w-4 text-white" />
                       </div>
-                      <span className="text-base sm:text-lg font-semibold text-brand-primary-700">
+                      <span className="text-lg font-semibold text-brand-primary-700">
                         {brand.name}
                       </span>
                     </div>
@@ -359,435 +356,231 @@ const EnhancedHero = () => {
         </div>
       </section>
 
-      {/* Enhanced Services Section */}
-      <div className="relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 max-w-[100vw]">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gray-50/80 z-0"></div>
-        <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-brand-primary-50 to-transparent z-0 hidden md:block"></div>
-        <div className="absolute left-0 bottom-0 w-1/3 h-1/2 bg-gradient-to-t from-brand-secondary-50 to-transparent z-0 hidden md:block"></div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-20 right-20 w-40 h-40 sm:w-64 sm:h-64 rounded-full border-4 sm:border-8 border-brand-primary-100/30 z-0 hidden lg:block"></div>
-        <div className="absolute bottom-20 left-20 w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 sm:border-8 border-brand-secondary-100/30 z-0 hidden lg:block"></div>
-
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="text-center mb-10 sm:mb-12 md:mb-16 lg:mb-20 max-w-full"
-          >
-            <div className="inline-block mb-3 sm:mb-4">
-              <span className="inline-block px-3 py-1 sm:px-4 bg-brand-secondary-50 text-brand-secondary-500 rounded-full text-xs sm:text-sm font-medium tracking-wide">
-                WHAT WE OFFER
-              </span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-5 lg:mb-6 text-brand-primary-800 px-4">
-              Our <span className="text-brand-secondary-500">Services</span>
+      <section className="relative overflow-hidden bg-[#040b19] py-20 text-white sm:py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(35,91,190,0.28),transparent_42%)]" />
+        <div className="container relative z-10 mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-14 max-w-4xl text-center">
+            <SectionLabel dark>Our Services</SectionLabel>
+            <h2 className="mt-7 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
+              End-to-End <span className="text-[#ff525d]">Solutions</span> for
+              Your Brand
             </h2>
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              Comprehensive design and printing solutions to elevate your brand
-              presence in today's competitive market
+            <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-white/68">
+              We offer a complete range of creative and digital services to help
+              your brand look amazing, communicate clearly, and grow faster.
             </p>
-          </motion.div>
-
-          <div className="grid gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 md:grid-cols-2 max-w-full">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8 }}
-            >
-              <ServiceCard
-                title="Graphic Design"
-                description="Crafting visual identities that tell your unique story and captivate your audience. From logos to complete brand guidelines, we create designs that make an impact."
-                icon={<FaPaintBrush />}
-                link="/graphic-design"
-                image="https://images.unsplash.com/photo-1613909207039-6b173b755cc1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600&q=80"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <ServiceCard
-                title="Printing Services"
-                description="Bringing your designs to life with high-quality, professional printing solutions. From business cards to large format printing, we deliver exceptional quality."
-                icon={<FaPrint />}
-                link="/printing"
-                image="https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600&q=80"
-              />
-            </motion.div>
           </div>
 
-          {/* Additional Services Button */}
-          <motion.div
-            className="text-center mt-12 sm:mt-14 md:mt-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          ></motion.div>
-        </div>
-      </div>
-
-      {/* Process Section */}
-      <ProcessSection />
-
-      {/* Swiper Slider Section */}
-      <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16 relative z-10 max-w-full overflow-hidden">
-        <ParallaxEffect direction="up" speed={0.2}>
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay, EffectFade]}
-            spaceBetween={0}
-            slidesPerView={1}
-            navigation
-            pagination={{ clickable: true }}
-            effect="fade"
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-            }}
-            loop={true}
-            className="w-full rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl"
-          >
-            {heroSlides.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div className="relative h-[280px] sm:h-[360px] md:h-[460px] lg:h-[560px] xl:h-[600px] w-full">
+          <div className="grid gap-7 lg:grid-cols-4">
+            {services.map((service) => (
+              <Link
+                key={service.title}
+                to={service.link}
+                className="group relative min-h-[470px] overflow-hidden rounded-[26px] border bg-white/[0.035] p-8 text-center transition duration-300 hover:-translate-y-2"
+                style={{
+                  borderColor: `${service.color}70`,
+                  boxShadow: `inset 0 0 70px ${service.color}18`,
+                }}
+              >
+                <span
+                  className="absolute right-0 top-0 rounded-bl-2xl px-5 py-4 text-xl font-extrabold text-white"
+                  style={{ backgroundColor: service.color }}
+                >
+                  {service.number}
+                </span>
+                <div
+                  className="mx-auto mt-8 flex h-40 w-40 items-center justify-center rounded-full border"
+                  style={{
+                    borderColor: `${service.color}90`,
+                    boxShadow: `0 0 40px ${service.color}24`,
+                  }}
+                >
                   <img
-                    src={slide.image}
-                    alt={slide.title}
-                    className="w-full h-full object-cover"
+                    src={service.icon}
+                    alt=""
+                    className="h-28 w-28 object-contain"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-primary-900/80 to-transparent flex items-end">
-                    <div className="max-w-3xl p-4 sm:p-6 md:p-8 lg:p-10 text-white">
-                      <h2 className="mb-2 sm:mb-3 md:mb-4 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
-                        {slide.title}
-                      </h2>
-                      <p className="mb-4 sm:mb-5 md:mb-6 text-sm sm:text-base md:text-lg lg:text-xl">{slide.description}</p>
-                      <AnimatedButton
-                        to="/graphic-design"
-                        variant="primary"
-                        className="bg-white/20 backdrop-blur-sm border-white/40 hover:bg-white/30 text-sm sm:text-base"
-                      >
-                        Learn More
-                      </AnimatedButton>
-                    </div>
+                </div>
+                <h3 className="mt-10 text-2xl font-extrabold text-white">
+                  {service.title}
+                </h3>
+                <div
+                  className="mx-auto my-6 h-1 w-20 rounded-full"
+                  style={{ backgroundColor: service.color }}
+                />
+                <p className="mx-auto min-h-[96px] max-w-[250px] text-base leading-8 text-white/68">
+                  {service.description}
+                </p>
+                <span
+                  className="mt-7 inline-flex items-center gap-3 text-base font-bold"
+                  style={{ color: service.color }}
+                >
+                  Learn More <FaArrowRight />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="relative overflow-hidden bg-[#051126] py-16 text-white"
+        style={{ backgroundImage: `url("${darkPattern}")` }}
+      >
+        <div className="absolute inset-0 bg-[#051126]/85" />
+        <div className="container relative z-10 mx-auto grid items-center gap-10 px-5 sm:px-6 lg:grid-cols-[1fr_1.6fr] lg:px-8">
+          <div>
+            <SectionLabel dark>Why Work With Us</SectionLabel>
+            <h2 className="mt-5 text-3xl font-extrabold leading-tight text-white sm:text-4xl">
+              We Don't Just Design,
+              <span className="block">
+                We Build <span className="text-[#ff525d]">Brand Value</span>
+              </span>
+            </h2>
+            <p className="mt-5 max-w-md text-sm leading-7 text-white/70">
+              We combine creativity, strategy and technology to deliver
+              solutions that make your brand memorable and successful.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-4">
+            {whyItems.map((item, index) => (
+              <div key={item.title} className="relative text-center">
+                {index > 0 && (
+                  <span className="absolute -left-3 top-12 hidden h-px w-6 bg-[#ff525d]/70 sm:block" />
+                )}
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-[#ff525d]/40 bg-white/5">
+                  <img
+                    src={item.icon}
+                    alt=""
+                    className="h-14 w-14 object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="mt-4 text-lg font-extrabold leading-snug text-white">
+                  {item.title}
+                </h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <SectionLabel>Our Work</SectionLabel>
+            <h2 className="mt-4 text-4xl font-extrabold text-[#071124]">
+              Work That <span className="text-[#ff525d]">Speaks</span> for
+              Itself
+            </h2>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              {["All", "Branding", "Print", "Web Development", "Marketing"].map(
+                (item, index) => (
+                  <span
+                    key={item}
+                    className={`rounded-full border px-6 py-2 text-sm font-semibold ${
+                      index === 0
+                        ? "border-[#ff525d] bg-[#ff525d] text-white"
+                        : "border-gray-200 bg-white text-[#071124]"
+                    }`}
+                  >
+                    {item}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {workItems.map((item) => (
+              <article
+                key={item.title}
+                className="group overflow-hidden rounded-lg bg-white shadow-xl shadow-slate-200/70"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-56 w-full object-cover transition duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-9 text-center">
+            <Link
+              to="/logo-design-gallery"
+              className="inline-flex items-center gap-3 rounded-full bg-[#ff525d] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-[#ff525d]/20 transition hover:bg-[#ff6871]"
+            >
+              View All Projects <FaArrowRight />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#061225] py-10 text-white">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="grid overflow-hidden rounded-2xl bg-white/[0.035] shadow-2xl shadow-black/25 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={stat.label}
+                  className={`flex items-center gap-5 px-8 py-7 ${
+                    index > 0 ? "border-white/10 lg:border-l" : ""
+                  }`}
+                >
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full border border-[#ff525d]/35 bg-[#ff525d]/10 text-[#ff525d]">
+                    <Icon className="text-3xl" />
+                  </div>
+                  <div>
+                    <p className="text-3xl font-extrabold text-white">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs text-white/65">{stat.label}</p>
                   </div>
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </ParallaxEffect>
-      </div>
-
-      {/* Enhanced Marquee Section with Brand-Appropriate Styling */}
-      <div className="relative w-full overflow-hidden bg-gradient-to-r from-brand-primary-700 via-brand-primary-600 to-brand-secondary-600 py-5 sm:py-6 md:py-8 max-w-[100vw]">
-        {/* Background pattern overlay */}
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/0 via-white/30 to-white/0"></div>
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-white/0 via-white/30 to-white/0"></div>
-
-        {/* First marquee - left to right */}
-        <div className="mb-3 sm:mb-4">
-          <motion.div
-            className="whitespace-nowrap flex"
-            initial={{ x: "-25%" }}
-            animate={{ x: "0%" }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 30,
-              ease: "linear",
-            }}
-          >
-            {Array(8)
-              .fill(null)
-              .map((_, index) => (
-                <React.Fragment key={`first-${index}`}>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Creative Design
-                  </span>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Brand Identity
-                  </span>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Print Solutions
-                  </span>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Visual Storytelling
-                  </span>
-                </React.Fragment>
-              ))}
-          </motion.div>
-        </div>
-
-        {/* Second marquee - right to left (opposite direction) */}
-        <div>
-          <motion.div
-            className="whitespace-nowrap flex"
-            initial={{ x: "0%" }}
-            animate={{ x: "-25%" }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 30,
-              ease: "linear",
-            }}
-          >
-            {Array(8)
-              .fill(null)
-              .map((_, index) => (
-                <React.Fragment key={`second-${index}`}>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Graphic Excellence
-                  </span>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Digital Printing
-                  </span>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Logo Design
-                  </span>
-                  <span className="mx-4 text-base font-bold uppercase tracking-wider text-white font-serif sm:mx-5 sm:text-xl md:mx-8 md:text-2xl lg:text-3xl xl:text-4xl">
-                    Marketing Materials
-                  </span>
-                </React.Fragment>
-              ))}
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Testimonials Section */}
-      <Testimonials />
-
-      {/* Enhanced Call to Action */}
-      <div className="relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 max-w-[100vw]">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-primary-600 to-brand-secondary-600 opacity-95 z-0"></div>
-
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <svg
-            className="absolute top-0 left-0 w-full h-full"
-            viewBox="0 0 1200 600"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0,0 L1200,0 L1200,600 L0,600 Z"
-              fill="none"
-              stroke="rgba(255,255,255,0.1)"
-              strokeWidth="2"
-            />
-            <circle cx="200" cy="150" r="80" fill="rgba(255,255,255,0.05)" />
-            <circle cx="1000" cy="450" r="120" fill="rgba(255,255,255,0.05)" />
-            <path
-              d="M100,100 C300,50 500,300 700,200 S1000,100 1100,300"
-              fill="none"
-              stroke="rgba(255,255,255,0.1)"
-              strokeWidth="3"
-            />
-          </svg>
-
-          {/* Animated Particles */}
-          {[...Array(10)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-white/10 hidden sm:block"
-              style={{
-                width: Math.random() * 80 + 20,
-                height: Math.random() * 80 + 20,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, Math.random() * 50 - 25],
-                x: [0, Math.random() * 50 - 25],
-                opacity: [0.1, 0.3, 0.1],
-              }}
-              transition={{
-                duration: 8 + Math.random() * 7,
-                repeat: Infinity,
-                ease: "easeInOut",
-                repeatType: "reverse",
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-full">
-          <ParallaxEffect direction="up" speed={0.1}>
-            <motion.div
-              className="mx-auto max-w-5xl rounded-2xl sm:rounded-3xl border border-white/20 bg-white/10 p-6 sm:p-8 md:p-10 lg:p-16 shadow-2xl backdrop-blur-lg"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <motion.h2
-                className="mb-5 sm:mb-6 lg:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white text-center sm:text-left"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                Ready to Transform <br className="hidden sm:block" />
-                <span className="text-white/90">Your Brand?</span>
-              </motion.h2>
-
-              <motion.p
-                className="mx-auto mb-7 sm:mb-8 lg:mb-12 max-w-3xl text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/80 text-center sm:text-left"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                Let's collaborate to bring your vision to life with our expert
-                design and printing services.
-              </motion.p>
-
-              <motion.div
-                className="text-center sm:text-left"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <AnimatedButton
-                  to="/contact"
-                  variant="light"
-                  size="lg"
-                  className="bg-white text-brand-primary-600 hover:bg-white/90 px-8 py-3.5 sm:px-10 sm:py-4 lg:px-12 lg:py-5 text-base sm:text-lg font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 w-full sm:w-auto"
-                >
-                  Get in Touch Today
-                </AnimatedButton>
-              </motion.div>
-            </motion.div>
-          </ParallaxEffect>
-        </div>
-      </div>
-
-      {isBrochureModalOpen && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center px-4">
-          <button
-            type="button"
-            aria-label="Close brochure form"
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={closeBrochureModal}
-          />
-
-          <div className="relative z-10 w-full max-w-lg rounded-xl sm:rounded-2xl bg-white p-5 sm:p-6 md:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <h3 className="text-xl sm:text-2xl font-bold text-brand-primary-800">
-              Download Vibha_Printing Media
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-gray-600">
-              Fill your details and brochure download will start instantly.
-            </p>
-
-            <form className="mt-5 sm:mt-6 space-y-3.5 sm:space-y-4" onSubmit={handleBrochureSubmit}>
-              <div>
-                <label
-                  htmlFor="brochure-name"
-                  className="mb-1 block text-xs sm:text-sm font-medium text-gray-700"
-                >
-                  Full Name
-                </label>
-                <input
-                  id="brochure-name"
-                  name="name"
-                  type="text"
-                  value={brochureForm.name}
-                  onChange={handleBrochureInputChange}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 sm:px-4 sm:py-2.5 text-sm outline-none focus:border-brand-primary-500 focus:ring-2 focus:ring-brand-primary-200"
-                  placeholder="Enter your name"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="brochure-email"
-                  className="mb-1 block text-xs sm:text-sm font-medium text-gray-700"
-                >
-                  Email Address
-                </label>
-                <input
-                  id="brochure-email"
-                  name="email"
-                  type="email"
-                  value={brochureForm.email}
-                  onChange={handleBrochureInputChange}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 sm:px-4 sm:py-2.5 text-sm outline-none focus:border-brand-primary-500 focus:ring-2 focus:ring-brand-primary-200"
-                  placeholder="you@example.com"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="brochure-phone"
-                  className="mb-1 block text-xs sm:text-sm font-medium text-gray-700"
-                >
-                  Phone Number
-                </label>
-                <input
-                  id="brochure-phone"
-                  name="phone"
-                  type="tel"
-                  value={brochureForm.phone}
-                  onChange={handleBrochureInputChange}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 sm:px-4 sm:py-2.5 text-sm outline-none focus:border-brand-primary-500 focus:ring-2 focus:ring-brand-primary-200"
-                  placeholder="+91 98765 43210"
-                  required
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="brochure-company"
-                  className="mb-1 block text-xs sm:text-sm font-medium text-gray-700"
-                >
-                  Company (Optional)
-                </label>
-                <input
-                  id="brochure-company"
-                  name="company"
-                  type="text"
-                  value={brochureForm.company}
-                  onChange={handleBrochureInputChange}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 sm:px-4 sm:py-2.5 text-sm outline-none focus:border-brand-primary-500 focus:ring-2 focus:ring-brand-primary-200"
-                  placeholder="Your company name"
-                />
-              </div>
-
-              {formError && (
-                <p className="text-xs sm:text-sm font-medium text-red-600">{formError}</p>
-              )}
-
-              <div className="flex flex-col gap-2.5 sm:gap-3 pt-2 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  className="w-full sm:w-auto rounded-lg border border-gray-300 px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 active:scale-95"
-                  onClick={closeBrochureModal}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto rounded-lg bg-brand-primary-800 px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold text-white transition hover:bg-brand-primary-700 active:scale-95"
-                >
-                  Submit & Download
-                </button>
-              </div>
-            </form>
+              );
+            })}
           </div>
         </div>
-      )}
+      </section>
+
+      <Testimonials />
+
+      <section className="w-full bg-white py-0">
+        <div className="relative min-h-[430px] w-full overflow-hidden bg-[#061225] px-5 py-16 text-white sm:px-8 md:px-16 lg:px-24">
+          <picture>
+            <source media="(max-width: 640px)" srcSet={ctaShowcaseMobile} />
+            <img
+              src={ctaShowcase}
+              alt="Vibha stationery showcase"
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+          </picture>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061225] via-[#061225]/88 to-[#061225]/8" />
+          <div className="relative z-10 flex min-h-[300px] items-center">
+            <div className="max-w-xl">
+              <h2 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+                Ready to Elevate
+                <span className="block">Your Brand?</span>
+              </h2>
+              <p className="mt-4 text-base leading-8 text-white/78">
+                Let's create something extraordinary together that connects,
+                inspires, and drives real results.
+              </p>
+              <Link
+                to="/contact"
+                className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#ff525d] px-7 py-3 text-sm font-bold text-white transition hover:bg-[#ff6871]"
+              >
+                Let's Get Started <FaArrowRight />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

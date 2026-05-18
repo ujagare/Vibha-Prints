@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTimes, FaWhatsapp, FaDesktop, FaMobile } from "react-icons/fa";
+import {
+  X as FaTimes,
+  MessageCircle as FaWhatsapp,
+  Monitor as FaDesktop,
+  Smartphone as FaMobile,
+} from "lucide-react";
 
 /**
  * WhatsApp Modal Component

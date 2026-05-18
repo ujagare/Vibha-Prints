@@ -2,16 +2,16 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  FaPalette,
-  FaImage,
-  FaRegFileAlt,
-  FaDesktop,
-  FaShapes,
-  FaRegIdCard,
-  FaGlobe,
-  FaShareAlt,
-  FaProjectDiagram,
-} from "react-icons/fa";
+  Palette as FaPalette,
+  Image as FaImage,
+  FileText as FaRegFileAlt,
+  Monitor as FaDesktop,
+  Shapes as FaShapes,
+  IdCard as FaRegIdCard,
+  Globe as FaGlobe,
+  Share2 as FaShareAlt,
+  Workflow as FaProjectDiagram,
+} from "lucide-react";
 
 const GraphicServicesSidebar = ({ sidebarTitle = "Our Graphic Services" }) => {
   const navigate = useNavigate();

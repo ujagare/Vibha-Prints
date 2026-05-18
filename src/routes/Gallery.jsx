@@ -23,12 +23,12 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaPrint, 
-  FaDesktop, 
-  FaImage, 
-  FaSearchPlus 
-} from 'react-icons/fa';
+import {
+  Printer as FaPrint,
+  Monitor as FaDesktop,
+  Image as FaImage,
+  Search as FaSearchPlus,
+} from "lucide-react";
 
 const PrintingShowcase = () => {
   const [activeCategory, setActiveCategory] = useState('digital');

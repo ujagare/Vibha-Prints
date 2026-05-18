@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { FaPaintBrush, FaPrint } from 'react-icons/fa';
+import {
+  Paintbrush as FaPaintBrush,
+  Printer as FaPrint,
+} from "lucide-react";
 import logoImg1 from "../../assets/Logo/Logo_1.jpg";
 import logoImg2 from "../../assets/Logo/Logo_2.jpg";
 import logoImg3 from "../../assets/Logo/Logo_3.jpg";
@@ -7,6 +10,7 @@ import packagingImg1 from "../../assets/Packeging/Almond Oil Packege_1.jpg";
 import packagingImg2 from "../../assets/Packeging/Behance Ad 1.jpg";
 import VibhaBrochurePdf from "../../assets/Brouchers/Vibha_Printing Media.pdf";
 import { submitBrochureLead } from "../../services/supabaseLeadService";
+import { useToast } from "./ToastProvider";
 
 // --- Data for the image accordion ---
 const accordionItems = [
@@ -78,6 +82,7 @@ const AccordionItem = ({ item, isActive, onMouseEnter }) => {
 
 // --- Main Component ---
 export function LandingAccordionItem() {
+  const { showToast } = useToast();
   const [activeIndex, setActiveIndex] = useState(2);
   const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
   const [brochureForm, setBrochureForm] = useState({
@@ -108,16 +113,19 @@ export function LandingAccordionItem() {
 
     if (!brochureForm.name.trim()) {
       setFormError("Please enter your full name.");
+      showToast("Please enter your full name.", "warning");
       return;
     }
 
     if (!emailRegex.test(brochureForm.email.trim())) {
       setFormError("Please enter a valid email address.");
+      showToast("Please enter a valid email address.", "warning");
       return;
     }
 
     if (!brochureForm.phone.trim()) {
       setFormError("Please enter your phone number.");
+      showToast("Please enter your phone number.", "warning");
       return;
     }
 
@@ -132,6 +140,7 @@ export function LandingAccordionItem() {
       });
     } catch (error) {
       console.error("Brochure lead save failed:", error);
+      showToast("Lead save failed, brochure download will continue.", "warning");
     }
 
     const link = document.createElement("a");
@@ -140,6 +149,7 @@ export function LandingAccordionItem() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    showToast("Brochure download started successfully.", "success");
 
     setBrochureForm({
       name: "",

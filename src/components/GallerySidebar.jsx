@@ -2,15 +2,15 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
-  FaIdCard,
-  FaNewspaper,
-  FaBox,
-  FaDesktop,
-  FaImage,
-  FaPrint,
-  FaTshirt,
-  FaEnvelope,
-} from "react-icons/fa";
+  IdCard as FaIdCard,
+  Newspaper as FaNewspaper,
+  Box as FaBox,
+  Monitor as FaDesktop,
+  Image as FaImage,
+  Printer as FaPrint,
+  Shirt as FaTshirt,
+  Mail as FaEnvelope,
+} from "lucide-react";
 
 const GallerySidebar = () => {
   const navigate = useNavigate();

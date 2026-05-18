@@ -10,10 +10,12 @@ const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.6, ease: "easeOut" },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
 }
 
 export function ContactForm() {
+  const apiBaseUrl = (process.env.NEXT_PUBLIC_MCP_BRIDGE_URL || "http://localhost:8000").replace(/\/$/, "")
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,10 +24,46 @@ export function ContactForm() {
     budget: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    alert("Thank you for your message! This is a demo form.")
+    setIsSubmitting(true)
+    
+    try {
+      const projectMessage = [
+        formData.message,
+        formData.service ? `Service: ${formData.service}` : "",
+        formData.budget ? `Budget: ${formData.budget}` : "",
+      ].filter(Boolean).join("\n\n")
+
+      const response = await fetch(`${apiBaseUrl}/api/leads/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: projectMessage,
+          phone: "",
+          company: "",
+          lead_type: "contact",
+        }),
+      })
+
+      const data = await response.json()
+      
+      if (response.ok) {
+        alert("Thank you for your message! We'll get back to you soon.")
+        setFormData({ name: "", email: "", service: "", message: "", budget: "" })
+      } else {
+        alert(data?.error || "Error submitting form. Please try again.")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      alert("Error submitting form. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -150,9 +188,10 @@ export function ContactForm() {
           </div>
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full md:w-[240px] h-10 bg-[#0f0f12] text-white rounded-full font-semibold text-sm hover:bg-[#1a1a21] transition-colors cursor-pointer"
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </form>

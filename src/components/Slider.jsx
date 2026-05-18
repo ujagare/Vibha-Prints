@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import {
+  ChevronLeft as FaChevronLeft,
+  ChevronRight as FaChevronRight,
+} from "lucide-react";
 
 const Slider = ({ 
   slides, 

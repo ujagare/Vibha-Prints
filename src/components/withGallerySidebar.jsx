@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes, FaChevronRight } from "react-icons/fa";
+import {
+  Menu as FaBars,
+  X as FaTimes,
+  ChevronRight as FaChevronRight,
+} from "lucide-react";
 import GallerySidebar from "./GallerySidebar";
 import GraphicServicesSidebar from "./GraphicServicesSidebar";
+import ServiceCategorySidebar from "./ServiceCategorySidebar";
 import { useLocation } from "react-router-dom";
 
 const withGallerySidebar = (WrappedComponent, options = {}) => {
@@ -14,7 +19,11 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
     const [isHovered, setIsHovered] = useState(false);
     const location = useLocation();
     const SidebarComponent =
-      sidebar === "graphic" ? GraphicServicesSidebar : GallerySidebar;
+      sidebar === "graphic"
+        ? GraphicServicesSidebar
+        : sidebar === "digitalMarketing" || sidebar === "webDevelopment"
+          ? ServiceCategorySidebar
+          : GallerySidebar;
 
     // Close mobile sidebar when route changes
     useEffect(() => {
@@ -27,6 +36,10 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
 
     const toggleDesktopSidebar = () => {
       setIsDesktopSidebarOpen(!isDesktopSidebarOpen);
+    };
+
+    const containSidebarScroll = (event) => {
+      event.stopPropagation();
     };
 
     return (
@@ -63,9 +76,14 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 left-0 bottom-0 w-72 bg-white shadow-2xl z-50 lg:hidden pt-24"
+              className="fixed bottom-0 left-0 top-0 z-50 w-80 bg-[#f8fafc] pt-24 shadow-2xl lg:hidden"
             >
-              <div className="px-4 overflow-y-auto h-full relative">
+              <div
+                className="relative h-full overflow-y-auto overscroll-contain px-4"
+                data-lenis-prevent
+                onWheelCapture={containSidebarScroll}
+                onTouchMoveCapture={containSidebarScroll}
+              >
                 {/* Close Button - Prominent and Visible */}
                 <motion.button
                   onClick={toggleMobileSidebar}
@@ -85,7 +103,7 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <SidebarComponent sidebarTitle={sidebarTitle} />
+                  <SidebarComponent sidebarTitle={sidebarTitle} group={sidebar} />
                 </motion.div>
               </div>
             </motion.div>
@@ -116,50 +134,64 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
           </motion.button>
         </div>
 
-        {/* Sidebar - Desktop */}
-        <AnimatePresence>
-          {isDesktopSidebarOpen && (
-            <motion.div
-              className="hidden lg:block fixed left-0 top-24 bottom-0 w-72 bg-white shadow-lg border-r border-gray-100 pt-4 overflow-y-auto"
-              initial={{ x: -72 }}
-              animate={{ x: 0 }}
-              exit={{ x: -72 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              onHoverStart={() => setIsHovered(true)}
-              onHoverEnd={() => setIsHovered(false)}
-            >
-              <motion.div
-                className="p-6 pb-24 mt-10" // Added extra padding at bottom for scrolling and top for button
-                animate={{ x: isHovered ? 3 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <SidebarComponent sidebarTitle={sidebarTitle} />
-              </motion.div>
-
-              {/* Hover indicator */}
-              <motion.div
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-brand-primary-800/10 text-brand-primary-800 p-1 rounded-l-md hidden lg:flex items-center justify-center"
-                animate={{
-                  opacity: isHovered ? 1 : 0.5,
-                  x: isHovered ? 0 : 3,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <FaChevronRight size={12} />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Main Content Area */}
+        {/* Main Content Area - Mobile */}
         <motion.div
-          className={`pt-24 lg:pt-24 ${isDesktopSidebarOpen ? "lg:ml-72" : "lg:ml-16"}`}
+          className="pt-24 lg:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <WrappedComponent {...props} />
         </motion.div>
+
+        {/* Main Content Area - Desktop */}
+        <div className="hidden min-h-[calc(100vh-6rem)] pt-24 lg:flex">
+          <AnimatePresence initial={false}>
+            {isDesktopSidebarOpen && (
+              <motion.aside
+                className="sticky top-24 h-[calc(100vh-6rem)] w-80 shrink-0 self-start overflow-y-auto overscroll-contain border-r border-[#dfe6f0] bg-[#f8fafc] pt-4 shadow-[18px_0_55px_rgba(7,17,36,0.08)]"
+                data-lenis-prevent
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: 320, opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                onWheelCapture={containSidebarScroll}
+                onTouchMoveCapture={containSidebarScroll}
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+              >
+                <motion.div
+                  className="mt-10 w-80 p-6 pb-24"
+                  animate={{ x: isHovered ? 3 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <SidebarComponent sidebarTitle={sidebarTitle} group={sidebar} />
+                </motion.div>
+
+                {/* Hover indicator */}
+                <motion.div
+                  className="absolute right-0 top-1/2 hidden -translate-y-1/2 items-center justify-center rounded-l-md bg-brand-primary-800/10 p-1 text-brand-primary-800 lg:flex"
+                  animate={{
+                    opacity: isHovered ? 1 : 0.5,
+                    x: isHovered ? 0 : 3,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FaChevronRight size={12} />
+                </motion.div>
+              </motion.aside>
+            )}
+          </AnimatePresence>
+
+          <motion.div
+            className={`min-w-0 flex-1 ${isDesktopSidebarOpen ? "" : "pl-16"}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <WrappedComponent {...props} />
+          </motion.div>
+        </div>
 
         {/* Overlay for Mobile Sidebar */}
         <AnimatePresence>

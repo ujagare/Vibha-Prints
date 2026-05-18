@@ -3,17 +3,18 @@ import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { vibha } from "../assets";
 import {
-  FaBars,
-  FaTimes,
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaBehanceSquare,
-  FaWhatsapp,
-  FaChevronDown,
-  FaPaintBrush,
-  FaPrint,
-} from "react-icons/fa";
+  Menu as FaBars,
+  X as FaTimes,
+  Facebook as FaFacebook,
+  Instagram as FaInstagram,
+  Linkedin as FaLinkedin,
+  BriefcaseBusiness as FaBehanceSquare,
+  MessageCircle as FaWhatsapp,
+  ChevronDown as FaChevronDown,
+  Paintbrush as FaPaintBrush,
+  Printer as FaPrint,
+  ArrowRight as FaArrowRight,
+} from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ const Navbar = () => {
   const servicesRef = useRef(null);
   const servicesTimeoutRef = useRef(null);
   const location = useLocation();
+  const isDarkPage = false;
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -70,6 +72,18 @@ const Navbar = () => {
       icon: <FaPrint />,
       description: "Business cards, brochures & more",
     },
+    {
+      name: "Digital Marketing",
+      path: "/digital-marketing",
+      icon: <FaBehanceSquare />,
+      description: "SEO, social media, ads & growth",
+    },
+    {
+      name: "Web Development",
+      path: "/web-development",
+      icon: <FaArrowRight />,
+      description: "Websites, stores & web apps",
+    },
   ];
 
   // Social media links
@@ -110,6 +124,9 @@ const Navbar = () => {
   const isServicesActive =
     location.pathname === "/graphic-design" ||
     location.pathname === "/printing" ||
+    location.pathname === "/digital-marketing" ||
+    location.pathname === "/web-development" ||
+    location.pathname.startsWith("/services/") ||
     location.pathname.includes("-gallery") ||
     location.pathname.includes("-design-") ||
     location.pathname.includes("-printing-");
@@ -117,24 +134,49 @@ const Navbar = () => {
   return (
     <>
       {/* Main navbar */}
-      <nav className="w-full z-50 py-3 bg-white shadow-md fixed top-0">
+      <nav
+        className={`fixed top-0 z-50 w-full py-3 backdrop-blur-xl ${
+          isDarkPage
+            ? "border-b border-white/10 bg-[#051225] shadow-none"
+            : "border-b border-white/70 bg-white/86 shadow-[0_18px_50px_rgba(7,17,36,0.08)]"
+        }`}
+      >
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-20 relative">
+          <div className="relative flex h-20 items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0">
-              <img src={vibha} alt="Vibha Art Logo" className="h-16 w-auto" />
+            <Link
+              to="/"
+              className={`group flex flex-shrink-0 items-center px-3 py-2 transition duration-300 hover:-translate-y-0.5 ${
+                isDarkPage
+                  ? "rounded-none border border-transparent bg-transparent shadow-none"
+                  : "rounded-2xl border border-[#edf1f7] bg-white shadow-sm hover:shadow-xl hover:shadow-slate-200/80"
+              }`}
+            >
+              <img
+                src={vibha}
+                alt="Vibha Art Logo"
+                className="h-14 w-auto transition duration-300 group-hover:scale-[1.03]"
+              />
             </Link>
 
             {/* Desktop Menu - Center Navigation */}
-            <div className="hidden lg:flex items-center justify-center absolute left-0 right-0 mx-auto">
-              <div className="flex space-x-12">
+            <div className="absolute left-0 right-0 mx-auto hidden items-center justify-center lg:flex">
+              <div
+                className={`flex items-center gap-2 px-3 py-2 backdrop-blur ${
+                  isDarkPage
+                    ? "rounded-none border border-transparent bg-transparent shadow-none"
+                    : "rounded-full border border-[#e2e7f0] bg-white/82 shadow-[0_12px_36px_rgba(7,17,36,0.07)]"
+                }`}
+              >
                 {/* Home */}
                 <Link
                   to="/"
-                  className={`text-lg font-medium transition-colors ${
-                    location.pathname === "/"
-                      ? "text-[#E65056]"
-                      : "text-gray-800 hover:text-[#E65056]"
+                  className={`relative px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                    isDarkPage
+                      ? "rounded-none text-white hover:text-[#ff525d]"
+                      : location.pathname === "/"
+                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                      : "text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                   }`}
                 >
                   Home
@@ -148,10 +190,12 @@ const Navbar = () => {
                   onMouseLeave={handleServicesMouseLeave}
                 >
                   <button
-                    className={`text-lg font-medium transition-colors flex items-center gap-1 ${
-                      isServicesActive
-                        ? "text-[#E65056]"
-                        : "text-gray-800 hover:text-[#E65056]"
+                    className={`flex items-center gap-2 px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                      isDarkPage
+                        ? "rounded-none text-white hover:text-[#ff525d]"
+                        : isServicesActive
+                        ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                        : "text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                     }`}
                     onClick={() => setIsServicesOpen(!isServicesOpen)}
                   >
@@ -171,27 +215,35 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                        className="absolute left-1/2 top-full z-50 mt-5 w-80 -translate-x-1/2 overflow-hidden rounded-2xl border border-[#e2e7f0] bg-white shadow-[0_24px_70px_rgba(7,17,36,0.14)]"
                       >
                         {/* Arrow */}
-                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white rotate-45 border-l border-t border-gray-100"></div>
+                        <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 border-l border-t border-[#e2e7f0] bg-white"></div>
 
-                        <div className="relative py-2">
+                        <div className="relative border-b border-[#edf1f7] bg-[#f8fafc] px-5 py-4">
+                          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#ff525d]">
+                            Our Services
+                          </p>
+                          <p className="mt-1 text-sm text-[#536176]">
+                            Design and print support for growing brands.
+                          </p>
+                        </div>
+                        <div className="relative p-2">
                           {serviceLinks.map((service) => (
                             <Link
                               key={service.name}
                               to={service.path}
-                              className="flex items-start gap-4 px-5 py-4 hover:bg-gradient-to-r hover:from-[#E65056]/5 hover:to-transparent transition-all duration-200 group"
+                              className="group flex items-start gap-4 rounded-xl px-4 py-4 transition-all duration-200 hover:bg-[#fff3f4]"
                               onClick={() => setIsServicesOpen(false)}
                             >
-                              <div className="mt-0.5 w-10 h-10 rounded-lg bg-[#E65056]/10 flex items-center justify-center text-[#E65056] group-hover:bg-[#E65056] group-hover:text-white transition-all duration-200 flex-shrink-0">
+                              <div className="mt-0.5 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-[#ff525d]/15 bg-[#ff525d]/10 text-[#ff525d] transition-all duration-200 group-hover:bg-[#ff525d] group-hover:text-white">
                                 {service.icon}
                               </div>
                               <div>
-                                <p className="font-semibold text-gray-800 group-hover:text-[#E65056] transition-colors">
+                                <p className="font-bold text-[#071124] transition-colors group-hover:text-[#ff525d]">
                                   {service.name}
                                 </p>
-                                <p className="text-sm text-gray-500 mt-0.5">
+                                <p className="mt-0.5 text-sm text-[#64748b]">
                                   {service.description}
                                 </p>
                               </div>
@@ -206,22 +258,47 @@ const Navbar = () => {
                 {/* About */}
                 <Link
                   to="/about"
-                  className={`text-lg font-medium transition-colors ${
-                    location.pathname === "/about"
-                      ? "text-[#E65056]"
-                      : "text-gray-800 hover:text-[#E65056]"
+                  className={`relative px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                    isDarkPage
+                      ? location.pathname === "/about"
+                        ? "rounded-none text-[#ff525d] after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-10 after:-translate-x-1/2 after:bg-[#ff525d]"
+                        : "rounded-none text-white hover:text-[#ff525d]"
+                      : location.pathname === "/about"
+                        ? "rounded-full bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                        : "rounded-full text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                   }`}
                 >
-                  About
+                  {isDarkPage ? "About Us" : "About"}
                 </Link>
+
+                {isDarkPage && (
+                  <>
+                    <Link
+                      to="/logo-design-gallery"
+                      className="px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:text-[#ff525d]"
+                    >
+                      Portfolio
+                    </Link>
+                    <Link
+                      to="/#blogs"
+                      className="px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:text-[#ff525d]"
+                    >
+                      Blogs
+                    </Link>
+                  </>
+                )}
 
                 {/* Contact */}
                 <Link
                   to="/contact"
-                  className={`text-lg font-medium transition-colors ${
-                    location.pathname === "/contact"
-                      ? "text-[#E65056]"
-                      : "text-gray-800 hover:text-[#E65056]"
+                  className={`relative px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                    isDarkPage
+                      ? location.pathname === "/contact"
+                        ? "rounded-none text-[#ff525d] after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-10 after:-translate-x-1/2 after:bg-[#ff525d]"
+                        : "rounded-none text-white hover:text-[#ff525d]"
+                      : location.pathname === "/contact"
+                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                      : "text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                   }`}
                 >
                   Contact
@@ -230,7 +307,7 @@ const Navbar = () => {
             </div>
 
             {/* Social Media Icons - Right Aligned */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden items-center gap-2 lg:flex">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
@@ -238,29 +315,42 @@ const Navbar = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.ariaLabel}
-                  className="flex items-center justify-center w-10 h-10 mx-1 rounded-full bg-gray-100 text-gray-600 hover:text-white transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg ${
+                    isDarkPage
+                      ? "border-white/35 bg-transparent text-white"
+                      : "border-[#e2e7f0] bg-white text-[#536176]"
+                  }`}
                   style={{
                     boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = social.color;
-                    e.target.style.boxShadow = `0 8px 25px ${social.color}40`;
+                    e.currentTarget.style.backgroundColor = social.color;
+                    e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = "";
-                    e.target.style.boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
+                    e.currentTarget.style.backgroundColor = "";
+                    e.currentTarget.style.boxShadow =
+                      "0 2px 10px rgba(0,0,0,0.05)";
                   }}
                 >
                   {social.icon}
                 </a>
               ))}
+              {isDarkPage && (
+                <Link
+                  to="/contact"
+                  className="ml-8 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-[#ff525d] px-7 text-sm font-black text-white shadow-lg shadow-[#ff525d]/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ff6871]"
+                >
+                  Start Project <FaArrowRight />
+                </Link>
+              )}
             </div>
 
             {/* Mobile menu button */}
-            <div className="lg:hidden flex items-center">
+            <div className="flex items-center lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 text-gray-600 hover:text-[#E65056] transition-colors focus:outline-none"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#071124] shadow-sm transition-all hover:text-[#ff525d] focus:outline-none"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
                 {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -277,17 +367,17 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white shadow-lg overflow-hidden fixed top-[5.75rem] left-0 right-0 z-40"
+            className="fixed left-0 right-0 top-[6.5rem] z-40 overflow-hidden border-b border-[#e2e7f0] bg-white/95 shadow-[0_24px_70px_rgba(7,17,36,0.14)] backdrop-blur-xl lg:hidden"
           >
-            <div className="container mx-auto px-4 py-4 divide-y divide-gray-100">
-              <div className="py-3 space-y-1">
+            <div className="container mx-auto px-4 py-5">
+              <div className="space-y-2 rounded-2xl border border-[#edf1f7] bg-[#f8fafc] p-3">
                 {/* Home */}
                 <Link
                   to="/"
-                  className={`block py-3 text-center text-lg font-medium ${
+                  className={`block rounded-xl py-3 text-center text-base font-bold transition-all ${
                     location.pathname === "/"
-                      ? "text-[#E65056]"
-                      : "text-gray-800 hover:text-[#E65056]"
+                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
+                      : "bg-white text-[#071124] hover:text-[#ff525d]"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -300,10 +390,10 @@ const Navbar = () => {
                     onClick={() =>
                       setIsMobileServicesOpen(!isMobileServicesOpen)
                     }
-                    className={`w-full py-3 text-center text-lg font-medium flex items-center justify-center gap-2 ${
+                    className={`flex w-full items-center justify-center gap-2 rounded-xl py-3 text-center text-base font-bold transition-all ${
                       isServicesActive
-                        ? "text-[#E65056]"
-                        : "text-gray-800 hover:text-[#E65056]"
+                        ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
+                        : "bg-white text-[#071124] hover:text-[#ff525d]"
                     }`}
                   >
                     Services
@@ -321,13 +411,13 @@ const Navbar = () => {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="overflow-hidden bg-gray-50 rounded-lg mx-4"
+                        className="mx-1 mt-2 overflow-hidden rounded-xl border border-[#e2e7f0] bg-white"
                       >
                         {serviceLinks.map((service) => (
                           <Link
                             key={service.name}
                             to={service.path}
-                            className="flex items-center gap-3 px-5 py-3 text-gray-700 hover:text-[#E65056] hover:bg-white transition-all"
+                            className="flex items-center gap-3 border-b border-[#edf1f7] px-5 py-3 text-[#536176] transition-all last:border-b-0 hover:bg-[#fff3f4] hover:text-[#ff525d]"
                             onClick={() => setIsOpen(false)}
                           >
                             <span className="text-[#E65056]">
@@ -344,10 +434,10 @@ const Navbar = () => {
                 {/* About */}
                 <Link
                   to="/about"
-                  className={`block py-3 text-center text-lg font-medium ${
+                  className={`block rounded-xl py-3 text-center text-base font-bold transition-all ${
                     location.pathname === "/about"
-                      ? "text-[#E65056]"
-                      : "text-gray-800 hover:text-[#E65056]"
+                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
+                      : "bg-white text-[#071124] hover:text-[#ff525d]"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -357,10 +447,10 @@ const Navbar = () => {
                 {/* Contact */}
                 <Link
                   to="/contact"
-                  className={`block py-3 text-center text-lg font-medium ${
+                  className={`block rounded-xl py-3 text-center text-base font-bold transition-all ${
                     location.pathname === "/contact"
-                      ? "text-[#E65056]"
-                      : "text-gray-800 hover:text-[#E65056]"
+                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
+                      : "bg-white text-[#071124] hover:text-[#ff525d]"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -368,11 +458,11 @@ const Navbar = () => {
                 </Link>
 
                 {/* Social Media Icons in Mobile Menu */}
-                <div className="pt-6 pb-2 mt-4 border-t border-gray-100">
-                  <p className="text-sm text-gray-500 text-center mb-4">
+                <div className="mt-4 border-t border-[#e2e7f0] pb-2 pt-5">
+                  <p className="mb-4 text-center text-sm font-semibold text-[#64748b]">
                     Connect with us
                   </p>
-                  <div className="flex items-center justify-center">
+                  <div className="flex flex-wrap items-center justify-center gap-3">
                     {socialLinks.map((social, index) => (
                       <a
                         key={index}
@@ -380,17 +470,17 @@ const Navbar = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={social.ariaLabel}
-                        className="flex items-center justify-center w-12 h-12 mx-2 rounded-full bg-gray-100 text-gray-600 hover:text-white transition-all duration-300 transform hover:scale-110 hover:shadow-lg"
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#536176] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg"
                         style={{
                           boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = social.color;
-                          e.target.style.boxShadow = `0 8px 25px ${social.color}40`;
+                          e.currentTarget.style.backgroundColor = social.color;
+                          e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = "";
-                          e.target.style.boxShadow =
+                          e.currentTarget.style.backgroundColor = "";
+                          e.currentTarget.style.boxShadow =
                             "0 2px 10px rgba(0,0,0,0.05)";
                         }}
                       >

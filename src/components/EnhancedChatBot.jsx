@@ -2,16 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import io from "socket.io-client";
 import {
-  FaComments,
-  FaTimes,
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaWhatsapp,
-  FaArrowRight,
-  FaCheck,
-  FaSync,
-} from "react-icons/fa";
+  MessageCircle as FaComments,
+  X as FaTimes,
+  User as FaUser,
+  Mail as FaEnvelope,
+  Phone as FaPhone,
+  MessageCircle as FaWhatsapp,
+  ArrowRight as FaArrowRight,
+  Check as FaCheck,
+  RefreshCw as FaSync,
+} from "lucide-react";
 import {
   logChatInteraction,
   forwardToWhatsApp,
@@ -20,7 +20,7 @@ import {
 import {
   getDelayedBotResponse,
   submitContactForm as fallbackSubmitForm,
-} from "../services/fallbackChatService";
+} from "../services/improvedChatService";
 import WhatsAppModal from "./WhatsAppModal";
 
 // Socket.io connection will be created inside the component
@@ -202,7 +202,7 @@ const EnhancedChatBot = () => {
       if (!response.success) {
         const botMessage = {
           id: messages.length + 1,
-          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at vibhart07@gmail.com.",
+          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com.",
           sender: "bot",
           timestamp: new Date(),
         };
@@ -216,7 +216,7 @@ const EnhancedChatBot = () => {
     socketRef.current.on("receive_message", handleReceiveMessage);
     socketRef.current.on(
       "form_submission_response",
-      handleFormSubmissionResponse
+      handleFormSubmissionResponse,
     );
 
     // Send initial greeting request if socket is connected
@@ -231,7 +231,7 @@ const EnhancedChatBot = () => {
         socketRef.current.off("receive_message", handleReceiveMessage);
         socketRef.current.off(
           "form_submission_response",
-          handleFormSubmissionResponse
+          handleFormSubmissionResponse,
         );
       }
     };
@@ -362,7 +362,7 @@ const EnhancedChatBot = () => {
       // Even the fallback failed, show a generic message
       const botMessage = {
         id: messages.length + 2,
-        text: "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment or contact us directly at vibhart07@gmail.com.",
+        text: "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment or contact us directly at info@vibhaprints.com.",
         sender: "bot",
         timestamp: new Date(),
       };
@@ -519,7 +519,7 @@ const EnhancedChatBot = () => {
       setTimeout(() => {
         const botMessage = {
           id: messages.length + 2,
-          text: "No problem! You can reach our team at vibhart07@gmail.com or call us at +91 86259 48046. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
+          text: "No problem! You can reach our team at info@vibhaprints.com or call us at +91 86259 48046. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
           sender: "bot",
           timestamp: new Date(),
           contactInfo: true,
@@ -636,7 +636,7 @@ const EnhancedChatBot = () => {
           // Show error message
           const botMessage = {
             id: messages.length + 1,
-            text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at vibhart07@gmail.com.",
+            text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com.",
             sender: "bot",
             timestamp: new Date(),
           };
@@ -699,7 +699,7 @@ const EnhancedChatBot = () => {
       // Show error message
       const botMessage = {
         id: messages.length + 1,
-        text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at vibhart07@gmail.com.",
+        text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com.",
         sender: "bot",
         timestamp: new Date(),
       };
@@ -874,7 +874,7 @@ const EnhancedChatBot = () => {
                       {message.contactInfo && (
                         <div className="mt-3 flex flex-wrap gap-2">
                           <a
-                            href="mailto:vibhart07@gmail.com"
+                            href="mailto:info@vibhaprints.com"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
                           >
                             <FaEnvelope className="mr-1" size={10} /> Email Us

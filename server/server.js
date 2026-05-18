@@ -3,14 +3,431 @@ const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const nodemailer = require('nodemailer');
+const path = require('path');
+const fs = require('fs');
+const { createClient } = require('@supabase/supabase-js');
 
 // Load environment variables
 dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
+
+// Initialize Supabase client only when chat persistence is configured.
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
+
+const supabase =
+  supabaseUrl && supabaseServiceKey
+    ? createClient(supabaseUrl, supabaseServiceKey)
+    : null;
+
+const SYSTEM_PROMPT = `
+You are a professional AI assistant for Vibha Prints.
+
+Rules:
+- Reply like a calm, experienced Vibha Prints support person chatting on WhatsApp.
+- Sound natural, warm, and human-like, but never falsely claim you are a human.
+- Be short, clear, and conversational.
+- Use the customer's words and intent; do not give robotic menu-style answers.
+- If the customer asks casually, reply casually. If they ask business details, become precise.
+- Help users with printing services, graphic design, branding, digital marketing, and web development.
+- Services include logo design, brand identity, business cards, brochures, pamphlets, posters, catalogs, company profile, packaging, labels, stickers, hangtags, corporate stationery, flex/vinyl/banner printing, bags, T-shirts, social media creatives, websites, landing pages, ecommerce, SEO, ads, and email marketing.
+- Contact details: info@vibhaprints.com and +91 86259 48046.
+- Suggest relevant Vibha Prints services when helpful.
+- Speak Hindi + English naturally using Roman Hindi/Hinglish.
+- Do not use emojis, Devanagari, Marathi script, or long paragraphs.
+- Keep WhatsApp-style replies complete in 2 to 4 short sentences.
+- Ask one useful follow-up question at a time.
+- Avoid repeating the company name in every reply.
+- Avoid saying "as an AI", "I am a bot", or "I cannot" unless directly necessary.
+- If the customer only says hi/hello, greet them warmly and ask how you can help.
+- If the customer is confused, guide them step by step in simple language.
+- If details are missing, ask naturally instead of listing too many questions.
+- For quotes, ask for service type, quantity, size, material/finish, design status, deadline, and city as needed.
+- For design projects, ask about business name, industry, style preference, colors, timeline, and budget range as needed.
+- Do not invent fixed prices unless they are already provided by the user or business data.
+- If the user wants pricing, give only estimate ranges and say final quote depends on requirements.
+- Estimate ranges: logo design Rs 5,000-15,000+, business cards Rs 2,000-5,000+, brochures/pamphlets Rs 3,000-10,000+. Printing, packaging and websites depend on size, material, quantity, features and deadline.
+- For printing quotes, collect item type, size, quantity, paper/material, finish, single/double side, delivery city and deadline.
+- If the user is ready to proceed, collect name, phone, service requirement, and preferred callback time.
+- If the request is urgent or complex, say the Vibha Prints team can follow up.
+- Never claim an order is confirmed, payment is received, or production has started unless the user explicitly provides that status.
+- Stay polite, helpful, and sales-focused without sounding pushy.
+- Prefer replies like:
+  "Haan, ye ho jayega. Aap quantity aur size bata do, main aapko proper quote ke liye guide kar deta hoon."
+  "Samajh gaya. Aapko logo modern chahiye ya premium/classic style me?"
+  "Sure, iske liye design ready hai ya design bhi banana hai?"
+`.trim();
 
 // Initialize Express app
 const app = express();
 app.use(cors());
+app.use(express.json());
 const server = http.createServer(app);
+
+const createMailTransporter = () => {
+  const host = process.env.ZOHO_SMTP_HOST;
+  const port = Number(process.env.ZOHO_SMTP_PORT || 587);
+  const user = process.env.ZOHO_SMTP_USER;
+  const pass = process.env.ZOHO_SMTP_PASS;
+
+  if (!host || !port || !user || !pass) return null;
+
+  return nodemailer.createTransport({
+    host,
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  });
+};
+
+const getMailIdentity = () => ({
+  from: process.env.MAIL_FROM || process.env.ZOHO_SMTP_USER,
+  adminTo: process.env.MAIL_TO || process.env.ZOHO_SMTP_USER,
+});
+
+const escapeHtml = (value = "") =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+const brandEmailHtml = ({ title, name, body, ctaText = "", ctaHref = "" }) => `
+  <div style="font-family:Arial,sans-serif;background:#f6f7fb;padding:24px;color:#1f2937;">
+    <div style="max-width:640px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
+      <div style="background:#111827;color:#ffffff;padding:20px 24px;">
+        <h1 style="margin:0;font-size:22px;">Vibha Prints</h1>
+        <p style="margin:6px 0 0;color:#d1d5db;">Design, Printing & Digital Growth</p>
+      </div>
+      <div style="padding:24px;">
+        <h2 style="margin:0 0 12px;font-size:20px;color:#111827;">${escapeHtml(title)}</h2>
+        <p style="margin:0 0 14px;">Hi ${escapeHtml(name || "there")},</p>
+        ${body}
+        ${
+          ctaText && ctaHref
+            ? `<p style="margin:22px 0;"><a href="${escapeHtml(ctaHref)}" style="background:#e65056;color:#ffffff;text-decoration:none;padding:12px 18px;border-radius:8px;display:inline-block;">${escapeHtml(ctaText)}</a></p>`
+            : ""
+        }
+        <p style="margin:24px 0 0;color:#4b5563;">Regards,<br/>Vibha Prints Team</p>
+      </div>
+      <div style="border-top:1px solid #e5e7eb;padding:16px 24px;color:#6b7280;font-size:13px;">
+        Email: ${escapeHtml(process.env.MAIL_FROM || "info@vibhaprints.com")}<br/>
+        Phone/WhatsApp: +91 86259 48046<br/>
+        Website: vibhaprints.com
+      </div>
+    </div>
+  </div>
+`;
+
+const textFromLines = (lines) => lines.filter(Boolean).join("\n");
+
+const sendContactAutomationEmails = async ({ name, email, mobile, message, source }) => {
+  const transporter = createMailTransporter();
+  if (!transporter) throw new Error("SMTP is not configured");
+
+  const { from, adminTo } = getMailIdentity();
+  const adminText = textFromLines([
+    "New Contact Form Lead",
+    "",
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Mobile: ${mobile}`,
+    `Message: ${message || "N/A"}`,
+    `Source: ${source || "website-contact-form"}`,
+    `Received At: ${new Date().toISOString()}`,
+  ]);
+
+  const customerHtml = brandEmailHtml({
+    title: "Thanks for contacting Vibha Prints",
+    name,
+    body: `
+      <p style="line-height:1.6;margin:0 0 14px;">Aapka enquiry mil gaya hai. Hamari team aapki requirement check karke jaldi follow up karegi.</p>
+      <p style="line-height:1.6;margin:0 0 14px;">Agar aap quick quote chahte hain, to quantity, size, material/finish, deadline aur city reply me share kar dijiye.</p>
+    `,
+  });
+
+  const customerText = textFromLines([
+    `Hi ${name},`,
+    "",
+    "Aapka enquiry mil gaya hai. Hamari team aapki requirement check karke jaldi follow up karegi.",
+    "Quick quote ke liye quantity, size, material/finish, deadline aur city reply me share kar dijiye.",
+    "",
+    "Regards,",
+    "Vibha Prints Team",
+  ]);
+
+  const [adminInfo, customerInfo] = await Promise.all([
+    transporter.sendMail({
+      from,
+      to: adminTo,
+      subject: `Contact Lead: ${name}`,
+      text: adminText,
+      replyTo: email,
+    }),
+    transporter.sendMail({
+      from,
+      to: email,
+      subject: "Thanks for contacting Vibha Prints",
+      text: customerText,
+      html: customerHtml,
+      replyTo: from,
+    }),
+  ]);
+
+  return {
+    adminMessageId: adminInfo.messageId,
+    customerMessageId: customerInfo.messageId,
+  };
+};
+
+const sendBrochureAutomationEmails = async ({
+  name,
+  email,
+  phone,
+  company,
+  brochure_name,
+  source,
+}) => {
+  const transporter = createMailTransporter();
+  if (!transporter) throw new Error("SMTP is not configured");
+
+  const { from, adminTo } = getMailIdentity();
+  const brochurePath = process.env.BROCHURE_PATH || "";
+  const attachments =
+    brochurePath && fs.existsSync(brochurePath)
+      ? [{ filename: path.basename(brochurePath), path: brochurePath }]
+      : [];
+
+  const adminText = textFromLines([
+    "New Brochure Download Lead",
+    "",
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Phone: ${phone}`,
+    `Company: ${company || "N/A"}`,
+    `Brochure: ${brochure_name || "Vibha_Printing Media"}`,
+    `Source: ${source || "website"}`,
+    `Attachment Found: ${attachments.length ? "yes" : "no"}`,
+    `Received At: ${new Date().toISOString()}`,
+  ]);
+
+  const customerHtml = brandEmailHtml({
+    title: "Your Vibha Prints brochure is here",
+    name,
+    body: `
+      <p style="line-height:1.6;margin:0 0 14px;">Thanks for your interest. Brochure attached hai, aap services aur work details check kar sakte hain.</p>
+      <p style="line-height:1.6;margin:0 0 14px;">Agar aap kisi design/printing requirement ke liye quote chahte hain, to service, quantity, size, deadline aur city reply me share kar dijiye.</p>
+    `,
+  });
+
+  const customerText = textFromLines([
+    `Hi ${name},`,
+    "",
+    "Thanks for your interest. Brochure attached hai, aap services aur work details check kar sakte hain.",
+    "Quote ke liye service, quantity, size, deadline aur city reply me share kar dijiye.",
+    "",
+    "Regards,",
+    "Vibha Prints Team",
+  ]);
+
+  const [adminInfo, customerInfo] = await Promise.all([
+    transporter.sendMail({
+      from,
+      to: adminTo,
+      subject: `Brochure Lead: ${name}`,
+      text: adminText,
+      replyTo: email,
+    }),
+    transporter.sendMail({
+      from,
+      to: email,
+      subject: "Vibha Prints Brochure",
+      text: customerText,
+      html: customerHtml,
+      attachments,
+      replyTo: from,
+    }),
+  ]);
+
+  return {
+    adminMessageId: adminInfo.messageId,
+    customerMessageId: customerInfo.messageId,
+    brochureAttached: attachments.length > 0,
+  };
+};
+
+const normalizeIndianChatId = (phoneOrChatId) => {
+  const value = String(phoneOrChatId || "").trim();
+  if (!value) return "";
+  if (value.endsWith("@c.us") || value.endsWith("@g.us")) return value;
+
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  const withCountryCode = digits.length === 10 ? `91${digits}` : digits;
+  return `${withCountryCode}@c.us`;
+};
+
+const getGreenApiConfig = () => {
+  const instanceId = process.env.GREEN_API_INSTANCE_ID || "";
+  const token = process.env.GREEN_API_TOKEN || process.env.GREEN_API_TOKEN_INSTANCE || "";
+  const baseUrl = process.env.GREEN_API_BASE_URL || "https://api.green-api.com";
+
+  if (!instanceId || !token) {
+    throw new Error("GREEN_API_INSTANCE_ID and GREEN_API_TOKEN are required");
+  }
+
+  return { instanceId, token, baseUrl: baseUrl.replace(/\/$/, "") };
+};
+
+const sendGreenApiMessage = async ({ chatId, phone, message }) => {
+  const { instanceId, token, baseUrl } = getGreenApiConfig();
+  const resolvedChatId = normalizeIndianChatId(chatId || phone);
+
+  if (!resolvedChatId || !message) {
+    throw new Error("chatId/phone and message are required");
+  }
+
+  const response = await fetch(
+    `${baseUrl}/waInstance${instanceId}/sendMessage/${token}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chatId: resolvedChatId,
+        message,
+      }),
+    },
+  );
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data?.message || data?.error || "GREEN-API sendMessage failed");
+  }
+
+  return data;
+};
+
+const extractGreenApiText = (payload) => {
+  const messageData = payload?.messageData || {};
+  const typeMessage = messageData.typeMessage;
+
+  if (typeMessage === "textMessage") {
+    return messageData.textMessageData?.textMessage || "";
+  }
+
+  if (typeMessage === "extendedTextMessage") {
+    return messageData.extendedTextMessageData?.text || "";
+  }
+
+  return "";
+};
+
+const generateGeminiReply = async ({ message, senderName }) => {
+  const apiKey = process.env.GOOGLE_AI_API_KEY || process.env.GEMINI_API_KEY || "";
+  const configuredModels = (
+    process.env.GOOGLE_AI_MODEL ||
+    process.env.GEMINI_MODEL ||
+    "gemini-2.5-flash,gemini-2.0-flash,gemini-2.0-flash-lite"
+  )
+    .split(",")
+    .map((model) => model.trim())
+    .filter(Boolean);
+  const models = [...new Set([...configuredModels, "gemini-2.0-flash", "gemini-2.0-flash-lite"])];
+
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is required for WhatsApp auto-reply");
+  }
+
+  let lastError = null;
+
+  for (const model of models) {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [
+              {
+                text: SYSTEM_PROMPT,
+              },
+            ],
+          },
+          contents: [
+            {
+              role: "user",
+              parts: [
+                {
+                  text: `Customer name: ${senderName || "Customer"}\nMessage: ${message}`,
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.5,
+            maxOutputTokens: 500,
+          },
+        }),
+      },
+    );
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      lastError = new Error(data?.error?.message || `${model} generateContent failed`);
+      console.warn(`Gemini model failed (${model}):`, lastError.message);
+      continue;
+    }
+
+    const text = data?.candidates?.[0]?.content?.parts
+      ?.map((part) => part.text || "")
+      .join("")
+      .trim();
+
+    if (text) return text;
+
+    lastError = new Error(`${model} returned an empty response`);
+  }
+
+  throw lastError || new Error("Gemini generateContent failed");
+};
+
+const handleGreenApiAutoReply = async (payload) => {
+  if ((process.env.WHATSAPP_AUTO_REPLY_ENABLED || "true").toLowerCase() === "false") {
+    return;
+  }
+
+  if (payload?.typeWebhook !== "incomingMessageReceived") {
+    return;
+  }
+
+  const chatId = payload?.senderData?.chatId || "";
+  const senderName =
+    payload?.senderData?.senderContactName ||
+    payload?.senderData?.senderName ||
+    payload?.senderData?.chatName ||
+    "";
+  const message = extractGreenApiText(payload).trim();
+
+  if (!chatId || !message) {
+    console.log("WhatsApp auto-reply skipped: missing chatId or text message");
+    return;
+  }
+
+  const reply = await generateGeminiReply({ message, senderName });
+  const result = await sendGreenApiMessage({ chatId, message: reply });
+
+  console.log(
+    "WhatsApp auto-reply sent:",
+    JSON.stringify({ chatId, inbound: message, reply, result }),
+  );
+};
 
 // Initialize Socket.io
 const io = new Server(server, {
@@ -46,7 +463,7 @@ const botResponses = {
     "Our packaging design services help your products stand out on the shelf. We create designs for boxes, labels, bags, and other packaging materials. Would you like to discuss your packaging design needs?"
   ],
   contact: [
-    "You can reach us at vibhart07@gmail.com or call us at +91 86259 48046. Would you like us to contact you instead? I can take your details right now."
+    "You can reach us at info@vibhaprints.com or call us at +91 86259 48046. Would you like us to contact you instead? I can take your details right now."
   ],
   pricing: [
     "Our pricing varies based on the specific requirements of your project. Here's a general range:\n\n• Logo Design: ₹5,000 - ₹15,000\n• Business Cards: ₹2,000 - ₹5,000\n• Brochures: ₹3,000 - ₹10,000\n\nWould you like to get a custom quote for your project?"
@@ -102,8 +519,117 @@ const getBotResponse = (message) => {
   return getRandomResponse(botResponses.default);
 };
 
+// ─── Supabase Helper Functions ───────────────────────────────────────────────
+
+const callGroqChat = async (input, requestedModel) => {
+  const apiKey = process.env.GROQ_API_KEY || process.env.VITE_CHATBOT_API_KEY || "";
+  if (!apiKey || apiKey.includes("YOUR_")) {
+    throw new Error("GROQ_API_KEY is not configured");
+  }
+
+  const model =
+    requestedModel ||
+    process.env.GROQ_MODEL ||
+    process.env.VITE_CHATBOT_MODEL ||
+    "openai/gpt-oss-120b";
+
+  const groqResponse = await fetch(
+    process.env.GROQ_API_URL || "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          {
+            role: "system",
+            content: SYSTEM_PROMPT,
+          },
+          {
+            role: "user",
+            content: input,
+          },
+        ],
+        temperature: 0.3,
+        max_tokens: 300,
+      }),
+    },
+  );
+
+  const result = await groqResponse.json();
+  if (!groqResponse.ok) {
+    throw new Error(result?.error?.message || "Groq request failed");
+  }
+
+  return {
+    text: result?.choices?.[0]?.message?.content || "",
+    result,
+  };
+};
+
+const createChatSession = async (socketId) => {
+  if (!supabase) return;
+
+  try {
+    const { error } = await supabase.from('chat_sessions').insert({
+      socket_id: socketId,
+      messages: [],
+      last_activity: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+    if (error) console.error('Supabase createChatSession error:', error.message);
+  } catch (err) {
+    console.error('createChatSession failed:', err.message);
+  }
+};
+
+const updateChatMessages = async (socketId, messages) => {
+  if (!supabase) return;
+
+  try {
+    const { error } = await supabase
+      .from('chat_sessions')
+      .update({
+        messages: messages,
+        last_activity: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })
+      .eq('socket_id', socketId);
+    if (error) console.error('Supabase updateChatMessages error:', error.message);
+  } catch (err) {
+    console.error('updateChatMessages failed:', err.message);
+  }
+};
+
+const updateUserDetails = async (socketId, name, email, phone, messages) => {
+  if (!supabase) return;
+
+  try {
+    const { error } = await supabase
+      .from('chat_sessions')
+      .update({
+        user_name: name,
+        user_email: email,
+        user_phone: phone,
+        messages: messages,
+        last_activity: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })
+      .eq('socket_id', socketId);
+    if (error) console.error('Supabase updateUserDetails error:', error.message);
+  } catch (err) {
+    console.error('updateUserDetails failed:', err.message);
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 // Socket.io connection handler
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   // Create a new session for this user
@@ -111,6 +637,8 @@ io.on('connection', (socket) => {
     messages: [],
     lastActivity: Date.now()
   };
+
+  await createChatSession(socket.id);
 
   // Handle request_greeting event
   socket.on('request_greeting', () => {
@@ -165,9 +693,16 @@ io.on('connection', (socket) => {
     socket.emit('bot_typing', true);
 
     // Generate bot response with delay
-    setTimeout(() => {
+    setTimeout(async () => {
       console.log(`Generating response for ${socket.id}`);
-      const botResponse = getBotResponse(data.message);
+      let botResponse = "";
+      try {
+        const groqReply = await callGroqChat(data.message);
+        botResponse = groqReply.text;
+      } catch (error) {
+        console.warn("Groq socket reply unavailable, using local response:", error.message);
+        botResponse = getBotResponse(data.message);
+      }
 
       const botMessage = {
         id: activeSessions[socket.id].messages.length + 1,
@@ -184,6 +719,8 @@ io.on('connection', (socket) => {
       console.log(`Sending response to ${socket.id}:`, botMessage);
       socket.emit('bot_typing', false);
       socket.emit('receive_message', botMessage);
+
+      await updateChatMessages(socket.id, activeSessions[socket.id].messages);
     }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
   });
 
@@ -191,11 +728,20 @@ io.on('connection', (socket) => {
   socket.on('submit_contact_form', (formData) => {
     console.log(`Contact form from ${socket.id}:`, formData);
 
-    // In a real implementation, you would save this to a database
-    // and potentially send an email notification
-
     // Simulate processing delay
-    setTimeout(() => {
+    setTimeout(async () => {
+      try {
+        await sendContactAutomationEmails({
+          name: formData.name,
+          email: formData.email,
+          mobile: formData.phone,
+          message: formData.message || "Chat widget contact request",
+          source: "chat-widget",
+        });
+      } catch (error) {
+        console.error("Chat contact email automation failed:", error);
+      }
+
       // Send success response
       socket.emit('form_submission_response', {
         success: true,
@@ -216,12 +762,24 @@ io.on('connection', (socket) => {
 
       // Send to client
       socket.emit('receive_message', botMessage);
+
+      await updateUserDetails(
+        socket.id,
+        formData.name,
+        formData.email,
+        formData.phone,
+        activeSessions[socket.id].messages
+      );
     }, 1500);
   });
 
   // Handle disconnection
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
     console.log(`User disconnected: ${socket.id}`);
+
+    if (activeSessions[socket.id]) {
+      await updateChatMessages(socket.id, activeSessions[socket.id].messages);
+    }
 
     // Clean up session data
     delete activeSessions[socket.id];
@@ -244,6 +802,133 @@ setInterval(() => {
 // Basic route for health check
 app.get('/', (req, res) => {
   res.send('Vibha Art Chat Server is running');
+});
+
+app.post("/api/groq/chat", async (req, res) => {
+  try {
+    const input = req.body?.input || "write a haiku about ai";
+    const result = await callGroqChat(input, req.body?.model);
+
+    return res.json({
+      success: true,
+      text: result.text,
+      result: result.result,
+    });
+  } catch (error) {
+    console.error("Groq chat request failed:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to call Groq",
+    });
+  }
+});
+
+app.post("/api/leads/brochure-notify", async (req, res) => {
+  try {
+    const expectedApiKey = process.env.BROCHURE_NOTIFY_API_KEY || "";
+    const requestApiKey = req.headers["x-api-key"];
+    if (expectedApiKey && requestApiKey !== expectedApiKey) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const { name, email, phone, company = "", brochure_name, source } = req.body || {};
+    if (!name || !email || !phone) {
+      return res.status(400).json({
+        success: false,
+        message: "name, email and phone are required",
+      });
+    }
+
+    const result = await sendBrochureAutomationEmails({
+      name,
+      email,
+      phone,
+      company,
+      brochure_name,
+      source,
+    });
+
+    return res.json({ success: true, ...result });
+  } catch (error) {
+    console.error("Brochure mail notification failed:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to send brochure notification",
+    });
+  }
+});
+
+app.post("/api/leads/contact-notify", async (req, res) => {
+  try {
+    const expectedApiKey = process.env.CONTACT_NOTIFY_API_KEY || "";
+    const requestApiKey = req.headers["x-api-key"];
+    if (expectedApiKey && requestApiKey !== expectedApiKey) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const { name, email, mobile, message = "", source } = req.body || {};
+    if (!name || !email || !mobile) {
+      return res.status(400).json({
+        success: false,
+        message: "name, email and mobile are required",
+      });
+    }
+
+    const result = await sendContactAutomationEmails({
+      name,
+      email,
+      mobile,
+      message,
+      source,
+    });
+
+    return res.json({ success: true, ...result });
+  } catch (error) {
+    console.error("Contact mail notification failed:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to send contact notification",
+    });
+  }
+});
+
+app.post("/api/whatsapp/send", async (req, res) => {
+  try {
+    const expectedApiKey = process.env.WHATSAPP_NOTIFY_API_KEY || "";
+    const requestApiKey = req.headers["x-api-key"];
+    if (expectedApiKey && requestApiKey !== expectedApiKey) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const { chatId, phone, message } = req.body || {};
+    const result = await sendGreenApiMessage({ chatId, phone, message });
+
+    return res.json({
+      success: true,
+      chatId: normalizeIndianChatId(chatId || phone),
+      result,
+    });
+  } catch (error) {
+    console.error("WhatsApp send failed:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to send WhatsApp message",
+    });
+  }
+});
+
+app.post(["/webhook", "/api/green-api/webhook"], async (req, res) => {
+  const payload = req.body || {};
+  console.log("GREEN-API webhook:", JSON.stringify(payload));
+
+  res.json({
+    success: true,
+    received: true,
+  });
+
+  handleGreenApiAutoReply(payload).catch((error) => {
+    console.error("WhatsApp auto-reply failed:", error);
+  });
 });
 
 // Start the server

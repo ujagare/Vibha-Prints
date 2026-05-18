@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaTimes, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Images,
+  X,
+} from "lucide-react";
 
 export const createGalleryTemplate = (config) => {
   const { title, description, items, category = "Design" } = config;
@@ -8,6 +15,7 @@ export const createGalleryTemplate = (config) => {
   const GalleryComponent = () => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [slideDirection, setSlideDirection] = useState(0);
 
     const openLightbox = (index) => {
       setCurrentImageIndex(index);
@@ -20,318 +28,277 @@ export const createGalleryTemplate = (config) => {
       document.body.style.overflow = "auto";
     };
 
-    const [slideDirection, setSlideDirection] = useState(0);
-
     const nextImage = () => {
       setSlideDirection(1);
-      setCurrentImageIndex((prev) =>
-        prev === items.length - 1 ? 0 : prev + 1
-      );
+      setCurrentImageIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
     };
 
     const prevImage = () => {
       setSlideDirection(-1);
-      setCurrentImageIndex((prev) =>
-        prev === 0 ? items.length - 1 : prev - 1
-      );
-    };
-
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
+      setCurrentImageIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
     };
 
     React.useEffect(() => {
-      if (lightboxOpen) {
-        document.addEventListener("keydown", handleKeyDown);
-        return () => document.removeEventListener("keydown", handleKeyDown);
-      }
+      if (!lightboxOpen) return undefined;
+
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+      return () => document.removeEventListener("keydown", handleKeyDown);
     }, [lightboxOpen, currentImageIndex]);
+
     return (
-      <div className="w-full bg-white min-h-screen overflow-hidden">
-        {/* Soft Background Pattern */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern
-                id="pattern"
-                x="0"
-                y="0"
-                width="50"
-                height="50"
-                patternUnits="userSpaceOnUse"
-              >
-                <path
-                  d="M0 25 Q25 0 50 25 T100 25"
-                  fill="none"
-                  stroke="#3B82F6"
-                  strokeWidth="0.5"
-                  strokeOpacity="0.2"
-                />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#pattern)" />
-          </svg>
-        </div>
-
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center mb-4 text-brand-primary-800 tracking-tight"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {title}
-          </motion.h1>
-
-          <div className="text-center mb-16 px-4">
+      <div className="min-h-screen w-full overflow-hidden bg-[#f6f8fb] font-['Poppins'] text-[#071124]">
+        <section className="relative overflow-hidden border-b border-[#dde4ef] bg-[#071124] px-4 py-14 text-white sm:px-6 sm:py-16">
+          <div className="absolute inset-0 opacity-[0.18]">
+            <div
+              className="h-full w-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px)",
+                backgroundSize: "42px 42px",
+              }}
+            />
+          </div>
+          <div className="container relative z-10 mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="w-24 h-1 bg-brand-secondary-500 mx-auto mb-6"
-            ></motion.div>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto">
-              {description}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 auto-rows-fr">
-            {items.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: index * 0.1,
-                  duration: 0.5,
-                }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 group border border-gray-100"
-              >
-                <div
-                  className="w-full h-56 sm:h-64 md:h-72 overflow-hidden relative bg-white border-b border-gray-100"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(#e1e1e1 1px, transparent 1px)",
-                    backgroundSize: "20px 20px",
-                    backgroundPosition: "-10px -10px",
-                  }}
-                >
-                  {item.image ? (
-                    <>
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className={`w-full h-full transition-transform duration-500 group-hover:scale-105 cursor-pointer ${
-                          item.fullCover
-                            ? "object-contain object-center p-2"
-                            : "object-contain p-6"
-                        }`}
-                        style={{
-                          filter:
-                            "contrast(1.15) brightness(1.1) saturate(1.15) sharpen(1px)",
-                          imageRendering: "crisp-edges",
-                          WebkitImageSmoothing: "high",
-                          imageSmoothing: "high",
-                        }}
-                        onClick={() => openLightbox(index)}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-primary-800/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                      {/* Click overlay for better UX */}
-                      <div
-                        className="absolute inset-0 cursor-pointer"
-                        onClick={() => openLightbox(index)}
-                      ></div>
-                    </>
-                  ) : (
-                    <div className="w-full h-full bg-blue-50 flex items-center justify-center">
-                      <div className="text-gray-700 font-bold text-xl sm:text-2xl text-center px-4 opacity-70 group-hover:opacity-100 transition-opacity">
-                        {title} {index + 1}
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className="p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-bold text-brand-primary-800 mb-2 truncate group-hover:text-brand-secondary-500 transition-colors duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-600 line-clamp-2">
-                    {item.description}
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                    <span className="text-xs text-gray-500">{category}</span>
-                    <button className="text-brand-secondary-500 hover:text-brand-secondary-600 transition-colors duration-300 text-sm font-medium flex items-center">
-                      View Details
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 ml-1"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Footer Section */}
-        <div className="mt-20 py-8 bg-gray-50 border-t border-gray-100">
-          <div className="container mx-auto px-4">
-            <div className="text-center">
-              <p className="text-gray-500 text-sm">
-                {"Copyright"} {new Date().getFullYear()} Vibha Art. All rights reserved.
+              transition={{ duration: 0.55 }}
+              className="mx-auto max-w-4xl text-center"
+            >
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.22em] text-white/88 shadow-[0_18px_50px_rgba(0,0,0,0.2)] backdrop-blur">
+                <Images size={14} />
+                {category} Gallery
+              </span>
+              <h1 className="mt-6 text-[34px] font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
+                {title}
+              </h1>
+              <p className="mx-auto mt-5 max-w-2xl text-sm font-medium leading-7 text-white/72 sm:text-base">
+                {description}
               </p>
+              <div className="mx-auto mt-8 grid max-w-md grid-cols-3 overflow-hidden rounded-lg border border-white/12 bg-white/[0.06] shadow-[0_22px_80px_rgba(0,0,0,0.22)] backdrop-blur">
+                <div className="border-r border-white/10 px-4 py-4">
+                  <p className="text-2xl font-extrabold text-white">{items.length}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">Items</p>
+                </div>
+                <div className="border-r border-white/10 px-4 py-4">
+                  <p className="text-2xl font-extrabold text-[#ff5967]">HD</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">Preview</p>
+                </div>
+                <div className="px-4 py-4">
+                  <p className="text-2xl font-extrabold text-white">01</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/55">Gallery</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="relative px-4 py-12 sm:px-6 sm:py-16">
+          <div className="container relative z-10 mx-auto">
+            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 xl:grid-cols-3">
+              {items.map((item, index) => (
+                <motion.article
+                  key={`${item.title}-${index}`}
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.45 }}
+                  className="group relative overflow-hidden rounded-lg border border-[#e6ebf3] bg-white shadow-[0_24px_80px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ffd5db] hover:shadow-[0_34px_95px_rgba(7,17,36,0.14)]"
+                >
+                  <button
+                    type="button"
+                    onClick={() => openLightbox(index)}
+                    className="relative block w-full overflow-hidden bg-[#edf2f7] text-left"
+                  >
+                    <div className="aspect-[1.18/1] w-full overflow-hidden">
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className={`h-full w-full transition duration-500 group-hover:scale-105 ${
+                            item.fullCover
+                              ? "object-cover"
+                              : item.flushFit
+                                ? "object-contain"
+                                : "object-contain p-6"
+                          }`}
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-[#e9eef5] px-6 text-center text-xl font-extrabold text-[#536176]">
+                          {title} {index + 1}
+                        </div>
+                      )}
+                    </div>
+                    <span className="absolute inset-0 bg-gradient-to-t from-[#071124]/70 via-[#071124]/10 to-transparent opacity-70 transition group-hover:opacity-90" />
+                    <span className="absolute left-4 top-4 rounded-full border border-white/35 bg-white/16 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-white shadow-sm backdrop-blur">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#071124] shadow-[0_12px_32px_rgba(0,0,0,0.22)] transition group-hover:bg-[#ff3f51] group-hover:text-white">
+                      <Eye size={17} />
+                    </span>
+                  </button>
+
+                  <div className="p-5 sm:p-6">
+                    {item.tagline && (
+                      <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#ff3f51]">
+                        {item.tagline}
+                      </p>
+                    )}
+                    <div className="mb-4 flex items-start justify-between gap-4">
+                      <h3 className="min-w-0 text-xl font-extrabold leading-tight text-[#071124] transition group-hover:text-[#ff3f51]">
+                        {item.title}
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={() => openLightbox(index)}
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#edf0f6] bg-[#f8fafc] text-[#071124] transition hover:border-[#ffb7c0] hover:bg-[#ff3f51] hover:text-white"
+                        aria-label={`Open ${item.title}`}
+                      >
+                        <ArrowUpRight size={17} />
+                      </button>
+                    </div>
+                    <p className="min-h-[54px] text-sm font-medium leading-7 text-[#667085]">
+                      {item.description}
+                    </p>
+                    <div className="mt-5 flex items-center justify-between border-t border-[#eef1f7] pt-4">
+                      <span className="rounded-full bg-[#fff0f2] px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#d13339]">
+                        {category}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => openLightbox(index)}
+                        className="inline-flex items-center gap-2 text-sm font-extrabold text-[#071124] transition hover:text-[#ff3f51]"
+                      >
+                        View
+                        <ArrowUpRight size={15} />
+                      </button>
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Lightbox Modal */}
         <AnimatePresence>
           {lightboxOpen && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-[#030712]/95 p-4"
               onClick={closeLightbox}
             >
-              {/* Close Button */}
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   closeLightbox();
                 }}
-                className="absolute top-4 right-4 z-50 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-70 rounded-full p-3 hover:bg-opacity-90 focus:outline-none"
-                style={{ zIndex: 1000 }}
+                className="absolute right-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/10 text-white shadow-[0_18px_45px_rgba(0,0,0,0.3)] backdrop-blur transition hover:bg-white hover:text-[#071124]"
                 type="button"
+                aria-label="Close image preview"
               >
-                <FaTimes size={20} />
+                <X size={20} />
               </button>
 
-              {/* Previous Button */}
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   prevImage();
                 }}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-50 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-70 rounded-full p-3 hover:bg-opacity-90 focus:outline-none"
-                style={{ zIndex: 1000 }}
+                className="absolute left-4 top-1/2 z-50 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/10 text-white shadow-[0_18px_45px_rgba(0,0,0,0.3)] backdrop-blur transition hover:bg-white hover:text-[#071124]"
                 type="button"
+                aria-label="Previous image"
               >
-                <FaChevronLeft size={20} />
+                <ChevronLeft size={22} />
               </button>
 
-              {/* Next Button */}
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   nextImage();
                 }}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-50 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-70 rounded-full p-3 hover:bg-opacity-90 focus:outline-none"
-                style={{ zIndex: 1000 }}
+                className="absolute right-4 top-1/2 z-50 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/10 text-white shadow-[0_18px_45px_rgba(0,0,0,0.3)] backdrop-blur transition hover:bg-white hover:text-[#071124]"
                 type="button"
+                aria-label="Next image"
               >
-                <FaChevronRight size={20} />
+                <ChevronRight size={22} />
               </button>
 
-              {/* Image Container */}
-              <div className="relative w-full h-full flex items-center justify-center p-8 pt-16 pb-32">
+              <div className="flex h-full w-full max-w-6xl flex-col justify-center gap-4 pt-12 sm:pt-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentImageIndex}
                     initial={{
-                      x:
-                        slideDirection > 0
-                          ? 300
-                          : slideDirection < 0
-                            ? -300
-                            : 0,
+                      x: slideDirection > 0 ? 220 : slideDirection < 0 ? -220 : 0,
                       opacity: 0,
+                      scale: 0.96,
                     }}
-                    animate={{
-                      x: 0,
-                      opacity: 1,
-                    }}
+                    animate={{ x: 0, opacity: 1, scale: 1 }}
                     exit={{
-                      x:
-                        slideDirection > 0
-                          ? -300
-                          : slideDirection < 0
-                            ? 300
-                            : 0,
+                      x: slideDirection > 0 ? -220 : slideDirection < 0 ? 220 : 0,
                       opacity: 0,
+                      scale: 0.96,
                     }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30,
-                      duration: 0.3,
-                    }}
-                    className="flex items-center justify-center"
+                    transition={{ duration: 0.28 }}
+                    className="flex min-h-0 flex-1 items-center justify-center"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <img
                       src={items[currentImageIndex]?.image}
                       alt={items[currentImageIndex]?.title}
-                      className="max-w-[80vw] max-h-[70vh] w-auto h-auto object-contain shadow-2xl rounded-lg"
-                      style={{
-                        filter: "contrast(1.1) brightness(1.05) saturate(1.1)",
-                      }}
+                      className="max-h-[64vh] w-auto max-w-[86vw] rounded-lg object-contain shadow-[0_30px_90px_rgba(0,0,0,0.45)]"
                     />
                   </motion.div>
                 </AnimatePresence>
-              </div>
 
-              {/* Image Info - Fixed Position */}
-              <div className="absolute bottom-4 left-4 right-4 bg-black bg-opacity-80 text-white p-4 rounded-lg backdrop-blur-sm">
-                <h3 className="text-lg font-semibold mb-1">
-                  {items[currentImageIndex]?.title}
-                </h3>
-                <p className="text-sm text-gray-300">
-                  {items[currentImageIndex]?.description}
-                </p>
-                <div className="text-xs text-gray-400 mt-2">
-                  {currentImageIndex + 1} of {items.length}
+                <div className="mx-auto w-full max-w-4xl rounded-lg border border-white/12 bg-white/[0.08] p-4 text-white shadow-[0_24px_80px_rgba(0,0,0,0.25)] backdrop-blur" onClick={(e) => e.stopPropagation()}>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#ff8b95]">
+                        {currentImageIndex + 1} of {items.length}
+                      </p>
+                      <h3 className="mt-1 text-xl font-extrabold text-white">
+                        {items[currentImageIndex]?.title}
+                      </h3>
+                      <p className="mt-2 text-sm font-medium leading-6 text-white/70">
+                        {items[currentImageIndex]?.description}
+                      </p>
+                    </div>
+                    <span className="w-max rounded-full border border-white/12 bg-white/10 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-white/78">
+                      {category}
+                    </span>
+                  </div>
+                  <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+                    {items.map((item, index) => (
+                      <button
+                        key={`${item.title}-thumb-${index}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSlideDirection(index > currentImageIndex ? 1 : -1);
+                          setCurrentImageIndex(index);
+                        }}
+                        className={`h-14 w-16 shrink-0 overflow-hidden rounded-md border transition ${
+                          index === currentImageIndex
+                            ? "border-[#ff5967] opacity-100"
+                            : "border-white/14 opacity-55 hover:opacity-100"
+                        }`}
+                        type="button"
+                        aria-label={`Preview ${item.title}`}
+                      >
+                        <img src={item.image} alt="" className="h-full w-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* Thumbnail Navigation */}
-              <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex space-x-2 max-w-[90vw] overflow-x-auto bg-black bg-opacity-50 p-2 rounded-lg backdrop-blur-sm">
-                {items.map((item, index) => (
-                  <button
-                    key={index}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSlideDirection(index > currentImageIndex ? 1 : -1);
-                      setCurrentImageIndex(index);
-                    }}
-                    className={`flex-shrink-0 w-12 h-12 rounded border-2 overflow-hidden transition-all ${
-                      index === currentImageIndex
-                        ? "border-white scale-110"
-                        : "border-gray-500 opacity-70 hover:opacity-100 hover:scale-105"
-                    }`}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
               </div>
             </motion.div>
           )}

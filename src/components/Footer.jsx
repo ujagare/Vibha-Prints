@@ -2,18 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaEnvelope,
-  FaPhone,
-  FaMapMarkerAlt,
-  FaPaintBrush,
-  FaPrint,
-  FaArrowRight,
-  FaBehanceSquare,
-} from "react-icons/fa";
+  Facebook as FaFacebook,
+  Instagram as FaInstagram,
+  Linkedin as FaLinkedin,
+  Mail as FaEnvelope,
+  Phone as FaPhone,
+  MapPin as FaMapMarkerAlt,
+  Paintbrush as FaPaintBrush,
+  Printer as FaPrint,
+  ArrowRight as FaArrowRight,
+  BriefcaseBusiness as FaBehanceSquare,
+} from "lucide-react";
 import { vibha } from "../assets";
+import footerBg from "../assets/Home/ChatGPT Image May 16, 2026, 04_50_15 PM.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -48,6 +49,8 @@ const Footer = () => {
     services: [
       { name: "Graphic Design", path: "/graphic-design" },
       { name: "Printing Services", path: "/printing" },
+      { name: "Digital Marketing", path: "/digital-marketing" },
+      { name: "Web Development", path: "/web-development" },
       { name: "Logo Design", path: "/logo-design-gallery" },
       { name: "Business Cards", path: "/business-card-design-gallery" },
       {
@@ -65,8 +68,8 @@ const Footer = () => {
       { icon: <FaPhone />, text: "+91 86259 48046", link: "tel:+918624948046" },
       {
         icon: <FaEnvelope />,
-        text: "vibhart07@gmail.com",
-        link: "mailto:vibhart07@gmail.com",
+        text: "info@vibhaprints.com",
+        link: "mailto:info@vibhaprints.com",
       },
       {
         icon: <FaMapMarkerAlt />,
@@ -77,8 +80,16 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white pt-16 pb-8">
-      <div className="container mx-auto px-6">
+    <footer
+      className="relative overflow-hidden bg-gray-900 pt-16 pb-8 text-white"
+      style={{
+        backgroundImage: `url("${footerBg}")`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="absolute inset-0 bg-[#050d1d]/88" />
+      <div className="container relative z-10 mx-auto px-6">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
           variants={containerVariants}
