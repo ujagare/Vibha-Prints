@@ -1024,6 +1024,65 @@ def whatsapp_chat():
         }), 500
 
 
+def _extract_green_api_text(message_data):
+    if not isinstance(message_data, dict):
+        return ""
+    text_data = message_data.get("textMessageData") or {}
+    if isinstance(text_data, dict) and text_data.get("textMessage"):
+        return str(text_data.get("textMessage") or "").strip()
+    extended = message_data.get("extendedTextMessageData") or {}
+    if isinstance(extended, dict):
+        return str(
+            extended.get("text")
+            or extended.get("description")
+            or extended.get("caption")
+            or ""
+        ).strip()
+    return ""
+
+
+@app.route("/api/green-api/webhook", methods=["POST", "OPTIONS"])
+@app.route("/api/whatsapp/green-webhook", methods=["POST", "OPTIONS"])
+def green_api_webhook():
+    """Receive Green API incoming WhatsApp messages and send AI auto-replies."""
+    if request.method == "OPTIONS":
+        return ("", 204)
+
+    if os.environ.get("WHATSAPP_AUTO_REPLY_ENABLED", "true").strip().lower() not in {
+        "1", "true", "yes"
+    }:
+        return jsonify({"success": True, "skipped": "auto_reply_disabled"})
+
+    data = request.get_json(silent=True) or {}
+    if data.get("body") and isinstance(data.get("body"), dict):
+        data = data["body"]
+
+    if data.get("typeWebhook") != "incomingMessageReceived":
+        return jsonify({"success": True, "skipped": data.get("typeWebhook", "unknown")})
+
+    sender_data = data.get("senderData") or {}
+    message_data = data.get("messageData") or {}
+    chat_id = (sender_data.get("chatId") or "").strip()
+    sender_name = (sender_data.get("senderName") or "").strip()
+    message = _extract_green_api_text(message_data)
+
+    if not chat_id or not message:
+        return jsonify({"success": True, "skipped": "no_chat_or_text"})
+
+    result = handle_whatsapp_message(chat_id, message, sender_name)
+    reply = (result.get("response") or "").strip()
+    if not reply:
+        return jsonify({"success": False, "error": "empty_ai_reply"}), 500
+
+    send_result = send_whatsapp_message(chat_id, reply, "auto_reply")
+    return jsonify({
+        "success": bool(send_result.get("success")),
+        "chat_id": chat_id,
+        "reply": reply,
+        "send_result": send_result,
+    })
+
+
 @app.route("/api/whatsapp/conversation/<phone>", methods=["GET", "OPTIONS"])
 def whatsapp_conversation(phone):
     """Get conversation history"""
