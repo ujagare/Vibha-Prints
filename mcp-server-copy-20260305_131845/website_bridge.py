@@ -181,6 +181,15 @@ def health():
     })
 
 
+@app.route("/", methods=["GET"])
+def root():
+    return jsonify({
+        "status": "ok",
+        "service": "vibha-art-backend",
+        "health": "/health"
+    })
+
+
 @app.route("/api/chat", methods=["POST", "OPTIONS"])
 def chat():
     if request.method == "OPTIONS":

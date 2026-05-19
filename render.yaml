@@ -4,6 +4,7 @@ services:
     runtime: python
     plan: free
     region: singapore
+    healthCheckPath: /health
     buildCommand: cd mcp-server-copy-20260305_131845 && pip install -r requirements.txt
     startCommand: cd mcp-server-copy-20260305_131845 && python website_bridge.py
     envVars:
