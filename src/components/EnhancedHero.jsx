@@ -191,7 +191,7 @@ const EnhancedHero = () => {
       <section className="relative min-h-[680px] overflow-hidden bg-[#050d1d] text-white sm:min-h-[820px] lg:min-h-[900px]">
         <picture>
           <source media="(max-width: 640px)" srcSet={heroShowcaseMobile} />
-          <img loading="lazy"
+          <img decoding="async" loading="lazy"
             src={heroShowcase}
             alt="Vibha brand stationery, tablet and print mockups"
             className="absolute inset-0 h-full w-full object-cover object-center"

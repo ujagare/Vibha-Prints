@@ -94,7 +94,7 @@ const Footer = () => {
           {/* Logo and About */}
           <motion.div variants={itemVariants}>
             <div className="mb-6">
-              <img loading="lazy"
+              <img decoding="async" loading="lazy"
                 src={vibha}
                 alt="Vibha Art Logo"
                 className="h-16 w-auto object-contain mb-4"

@@ -572,3 +572,77 @@ button {
     animation: none;
   }
 }
+
+/* ===== mobile-optimize-patch ===== */
+
+/* Tap targets minimum 48px */
+a, button, [role="button"],
+input[type="submit"], input[type="button"],
+label, select {
+  min-height: 48px;
+  min-width: 44px;
+}
+
+/* Box sizing globally */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Readable font on mobile */
+@media (max-width: 768px) {
+  html {
+    font-size: 16px !important;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+  h2 { font-size: clamp(1.3rem, 5vw, 2rem); }
+  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem); }
+  p, li, span, a { font-size: clamp(0.875rem, 3.5vw, 1rem); }
+
+  /* Images responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Better buttons on mobile */
+  button, .btn, a.btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* Fix iOS input zoom (font must be 16px+) */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Table scroll on mobile */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ===== end mobile-optimize-patch ===== */

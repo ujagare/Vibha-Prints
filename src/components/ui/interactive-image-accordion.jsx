@@ -53,7 +53,7 @@ const AccordionItem = ({ item, isActive, onMouseEnter }) => {
       onMouseEnter={onMouseEnter}
     >
       {/* Background Image */}
-      <img loading="lazy"
+      <img decoding="async" loading="lazy"
         src={item.imageUrl}
         alt={item.title}
         className="absolute inset-0 w-full h-full object-cover"

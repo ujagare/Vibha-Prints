@@ -165,7 +165,7 @@ function IconBadge({ icon: Icon, image, className = "" }) {
   return (
     <span className={`about-icon-badge ${className}`}>
       {image ? (
-        <img src={image} alt="About Vibha Art - Design Studio Pune" aria-hidden="true" loading="lazy" />
+        <img decoding="async" src={image} alt="About Vibha Art - Design Studio Pune" aria-hidden="true" loading="lazy" />
       ) : (
         <Icon />
       )}
@@ -227,7 +227,7 @@ export default function EnhancedAbout() {
       <section className="about-hero-v2">
         <picture>
           <source media="(max-width: 680px)" srcSet={aboutHeroMobile} />
-          <img loading="lazy"
+          <img decoding="async" loading="lazy"
             src={heroBg}
             alt="Vibha Prints design, printing, digital marketing and web development showcase"
             className="about-hero-art"
@@ -387,7 +387,7 @@ export default function EnhancedAbout() {
             <div className="about-logo-row">
               {clientLogos.map((brand) => (
                 <div className="about-logo-box about-reveal" key={brand.name}>
-                  <img src={brand.src} alt={brand.name} loading="lazy" />
+                  <img decoding="async" src={brand.src} alt={brand.name} loading="lazy" />
                 </div>
               ))}
             </div>

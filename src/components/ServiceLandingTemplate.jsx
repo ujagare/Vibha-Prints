@@ -21,7 +21,7 @@ const SectionBadge = ({ children, light = false }) => (
 const IconSlot = ({ item, size = 24, imageClassName = "" }) => {
   if (item.iconImage) {
     return (
-      <img loading="lazy"
+      <img decoding="async" loading="lazy"
         src={item.iconImage}
         alt="Vibha Art Services - Graphic Design and Printing"
         aria-hidden="true"
@@ -53,7 +53,7 @@ const ServiceLandingTemplate = ({ page }) => {
           {page.backgrounds.heroMobile && (
             <source media="(max-width: 640px)" srcSet={page.backgrounds.heroMobile} />
           )}
-          <img loading="lazy" src={page.backgrounds.hero} alt="Vibha Art Services - Graphic Design and Printing" className="absolute inset-0 h-full w-full object-cover object-top" />
+          <img decoding="async" loading="lazy" src={page.backgrounds.hero} alt="Vibha Art Services - Graphic Design and Printing" className="absolute inset-0 h-full w-full object-cover object-top" />
         </picture>
         <div className="container relative z-10 mx-auto flex min-h-[calc(100vh-104px)] items-center px-6 py-16 sm:py-20">
           <motion.div
@@ -163,7 +163,7 @@ const ServiceLandingTemplate = ({ page }) => {
                 {cardVariant === "image" ? (
                   <>
                     <span className="relative block h-44 overflow-hidden bg-[#eef1f5]">
-                      <img loading="lazy" src={service.image} alt={service.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+                      <img decoding="async" loading="lazy" src={service.image} alt={service.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
                       <span className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full text-white shadow-[0_12px_28px_rgba(255,63,81,0.32)]" style={{ backgroundColor: accent }}>
                         <IconSlot item={service} size={18} imageClassName="p-1.5" />
                       </span>
@@ -213,7 +213,7 @@ const ServiceLandingTemplate = ({ page }) => {
 
                     <span className="relative z-10 mt-6 flex h-[150px] items-center justify-center overflow-hidden rounded-lg border border-[#edf0f6] bg-[linear-gradient(145deg,#f8fafc,#ffffff)] shadow-inner sm:mt-0 sm:h-full">
                       <span className="absolute inset-3 rounded-md border border-white bg-white/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]" />
-                      <img loading="lazy"
+                      <img decoding="async" loading="lazy"
                         src={service.image}
                         alt={service.title}
                         className="relative z-10 h-full max-h-[145px] w-full object-contain p-3 drop-shadow-[0_16px_22px_rgba(7,17,36,0.16)] transition duration-300 group-hover:scale-105 sm:max-h-[160px]"
@@ -382,7 +382,7 @@ const ServiceLandingTemplate = ({ page }) => {
                   onClick={() => navigate(item.route)}
                   className="group overflow-hidden rounded-lg border border-white/14 bg-white/[0.06] text-left shadow-[0_26px_80px_rgba(0,0,0,0.22)] backdrop-blur transition hover:-translate-y-1 hover:bg-white/[0.09]"
                 >
-                  <img loading="lazy" src={item.image} alt={item.title} className="h-40 w-full object-cover" />
+                  <img decoding="async" loading="lazy" src={item.image} alt={item.title} className="h-40 w-full object-cover" />
                   <span className="block p-5">
                     <span className="block text-lg font-extrabold text-white">{item.title}</span>
                     <span className="mt-3 block text-sm font-medium leading-6 text-white/70">{item.text}</span>

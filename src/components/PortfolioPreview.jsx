@@ -91,7 +91,7 @@ const PortfolioPreview = () => {
             >
               <Link to={item.link}>
                 <div className="aspect-square overflow-hidden">
-                  <img loading="lazy"
+                  <img decoding="async" loading="lazy"
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"

@@ -1,46 +1,42 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import compression from 'vite-plugin-compression';
-import path from 'path';
+// mobile-optimized
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    compression({
-      algorithm: 'gzip',
-      ext: '.gz',
-    }),
-  ],
-  build: {
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        }
-      }
-    }
-  },
+  plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      'lenis': '@studio-freight/lenis'
-    }
+    },
   },
+  build: {
+    // Chunk splitting — faster mobile load
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+        },
+      },
+    },
+    // Smaller chunks
+    chunkSizeWarningLimit: 500,
+    // CSS code split
+    cssCodeSplit: true,
+    // Minify
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,   // console.log remove in production
+        drop_debugger: true,
+      },
+    },
+    // Source maps off in production
+    sourcemap: false,
+  },
+  // Optimize deps
   optimizeDeps: {
-    include: ['@studio-freight/lenis', 'react', 'react-dom', 'react-router-dom', 'framer-motion']
+    include: ['react', 'react-dom', 'react-router-dom'],
   },
-  performance: {
-    hints: 'warning',
-    maxAssetSize: 500000,
-    maxEntrypointSize: 500000
-  }
-});
+})

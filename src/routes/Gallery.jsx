@@ -180,7 +180,7 @@ const PrintingShowcase = () => {
               onClick={() => setSelectedProject(project)}
             >
               <div className="relative overflow-hidden">
-                <img loading="lazy" 
+                <img decoding="async" loading="lazy" 
                   src={project.image} 
                   alt={project.name} 
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
@@ -226,7 +226,7 @@ const PrintingShowcase = () => {
               >
                 <div className="grid md:grid-cols-2">
                   <div>
-                    <img loading="lazy" 
+                    <img decoding="async" loading="lazy" 
                       src={selectedProject.image} 
                       alt={selectedProject.name} 
                       className="w-full h-full object-cover"

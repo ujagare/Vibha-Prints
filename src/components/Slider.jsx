@@ -73,7 +73,7 @@ const Slider = ({
           className="absolute w-full h-full"
         >
           <div className="relative w-full h-full">
-            <img loading="lazy" 
+            <img decoding="async" loading="lazy" 
               src={slides[currentSlide].image} 
               alt={slides[currentSlide].title} 
               className="w-full h-full object-cover object-center"
