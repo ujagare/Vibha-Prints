@@ -44,7 +44,7 @@ const infoItems = [
   {
     icon: <Phone size={26} />,
     title: "Phone",
-    lines: ["+91 98765 43210", "+91 12345 67890"],
+    lines: ["+91 86259 48046", "+91 86249 48046"],
   },
   {
     icon: <Mail size={26} />,
@@ -117,20 +117,20 @@ const EnhancedContact = () => {
   return (
     <div className="min-h-screen bg-[#f7f9fc] text-[#071124]">
       <section
-        className="relative overflow-hidden bg-[#f8fafc] pt-[9.5rem] pb-14 lg:pt-[10.25rem] lg:pb-16"
+        className="relative overflow-hidden bg-[#f8fafc] pt-28 pb-12 sm:pt-32 lg:pt-[10.25rem] lg:pb-16"
         style={{
           backgroundImage: `url("${heroBg}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="relative z-10 mx-auto grid w-full items-center gap-12 px-6 md:px-12 lg:grid-cols-[0.92fr_1.08fr] lg:px-16 xl:px-20">
+        <div className="relative z-10 mx-auto grid w-full items-center gap-9 px-4 sm:px-6 md:px-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:px-16 xl:px-20">
           <div>
-            <p className="mb-7 text-xs font-extrabold uppercase tracking-[0.24em] text-[#ff3344]">
+            <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ff3344] sm:mb-7 sm:tracking-[0.24em]">
               Get In Touch
             </p>
             <h1
-              className="mb-6 max-w-xl text-[38px] font-black leading-[1.12] tracking-[-0.02em] md:text-[58px]"
+              className="mb-5 max-w-xl text-[34px] font-black leading-[1.08] md:text-[58px]"
               style={{
                 color: "#071124",
                 background: "none",
@@ -144,21 +144,21 @@ const EnhancedContact = () => {
               </span>
             </h1>
             <div className="mb-7 h-1 w-12 rounded-full bg-[#ff3344]" />
-            <p className="max-w-[560px] text-[17px] leading-8 text-[#4f5d72]">
+            <p className="max-w-[560px] text-[15px] leading-7 text-[#4f5d72] sm:text-[17px] sm:leading-8">
               Have a project in mind or just want to say hello? We'd love to
               hear from you. Fill out the form and our team will get back to you
               shortly.
             </p>
 
-            <div className="mt-14 grid gap-7 sm:grid-cols-2">
+            <div className="mt-9 grid gap-5 sm:mt-14 sm:grid-cols-2 sm:gap-7">
               {contactCards.map((item) => (
                 <div key={item.title} className="flex items-center gap-5">
-                  <div className="flex h-24 w-24 shrink-0 items-center justify-center">
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center sm:h-24 sm:w-24">
                     <img
                       src={item.icon}
                       alt=""
                       aria-hidden="true"
-                      className="h-24 w-24 object-contain"
+                      className="h-16 w-16 object-contain sm:h-24 sm:w-24"
                       loading="lazy"
                     />
                   </div>
@@ -176,17 +176,17 @@ const EnhancedContact = () => {
           <div className="relative mx-auto w-full max-w-[640px]">
             <form
               onSubmit={handleSubmit}
-              className="relative rounded-[24px] bg-[#071426] p-7 shadow-[0_28px_70px_rgba(7,17,36,0.28)] md:p-12"
+              className="relative rounded-2xl bg-[#071426] p-4 shadow-[0_20px_50px_rgba(7,17,36,0.24)] sm:p-7 md:rounded-[24px] md:p-12"
             >
-              <h2 className="mb-2 text-2xl font-extrabold text-white md:text-3xl">
+              <h2 className="mb-2 text-xl font-extrabold text-white sm:text-2xl md:text-3xl">
                 Send Us a Message
               </h2>
-              <div className="mb-9 text-3xl font-black leading-none text-[#ff3344]">
+              <div className="mb-6 text-3xl font-black leading-none text-[#ff3344] sm:mb-9">
                 ~~
               </div>
               <div className="grid gap-5 md:grid-cols-2">
                 <input
-                  className="h-16 rounded-lg border border-white/18 bg-white/[0.03] px-6 text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344]"
+                  className="h-14 rounded-lg border border-white/18 bg-white/[0.03] px-4 text-sm text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344] sm:h-16 sm:px-6 sm:text-base"
                   placeholder="Your Name"
                   value={formData.name}
                   onChange={(e) => updateField("name", e.target.value)}
@@ -194,7 +194,7 @@ const EnhancedContact = () => {
                 />
                 <input
                   type="email"
-                  className="h-16 rounded-lg border border-white/18 bg-white/[0.03] px-6 text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344]"
+                  className="h-14 rounded-lg border border-white/18 bg-white/[0.03] px-4 text-sm text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344] sm:h-16 sm:px-6 sm:text-base"
                   placeholder="Your Email"
                   value={formData.email}
                   onChange={(e) => updateField("email", e.target.value)}
@@ -202,14 +202,14 @@ const EnhancedContact = () => {
                 />
                 <input
                   type="tel"
-                  className="h-16 rounded-lg border border-white/18 bg-white/[0.03] px-6 text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344]"
+                  className="h-14 rounded-lg border border-white/18 bg-white/[0.03] px-4 text-sm text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344] sm:h-16 sm:px-6 sm:text-base"
                   placeholder="Phone Number"
                   value={formData.phone}
                   onChange={(e) => updateField("phone", e.target.value)}
                   required
                 />
                 <input
-                  className="h-16 rounded-lg border border-white/18 bg-white/[0.03] px-6 text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344]"
+                  className="h-14 rounded-lg border border-white/18 bg-white/[0.03] px-4 text-sm text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344] sm:h-16 sm:px-6 sm:text-base"
                   placeholder="Subject"
                   value={formData.subject}
                   onChange={(e) => updateField("subject", e.target.value)}
@@ -217,7 +217,7 @@ const EnhancedContact = () => {
                 />
               </div>
               <textarea
-                className="mt-5 h-44 w-full resize-none rounded-lg border border-white/18 bg-white/[0.03] px-6 py-6 text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344]"
+                className="mt-5 h-36 w-full resize-none rounded-lg border border-white/18 bg-white/[0.03] px-4 py-4 text-sm text-white outline-none transition placeholder:text-white/68 focus:border-[#ff3344] sm:h-44 sm:px-6 sm:py-6 sm:text-base"
                 placeholder="Tell us about your project..."
                 value={formData.message}
                 onChange={(e) => updateField("message", e.target.value)}
@@ -226,10 +226,10 @@ const EnhancedContact = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-6 flex h-16 w-full items-center justify-center gap-3 rounded-full bg-[#ff3344] px-8 text-base font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] transition hover:bg-[#fa4b5a] disabled:opacity-70"
+                className="mt-6 flex h-14 w-full items-center justify-center gap-3 rounded-full bg-[#ff3344] px-5 text-sm font-extrabold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] transition hover:bg-[#fa4b5a] disabled:opacity-70 sm:h-16 sm:px-8 sm:text-base"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
-                <span className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/15">
+                <span className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 sm:h-10 sm:w-10">
                   <ChevronRight size={20} />
                 </span>
               </button>
@@ -239,28 +239,28 @@ const EnhancedContact = () => {
       </section>
 
       <section
-        className="bg-[#061426] py-20 text-white"
+        className="bg-[#061426] py-14 text-white sm:py-20"
         style={{
           backgroundImage: `url("${mapBg}")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="mx-auto grid w-full gap-14 px-6 md:px-12 lg:grid-cols-[360px_1fr] lg:px-16 xl:px-20">
+        <div className="mx-auto grid w-full gap-10 px-4 sm:px-6 md:px-12 lg:grid-cols-[360px_1fr] lg:gap-14 lg:px-16 xl:px-20">
           <div>
             <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.24em] text-[#ff3344]">
               Contact Information
             </p>
-            <h2 className="mb-10 text-3xl font-black text-white md:text-4xl">
+            <h2 className="mb-8 text-2xl font-black text-white sm:text-3xl md:text-4xl">
               We're Here to Help
             </h2>
             <div className="space-y-7">
               {infoItems.map((item) => (
                 <div
                   key={item.title}
-                  className="flex gap-5 border-b border-white/12 pb-7 last:border-b-0"
+                  className="flex gap-4 border-b border-white/12 pb-6 last:border-b-0 sm:gap-5 sm:pb-7"
                 >
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-[#ff3344]">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-[#ff3344] sm:h-16 sm:w-16">
                     {item.icon}
                   </div>
                   <div>
@@ -278,8 +278,8 @@ const EnhancedContact = () => {
             </div>
           </div>
 
-          <div className="relative min-h-[430px] overflow-hidden rounded-2xl shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-            <div className="absolute left-10 top-1/2 w-[260px] -translate-y-1/2 rounded-xl bg-[#071426] p-8 shadow-2xl">
+          <div className="relative min-h-[340px] overflow-hidden rounded-2xl shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:min-h-[430px]">
+            <div className="absolute inset-x-4 bottom-4 rounded-xl bg-[#071426] p-5 shadow-2xl sm:bottom-auto sm:left-10 sm:top-1/2 sm:w-[260px] sm:-translate-y-1/2 sm:p-8">
               <h3 className="mb-4 text-xl font-black text-[#ff3344]">
                 Vibha Prints
               </h3>
@@ -307,14 +307,14 @@ const EnhancedContact = () => {
         </div>
       </section>
 
-      <section className="bg-[#f7f9fc] py-20">
-        <div className="mx-auto w-full px-6 md:px-12 lg:px-16 xl:px-20">
-          <div className="grid items-start gap-14 lg:grid-cols-[1fr_0.9fr]">
+      <section className="bg-[#f7f9fc] py-14 sm:py-20">
+        <div className="mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-16 xl:px-20">
+          <div className="grid items-start gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-14">
             <div>
               <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.24em] text-[#ff3344]">
                 FAQs
               </p>
-              <h2 className="mb-10 text-3xl font-black text-[#071124] md:text-4xl">
+              <h2 className="mb-8 text-2xl font-black text-[#071124] sm:text-3xl md:text-4xl">
                 Frequently Asked{" "}
                 <span className="text-[#ff3344]">Questions</span>
               </h2>
@@ -322,34 +322,34 @@ const EnhancedContact = () => {
                 {faqs.map((faq) => (
                   <button
                     key={faq}
-                    className="flex h-20 w-full items-center justify-between rounded-xl bg-white px-7 text-left shadow-[0_12px_30px_rgba(7,17,36,0.08)]"
+                    className="flex min-h-16 w-full items-center justify-between gap-4 rounded-xl bg-white px-4 py-4 text-left shadow-[0_12px_30px_rgba(7,17,36,0.08)] sm:h-20 sm:px-7 sm:py-0"
                   >
-                    <span className="flex items-center gap-5 text-base font-extrabold text-[#071124]">
-                      <CheckCircle2 className="text-[#ff3344]" size={21} />
+                    <span className="flex min-w-0 items-center gap-3 text-sm font-extrabold leading-5 text-[#071124] sm:gap-5 sm:text-base">
+                      <CheckCircle2 className="shrink-0 text-[#ff3344]" size={21} />
                       {faq}
                     </span>
-                    <Plus size={24} />
+                    <Plus className="shrink-0" size={24} />
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col items-center pt-8 text-center lg:pt-6">
-              <p className="mb-8 max-w-[430px] text-left text-base leading-8 text-[#5f6b7d]">
+            <div className="flex flex-col items-center text-center lg:pt-6">
+              <p className="mb-6 max-w-[430px] text-left text-sm leading-7 text-[#5f6b7d] sm:mb-8 sm:text-base sm:leading-8">
                 Here are some common questions. Can't find the answer you're
                 looking for? Contact us directly.
               </p>
               <img
                 src={envelopeArt}
                 alt="Vibha Prints message envelope"
-                className="w-full max-w-[440px] object-contain"
+                className="w-full max-w-[320px] object-contain sm:max-w-[440px]"
                 loading="lazy"
               />
             </div>
           </div>
 
           <div
-            className="mt-20 overflow-hidden rounded-2xl bg-[#071426] px-10 py-12 text-white md:px-16"
+            className="mt-14 overflow-hidden rounded-2xl bg-[#071426] px-5 py-9 text-white sm:mt-20 sm:px-10 sm:py-12 md:px-16"
             style={{
               backgroundImage: `url("${ctaBg}")`,
               backgroundSize: "cover",
@@ -358,7 +358,7 @@ const EnhancedContact = () => {
           >
             <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
               <div>
-                <h2 className="mb-3 text-3xl font-black text-white md:text-4xl">
+                <h2 className="mb-3 text-2xl font-black text-white sm:text-3xl md:text-4xl">
                   Ready to Start{" "}
                   <span className="text-[#ff3344]">Your Project?</span>
                 </h2>
@@ -368,7 +368,7 @@ const EnhancedContact = () => {
               </div>
               <a
                 href="#"
-                className="inline-flex h-16 min-w-[250px] items-center justify-center gap-4 rounded-full bg-[#ff3344] px-8 text-base font-extrabold text-white transition hover:bg-[#fa4b5a]"
+                className="inline-flex h-14 w-full items-center justify-center gap-4 rounded-full bg-[#ff3344] px-6 text-sm font-extrabold text-white transition hover:bg-[#fa4b5a] sm:h-16 sm:w-auto sm:min-w-[250px] sm:px-8 sm:text-base"
               >
                 Start a Project
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15">
