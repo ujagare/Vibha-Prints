@@ -17,7 +17,8 @@ const assertSupabase = () => {
 
 const postLeadNotification = async (url, payload, apiKey = "") => {
   const headers = { "Content-Type": "application/json" };
-  if (apiKey) {
+  const shouldSendApiKey = apiKey && !url.includes("/api/create-lead");
+  if (shouldSendApiKey) {
     headers["x-api-key"] = apiKey;
   }
 
