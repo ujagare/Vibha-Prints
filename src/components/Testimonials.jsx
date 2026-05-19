@@ -54,36 +54,36 @@ const secondRow = reviews.slice(Math.ceil(reviews.length / 2));
 
 const ReviewCard = ({ name, username, body, rating }) => {
   return (
-    <figure className="group relative flex h-[252px] w-[min(82vw,330px)] shrink-0 cursor-pointer flex-col overflow-hidden rounded-lg border border-[#e4e9f2] bg-white p-5 shadow-[0_18px_50px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ff525d]/35 hover:shadow-[0_26px_70px_rgba(7,17,36,0.14)] sm:h-[260px] sm:w-[390px] sm:p-6">
-      <div className="absolute right-4 top-4 text-4xl text-[#ff525d]/10 transition duration-300 group-hover:text-[#ff525d]/18 sm:right-5 sm:top-5 sm:text-5xl">
+    <figure className="group relative flex h-[210px] w-[min(72vw,280px)] shrink-0 cursor-pointer flex-col overflow-hidden rounded-lg border border-[#e4e9f2] bg-white p-4 shadow-[0_14px_36px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ff525d]/35 hover:shadow-[0_26px_70px_rgba(7,17,36,0.14)] sm:h-[260px] sm:w-[390px] sm:p-6">
+      <div className="absolute right-3 top-3 text-3xl text-[#ff525d]/10 transition duration-300 group-hover:text-[#ff525d]/18 sm:right-5 sm:top-5 sm:text-5xl">
         <FaQuoteRight />
       </div>
-      <div className="relative z-10 flex items-start justify-between gap-3">
+      <div className="relative z-10 flex items-start justify-between gap-2 sm:gap-3">
         <div className="min-w-0">
-          <figcaption className="text-base font-extrabold leading-snug text-[#071124] sm:text-lg">
+          <figcaption className="text-sm font-extrabold leading-snug text-[#071124] sm:text-lg">
             {name}
           </figcaption>
-          <p className="mt-1 line-clamp-2 text-[10px] font-semibold uppercase leading-4 tracking-[0.08em] text-[#64748b] sm:text-xs sm:tracking-[0.12em]">
+          <p className="mt-0.5 line-clamp-2 text-[9px] font-semibold uppercase leading-3 tracking-[0.06em] text-[#64748b] sm:mt-1 sm:text-xs sm:leading-4 sm:tracking-[0.12em]">
             {username}
           </p>
         </div>
-        <div className="flex shrink-0 rounded-full border border-[#f8d3d6] bg-[#fff3f4] px-2 py-1.5 sm:px-3">
+        <div className="flex shrink-0 rounded-full border border-[#f8d3d6] bg-[#fff3f4] px-1.5 py-1 sm:px-3 sm:py-1.5">
           {Array(5)
             .fill(0)
             .map((_, i) => (
               <FaStar
                 key={i}
-                className={`text-[11px] sm:text-sm ${
+                className={`text-[9px] sm:text-sm ${
                   i < rating ? "text-[#ffb703]" : "text-[#d9dee8]"
                 }`}
               />
             ))}
         </div>
       </div>
-      <blockquote className="relative z-10 mt-5 flex-1 text-[13px] leading-6 text-[#536176] sm:mt-6 sm:text-[15px] sm:leading-8">
+      <blockquote className="relative z-10 mt-4 flex-1 text-[11px] leading-5 text-[#536176] sm:mt-6 sm:text-[15px] sm:leading-8">
         “{body}”
       </blockquote>
-      <div className="relative z-10 mt-5 h-1 w-20 rounded-full bg-[#ff525d]" />
+      <div className="relative z-10 mt-3 h-0.5 w-14 rounded-full bg-[#ff525d] sm:mt-5 sm:h-1 sm:w-20" />
     </figure>
   );
 };

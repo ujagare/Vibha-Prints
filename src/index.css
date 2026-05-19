@@ -558,8 +558,8 @@ button {
 
 @media (max-width: 640px) {
   .testimonial-marquee-track {
-    gap: 0.75rem;
-    animation-duration: 38s;
+    gap: 0.55rem;
+    animation-duration: 34s;
   }
 
   .hero-trusted-ticker-track {
