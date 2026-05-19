@@ -202,7 +202,7 @@ const EnhancedChatBot = () => {
       if (!response.success) {
         const botMessage = {
           id: messages.length + 1,
-          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com.",
+          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
           sender: "bot",
           timestamp: new Date(),
         };
@@ -362,7 +362,7 @@ const EnhancedChatBot = () => {
       // Even the fallback failed, show a generic message
       const botMessage = {
         id: messages.length + 2,
-        text: "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment or contact us directly at info@vibhaprints.com.",
+        text: "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
         sender: "bot",
         timestamp: new Date(),
       };
@@ -519,7 +519,7 @@ const EnhancedChatBot = () => {
       setTimeout(() => {
         const botMessage = {
           id: messages.length + 2,
-          text: "No problem! You can reach our team at info@vibhaprints.com or call us at +91 86259 48046. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
+          text: "No problem! You can reach our team at info@vibhapints.com / vibhart07@gmail.com or call us at +91 86249 48046 / +91 89758 05789. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
           sender: "bot",
           timestamp: new Date(),
           contactInfo: true,
@@ -636,7 +636,7 @@ const EnhancedChatBot = () => {
           // Show error message
           const botMessage = {
             id: messages.length + 1,
-            text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com.",
+            text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
             sender: "bot",
             timestamp: new Date(),
           };
@@ -699,7 +699,7 @@ const EnhancedChatBot = () => {
       // Show error message
       const botMessage = {
         id: messages.length + 1,
-        text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com.",
+        text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
         sender: "bot",
         timestamp: new Date(),
       };
@@ -803,7 +803,7 @@ const EnhancedChatBot = () => {
       <WhatsAppModal
         isOpen={isWhatsAppModalOpen}
         onClose={handleCloseWhatsAppModal}
-        phoneNumber="918625948046"
+        phoneNumber="918624948046"
         message={whatsAppMessage}
       />
 
@@ -874,19 +874,31 @@ const EnhancedChatBot = () => {
                       {message.contactInfo && (
                         <div className="mt-3 flex flex-wrap gap-2">
                           <a
-                            href="mailto:info@vibhaprints.com"
+                            href="mailto:info@vibhapints.com"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
                           >
-                            <FaEnvelope className="mr-1" size={10} /> Email Us
+                            <FaEnvelope className="mr-1" size={10} /> Email 1
                           </a>
                           <a
-                            href="tel:+918625948046"
+                            href="mailto:vibhart07@gmail.com"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
                           >
-                            <FaPhone className="mr-1" size={10} /> Call Us
+                            <FaEnvelope className="mr-1" size={10} /> Email 2
                           </a>
                           <a
-                            href="https://wa.me/918625948046"
+                            href="tel:+918624948046"
+                            className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
+                          >
+                            <FaPhone className="mr-1" size={10} /> Call 1
+                          </a>
+                          <a
+                            href="tel:+918975805789"
+                            className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
+                          >
+                            <FaPhone className="mr-1" size={10} /> Call 2
+                          </a>
+                          <a
+                            href="https://wa.me/918624948046"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"

@@ -3,19 +3,19 @@ import { useEffect } from "react";
 const SEO_DATA = {
   home: {
     title: "Vibha Art | Graphic Design & Printing Services in Pune",
-    description: "Vibha Art Pune — Professional graphic design, flex printing, visiting cards, banners, T-shirt printing & branding. Quality prints at affordable rates. Call +91-8424948046!",
+    description: "Vibha Art Pune — Professional graphic design, flex printing, visiting cards, banners, T-shirt printing & branding. Quality prints at affordable rates. Call +91-8624948046 or +91-8975805789!",
     keywords: "graphic design pune, printing services pune, flex printing pune, visiting card printing pune, banner printing pune, logo design pune, branding pune",
     canonical: "https://vibha-prints.vercel.app/",
   },
   about: {
     title: "About Vibha Art | Pune's Trusted Printing & Design Studio",
-    description: "Learn about Vibha Art — Pune's creative design and printing studio. Expert team delivering high-quality branding, printing, and design solutions. Call +91-8424948046.",
+    description: "Learn about Vibha Art — Pune's creative design and printing studio. Expert team delivering high-quality branding, printing, and design solutions. Call +91-8624948046 or +91-8975805789.",
     keywords: "about vibha art pune, printing studio pune, design agency pune, creative studio maharashtra",
     canonical: "https://vibha-prints.vercel.app/about",
   },
   services: {
     title: "Printing & Design Services | Vibha Art Pune",
-    description: "Vibha Art offers flex printing, visiting cards, banners, T-shirt printing, logo design, branding & more in Pune. Get instant quote at info@vibhaprints.com.",
+    description: "Vibha Art offers flex printing, visiting cards, banners, T-shirt printing, logo design, branding & more in Pune. Get instant quote at info@vibhapints.com or vibhart07@gmail.com.",
     keywords: "flex printing pune, visiting card printing pune, banner printing pune, logo design pune, t-shirt printing pune, brochure printing pune, sticker printing pune",
     canonical: "https://vibha-prints.vercel.app/services",
   },
@@ -27,8 +27,8 @@ const SEO_DATA = {
   },
   contact: {
     title: "Contact Vibha Art | Get Quote for Printing & Design Pune",
-    description: "Contact Vibha Art Pune for printing and design services. Get free quotes. WhatsApp or call +91-8424948046 or email info@vibhaprints.com today!",
-    keywords: "contact vibha art pune, printing quote pune, vibha art phone number, info@vibhaprints.com",
+    description: "Contact Vibha Art Pune for printing and design services. Get free quotes. WhatsApp or call +91-8624948046 / +91-8975805789 or email info@vibhapints.com / vibhart07@gmail.com today!",
+    keywords: "contact vibha art pune, printing quote pune, vibha art phone number, info@vibhapints.com, vibhart07@gmail.com",
     canonical: "https://vibha-prints.vercel.app/contact",
   },
 };
@@ -39,8 +39,8 @@ const SCHEMA = {
   "name": "Vibha Art",
   "description": "Professional graphic design and printing services in Pune, Maharashtra.",
   "url": "https://vibha-prints.vercel.app",
-  "telephone": "+91-8424948046",
-  "email": "info@vibhaprints.com",
+  "telephone": ["+91-8624948046", "+91-8975805789"],
+  "email": ["info@vibhapints.com", "vibhart07@gmail.com"],
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Pune",

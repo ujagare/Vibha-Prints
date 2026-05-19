@@ -59,11 +59,17 @@ const Footer = () => {
       { name: "Testimonials", path: "/#testimonials" },
     ],
     contact: [
-      { icon: <FaPhone />, text: "+91 86259 48046", link: "tel:+918624948046" },
+      { icon: <FaPhone />, text: "+91 86249 48046", link: "tel:+918624948046" },
+      { icon: <FaPhone />, text: "+91 89758 05789", link: "tel:+918975805789" },
       {
         icon: <FaEnvelope />,
-        text: "info@vibhaprints.com",
-        link: "mailto:info@vibhaprints.com",
+        text: "info@vibhapints.com",
+        link: "mailto:info@vibhapints.com",
+      },
+      {
+        icon: <FaEnvelope />,
+        text: "vibhart07@gmail.com",
+        link: "mailto:vibhart07@gmail.com",
       },
       {
         icon: <FaMapMarkerAlt />,

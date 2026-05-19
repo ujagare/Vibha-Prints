@@ -39,7 +39,7 @@ import graphicCtaMobileBg from "../assets/Graphics Main/Mobile/image-161.webp";
 import lightWaveBg from "../assets/Graphics Main/image-151.webp";
 import whyChooseBg from "../assets/Graphics Main/image-152.webp";
 import darkWaveBg from "../assets/Graphics Main/image-153.webp";
-import processBg from "../assets/Graphics Main/image-149.webp";
+import processBg from "../assets/Graphics Main/image-154.webp";
 import ctaBg from "../assets/Graphics Main/image-155.webp";
 import logoImage from "../assets/Graphics Main/logo-9-1.webp";
 import businessCardImage from "../assets/Graphics Main/11506671.webp";
@@ -47,9 +47,8 @@ import brochureImage from "../assets/Graphics Main/1695210509.webp";
 import pamphletImage from "../assets/Graphics Main/3329102.webp";
 import packagingImage from "../assets/Packeging/image-200.webp";
 import companyProfileImage from "../assets/Graphics Main/image-158.webp";
-import socialMediaImage from "../assets/Social Media/image-361.webp";
-import corporateImage from "../assets/Graphics Main/1984.webp";
-import websiteImage from "../assets/Graphics Main/image-156.webp";
+import socialMediaImage from "../assets/Social Media/image-368.webp";
+import corporateImage from "../assets/Corporate/10919666506709.webp";
 import printHeroBg from "../assets/Printing Main/image-350.webp";
 import printHeroMobileBg from "../assets/Printing Main/Mobile/image-360.webp";
 import printServicesBg from "../assets/Printing Main/image-358.webp";
@@ -103,7 +102,7 @@ export const graphicDesignLandingPage = {
     title: "Graphic Design",
     highlight: "Services",
     description: "Transform your brand with our professional design solutions tailored to your unique needs.",
-    copyClass: "w-full min-w-0 max-w-[calc(100vw-3rem)] -translate-y-20 pt-0 sm:max-w-xl sm:translate-y-0 sm:pt-10",
+    copyClass: "w-full min-w-0 max-w-[calc(100vw-2rem)] -mt-32 pt-0 sm:mt-0 sm:max-w-xl sm:pt-10",
     cta: { label: "Let's Create", route: "/contact" },
     hideStatsOnMobile: true,
     stats: [
@@ -119,6 +118,7 @@ export const graphicDesignLandingPage = {
     highlight: "Expertise",
     description: "Explore our comprehensive range of graphic design services tailored to elevate your brand presence.",
     cardTag: "Premium Design",
+    cardVariant: "image",
     cta: { label: "Explore All Services", route: "/contact" },
   },
   services: [
@@ -178,13 +178,6 @@ export const graphicDesignLandingPage = {
       icon: BadgeCheck,
       route: "/corporate-identity-design-gallery",
     },
-    {
-      title: "Website Design",
-      description: "Create stunning, functional websites that captivate and convert.",
-      image: websiteImage,
-      icon: PenTool,
-      route: "/website-design-gallery",
-    },
   ],
   processSection: {
     badge: "Our Process",
@@ -221,9 +214,10 @@ export const graphicDesignLandingPage = {
     highlight: "Choose Us",
     description: "We combine creativity, strategy, and technology to deliver designs that make your brand unforgettable.",
     stats: [
-      ["250+", "Happy Clients"],
-      ["350+", "Projects Done"],
-      ["98%", "Satisfaction"],
+      ["100+", "Projects Completed"],
+      ["98%", "Client Satisfaction"],
+      ["7+", "Years Experience"],
+      ["50+", "Brands Empowered"],
     ],
   },
   reasons: [
@@ -340,9 +334,10 @@ export const printingLandingPage = {
     highlight: "Choose Us",
     description: "We combine creativity, technology, and precision to deliver prints that make your brand stand out.",
     stats: [
-      ["250+", "Print Projects"],
-      ["98%", "Satisfaction"],
-      ["24h", "Quick Support"],
+      ["100+", "Projects Completed"],
+      ["98%", "Client Satisfaction"],
+      ["7+", "Years Experience"],
+      ["50+", "Brands Empowered"],
     ],
   },
   reasons: [
@@ -435,9 +430,10 @@ export const digitalMarketingLandingPage = {
     highlight: "Choose Us",
     description: "We combine creativity, data, and technology to deliver digital marketing solutions that drive measurable growth.",
     stats: [
-      ["250+", "Campaigns"],
-      ["180%", "Traffic Growth"],
-      ["98%", "Satisfaction"],
+      ["100+", "Projects Completed"],
+      ["98%", "Client Satisfaction"],
+      ["7+", "Years Experience"],
+      ["50+", "Brands Empowered"],
     ],
   },
   reasons: [
@@ -454,10 +450,10 @@ export const digitalMarketingLandingPage = {
     highlight: "Speak For Us",
     description: "Real results for real businesses.",
     stats: [
-      ["250+", "Projects Completed", UsersRound],
-      ["180%", "Average Traffic Increase", BarChart3],
-      ["120%", "Average ROI Increase", Rocket],
+      ["100+", "Projects Completed", UsersRound],
       ["98%", "Client Satisfaction", ShieldCheck],
+      ["7+", "Years Experience", Clock3],
+      ["50+", "Brands Empowered", BadgeCheck],
     ],
     cases: [
       { title: "E-Commerce Brand", text: "Increased organic traffic and boosted sales with SEO and ads.", image: digitalMarketingServicesBg, route: "/contact" },
@@ -546,9 +542,10 @@ export const webDevelopmentLandingPage = {
     highlight: "Choose Us",
     description: "We combine creativity, technology, and strategy to deliver websites that drive growth and deliver results.",
     stats: [
-      ["250+", "Websites"],
-      ["98%", "Satisfaction"],
-      ["50+", "Industries"],
+      ["100+", "Projects Completed"],
+      ["98%", "Client Satisfaction"],
+      ["7+", "Years Experience"],
+      ["50+", "Brands Empowered"],
     ],
   },
   reasons: [
@@ -565,10 +562,10 @@ export const webDevelopmentLandingPage = {
     highlight: "Make an Impact",
     description: "We build websites that do not just look great, they deliver real business results.",
     stats: [
-      ["250+", "Websites Delivered", UsersRound],
+      ["100+", "Projects Completed", UsersRound],
       ["98%", "Client Satisfaction", ShieldCheck],
-      ["120%", "Average Traffic Increase", BarChart3],
-      ["50+", "Industries Served", BadgeCheck],
+      ["7+", "Years Experience", Clock3],
+      ["50+", "Brands Empowered", BadgeCheck],
     ],
     cases: [
       { title: "E-Commerce Store", text: "A fast and secure online store that increased sales.", image: webDevelopmentImpactBg, route: "/contact" },

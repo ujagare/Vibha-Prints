@@ -20,7 +20,7 @@ import {
 const WhatsAppModal = ({
   isOpen,
   onClose,
-  phoneNumber = "918625948046",
+  phoneNumber = "918624948046",
   message = "",
 }) => {
   // Handle escape key press to close modal

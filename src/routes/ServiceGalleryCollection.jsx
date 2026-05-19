@@ -288,6 +288,8 @@ const buildItems = (titles, images, options = {}) =>
   titles.map((item, index) => ({
     title: item.title,
     description: item.description,
+    tagline: item.tagline,
+    link: item.link,
     image: images[index % images.length],
     fullCover: options.fullCover ?? true,
     flushFit: options.flushFit ?? false,
@@ -303,12 +305,34 @@ const galleryConfigs = {
     category: "SEO",
     items: buildItems(
       [
-        { title: "Keyword Strategy", description: "Search terms mapped to high-intent customer journeys." },
-        { title: "Technical SEO", description: "Site speed, crawlability, indexing, and structured data checks." },
-        { title: "On-Page SEO", description: "Optimized pages with strong headings, metadata, and internal links." },
-        { title: "Local SEO", description: "Location-focused visibility for maps, calls, and local leads." },
-        { title: "Content Growth", description: "SEO content plans built to earn traffic and trust." },
-        { title: "Ranking Reports", description: "Clear reporting for ranking movement and organic results." },
+        {
+          title: "Keyword Strategy",
+          description: "Search terms mapped to high-intent customer journeys.",
+        },
+        {
+          title: "Technical SEO",
+          description:
+            "Site speed, crawlability, indexing, and structured data checks.",
+        },
+        {
+          title: "On-Page SEO",
+          description:
+            "Optimized pages with strong headings, metadata, and internal links.",
+        },
+        {
+          title: "Local SEO",
+          description:
+            "Location-focused visibility for maps, calls, and local leads.",
+        },
+        {
+          title: "Content Growth",
+          description: "SEO content plans built to earn traffic and trust.",
+        },
+        {
+          title: "Ranking Reports",
+          description:
+            "Clear reporting for ranking movement and organic results.",
+        },
       ],
       seoGalleryImages,
       { fullCover: false, flushFit: true },
@@ -323,18 +347,66 @@ const galleryConfigs = {
     category: "SMM",
     items: buildItems(
       [
-        { title: "Brand Content", description: "Consistent social posts that carry your visual identity." },
-        { title: "Campaign Planning", description: "Monthly calendars aligned with offers and audience behavior." },
-        { title: "Reels & Stories", description: "Short-form creative ideas for higher reach and engagement." },
-        { title: "Community Growth", description: "Engagement-led social activity for stronger brand connection." },
-        { title: "Festival Creatives", description: "Timely posts for events, promotions, and seasonal campaigns." },
-        { title: "Performance Insights", description: "Readable reports for reach, engagement, and follower growth." },
-        { title: "Product Awareness", description: "Social visuals crafted to introduce offers with strong recall." },
-        { title: "Brand Promotion", description: "Campaign posts designed to keep the brand active and visible." },
-        { title: "Lead Creatives", description: "Inquiry-focused designs for service promotions and responses." },
-        { title: "Engagement Posts", description: "Content formats made for saves, shares, comments, and reach." },
-        { title: "Offer Graphics", description: "Clear promotional designs for deals, launches, and updates." },
-        { title: "Social Ad Visuals", description: "Scroll-stopping creative concepts for paid social campaigns." },
+        {
+          title: "Brand Content",
+          description:
+            "Consistent social posts that carry your visual identity.",
+        },
+        {
+          title: "Campaign Planning",
+          description:
+            "Monthly calendars aligned with offers and audience behavior.",
+        },
+        {
+          title: "Reels & Stories",
+          description:
+            "Short-form creative ideas for higher reach and engagement.",
+        },
+        {
+          title: "Community Growth",
+          description:
+            "Engagement-led social activity for stronger brand connection.",
+        },
+        {
+          title: "Festival Creatives",
+          description:
+            "Timely posts for events, promotions, and seasonal campaigns.",
+        },
+        {
+          title: "Performance Insights",
+          description:
+            "Readable reports for reach, engagement, and follower growth.",
+        },
+        {
+          title: "Product Awareness",
+          description:
+            "Social visuals crafted to introduce offers with strong recall.",
+        },
+        {
+          title: "Brand Promotion",
+          description:
+            "Campaign posts designed to keep the brand active and visible.",
+        },
+        {
+          title: "Lead Creatives",
+          description:
+            "Inquiry-focused designs for service promotions and responses.",
+        },
+        {
+          title: "Engagement Posts",
+          description:
+            "Content formats made for saves, shares, comments, and reach.",
+        },
+        {
+          title: "Offer Graphics",
+          description:
+            "Clear promotional designs for deals, launches, and updates.",
+        },
+        {
+          title: "Social Ad Visuals",
+          description:
+            "Scroll-stopping creative concepts for paid social campaigns.",
+        },
       ],
       smmGalleryImages,
       { fullCover: false, flushFit: true },
@@ -349,12 +421,32 @@ const galleryConfigs = {
     category: "PPC",
     items: buildItems(
       [
-        { title: "Google Ads", description: "Search campaigns for high-intent customer queries." },
-        { title: "Meta Ads", description: "Visual ad campaigns for awareness, leads, and conversions." },
-        { title: "Landing Pages", description: "Conversion-focused pages matched to every ad campaign." },
-        { title: "Remarketing", description: "Audience retargeting creatives that bring visitors back." },
-        { title: "Lead Campaigns", description: "Structured campaigns designed for qualified enquiries." },
-        { title: "Ad Reports", description: "Spend, clicks, conversions, and ROI presented clearly." },
+        {
+          title: "Google Ads",
+          description: "Search campaigns for high-intent customer queries.",
+        },
+        {
+          title: "Meta Ads",
+          description:
+            "Visual ad campaigns for awareness, leads, and conversions.",
+        },
+        {
+          title: "Landing Pages",
+          description: "Conversion-focused pages matched to every ad campaign.",
+        },
+        {
+          title: "Remarketing",
+          description:
+            "Audience retargeting creatives that bring visitors back.",
+        },
+        {
+          title: "Lead Campaigns",
+          description: "Structured campaigns designed for qualified enquiries.",
+        },
+        {
+          title: "Ad Reports",
+          description: "Spend, clicks, conversions, and ROI presented clearly.",
+        },
       ],
       ppcGalleryImages,
       { fullCover: false, flushFit: true },
@@ -369,12 +461,35 @@ const galleryConfigs = {
     category: "Content Marketing",
     items: buildItems(
       [
-        { title: "Blog Strategy", description: "Topic clusters that answer customer questions and support SEO." },
-        { title: "Brand Storytelling", description: "Content themes that make your brand easier to remember." },
-        { title: "Lead Magnets", description: "Guides, checklists, and resources built for lead capture." },
-        { title: "Visual Content", description: "Graphics and carousels that simplify important messages." },
-        { title: "Website Copy", description: "Clear page content that supports trust and conversion." },
-        { title: "Content Calendar", description: "Planned publishing rhythm across channels and campaigns." },
+        {
+          title: "Blog Strategy",
+          description:
+            "Topic clusters that answer customer questions and support SEO.",
+        },
+        {
+          title: "Brand Storytelling",
+          description:
+            "Content themes that make your brand easier to remember.",
+        },
+        {
+          title: "Lead Magnets",
+          description:
+            "Guides, checklists, and resources built for lead capture.",
+        },
+        {
+          title: "Visual Content",
+          description:
+            "Graphics and carousels that simplify important messages.",
+        },
+        {
+          title: "Website Copy",
+          description: "Clear page content that supports trust and conversion.",
+        },
+        {
+          title: "Content Calendar",
+          description:
+            "Planned publishing rhythm across channels and campaigns.",
+        },
       ],
       contentMarketingGalleryImages,
       { fullCover: false, flushFit: true },
@@ -389,12 +504,33 @@ const galleryConfigs = {
     category: "Email Marketing",
     items: buildItems(
       [
-        { title: "Welcome Emails", description: "First-touch email flows that introduce your brand clearly." },
-        { title: "Offer Campaigns", description: "Promotional emails designed around strong calls to action." },
-        { title: "Lead Nurturing", description: "Automated sequences that move prospects toward enquiry." },
-        { title: "Newsletter Design", description: "Useful updates packaged in clean branded layouts." },
-        { title: "Customer Retention", description: "Emails that encourage repeat orders and loyalty." },
-        { title: "Email Reports", description: "Open rates, clicks, replies, and conversion tracking." },
+        {
+          title: "Welcome Emails",
+          description:
+            "First-touch email flows that introduce your brand clearly.",
+        },
+        {
+          title: "Offer Campaigns",
+          description:
+            "Promotional emails designed around strong calls to action.",
+        },
+        {
+          title: "Lead Nurturing",
+          description:
+            "Automated sequences that move prospects toward enquiry.",
+        },
+        {
+          title: "Newsletter Design",
+          description: "Useful updates packaged in clean branded layouts.",
+        },
+        {
+          title: "Customer Retention",
+          description: "Emails that encourage repeat orders and loyalty.",
+        },
+        {
+          title: "Email Reports",
+          description: "Open rates, clicks, replies, and conversion tracking.",
+        },
       ],
       emailMarketingGalleryImages,
       { fullCover: false, flushFit: true },
@@ -409,12 +545,33 @@ const galleryConfigs = {
     category: "CRO",
     items: buildItems(
       [
-        { title: "Landing Page Audit", description: "Page reviews focused on clarity, hierarchy, and action." },
-        { title: "CTA Optimization", description: "Button and offer improvements for stronger response." },
-        { title: "Form Improvements", description: "Shorter, cleaner forms built to reduce drop-offs." },
-        { title: "Trust Signals", description: "Reviews, proof points, and guarantees placed where they matter." },
-        { title: "A/B Testing", description: "Experiment ideas to compare layouts, offers, and messaging." },
-        { title: "Funnel Reports", description: "Conversion tracking from visit to lead or sale." },
+        {
+          title: "Landing Page Audit",
+          description:
+            "Page reviews focused on clarity, hierarchy, and action.",
+        },
+        {
+          title: "CTA Optimization",
+          description: "Button and offer improvements for stronger response.",
+        },
+        {
+          title: "Form Improvements",
+          description: "Shorter, cleaner forms built to reduce drop-offs.",
+        },
+        {
+          title: "Trust Signals",
+          description:
+            "Reviews, proof points, and guarantees placed where they matter.",
+        },
+        {
+          title: "A/B Testing",
+          description:
+            "Experiment ideas to compare layouts, offers, and messaging.",
+        },
+        {
+          title: "Funnel Reports",
+          description: "Conversion tracking from visit to lead or sale.",
+        },
       ],
       croGalleryImages,
       { fullCover: false, flushFit: true },
@@ -429,12 +586,33 @@ const galleryConfigs = {
     category: "ORM",
     items: buildItems(
       [
-        { title: "Review Strategy", description: "Systems to request, collect, and showcase genuine reviews." },
-        { title: "Brand Monitoring", description: "Tracking brand mentions across important online channels." },
-        { title: "Response Templates", description: "Professional replies for customer feedback and concerns." },
-        { title: "Trust Building", description: "Reputation assets that improve buyer confidence." },
-        { title: "Profile Optimization", description: "Improved business profiles across relevant platforms." },
-        { title: "Reputation Reports", description: "Simple reporting for ratings, mentions, and sentiment." },
+        {
+          title: "Review Strategy",
+          description:
+            "Systems to request, collect, and showcase genuine reviews.",
+        },
+        {
+          title: "Brand Monitoring",
+          description:
+            "Tracking brand mentions across important online channels.",
+        },
+        {
+          title: "Response Templates",
+          description:
+            "Professional replies for customer feedback and concerns.",
+        },
+        {
+          title: "Trust Building",
+          description: "Reputation assets that improve buyer confidence.",
+        },
+        {
+          title: "Profile Optimization",
+          description: "Improved business profiles across relevant platforms.",
+        },
+        {
+          title: "Reputation Reports",
+          description: "Simple reporting for ratings, mentions, and sentiment.",
+        },
       ],
       ormGalleryImages,
       { fullCover: false, flushFit: true },
@@ -449,12 +627,31 @@ const galleryConfigs = {
     category: "Analytics",
     items: buildItems(
       [
-        { title: "Traffic Dashboard", description: "Website traffic, source, and user behavior snapshots." },
-        { title: "Campaign Reports", description: "Paid and organic campaign performance in one view." },
-        { title: "Lead Tracking", description: "Enquiries and conversion sources tracked with clarity." },
-        { title: "ROI Measurement", description: "Marketing spend compared against outcomes and revenue." },
-        { title: "Monthly Insights", description: "Readable summaries with next-step recommendations." },
-        { title: "Goal Tracking", description: "Measurement setup for calls, forms, purchases, and events." },
+        {
+          title: "Traffic Dashboard",
+          description: "Website traffic, source, and user behavior snapshots.",
+        },
+        {
+          title: "Campaign Reports",
+          description: "Paid and organic campaign performance in one view.",
+        },
+        {
+          title: "Lead Tracking",
+          description: "Enquiries and conversion sources tracked with clarity.",
+        },
+        {
+          title: "ROI Measurement",
+          description: "Marketing spend compared against outcomes and revenue.",
+        },
+        {
+          title: "Monthly Insights",
+          description: "Readable summaries with next-step recommendations.",
+        },
+        {
+          title: "Goal Tracking",
+          description:
+            "Measurement setup for calls, forms, purchases, and events.",
+        },
       ],
       analyticsGalleryImages,
       { fullCover: false, flushFit: true },
@@ -472,32 +669,44 @@ const galleryConfigs = {
         {
           title: "Industrial Website",
           tagline: "Heavy-duty brand, high-trust presentation.",
-          description: "Dark premium layouts for machinery, manufacturing, and industrial product businesses.",
+          description:
+            "Dark premium layouts for machinery, manufacturing, and industrial product businesses.",
+          link: "https://alfanio.com/",
         },
         {
           title: "Coaching Website",
           tagline: "Warm visuals for personal transformation.",
-          description: "Elegant coaching pages built around sessions, programs, stories, and booking actions.",
+          description:
+            "Elegant coaching pages built around sessions, programs, stories, and booking actions.",
+          link: "https://touchandmove.in/",
         },
         {
           title: "Real Estate Website",
           tagline: "Property discovery made clear and credible.",
-          description: "Lead-focused real estate layouts for advisory, listings, site visits, and consultations.",
+          description:
+            "Lead-focused real estate layouts for advisory, listings, site visits, and consultations.",
+          link: "https://kappstonerealty.com/",
         },
         {
           title: "Construction Website",
           tagline: "Strong structure for serious B2B enquiries.",
-          description: "Bold construction and supplier websites with services, projects, and consultation flows.",
+          description:
+            "Bold construction and supplier websites with services, projects, and consultation flows.",
+          link: "https://www.ddtech.in/",
         },
         {
           title: "Personal Brand Website",
           tagline: "Premium storytelling for expert-led brands.",
-          description: "High-impact personal brand pages for philosophy, portfolio, insights, and client journeys.",
+          description:
+            "High-impact personal brand pages for philosophy, portfolio, insights, and client journeys.",
+          link: "https://www.sarveshmopkar.co/",
         },
         {
           title: "Project Gallery Website",
           tagline: "Field work showcased with clean proof.",
-          description: "Practical gallery layouts for site photos, progress documentation, and project credibility.",
+          description:
+            "Practical gallery layouts for site photos, progress documentation, and project credibility.",
+          link: "https://greenspacess.com/",
         },
       ],
       customWebsiteGalleryImages,
@@ -512,12 +721,40 @@ const galleryConfigs = {
     category: "E-Commerce",
     items: buildItems(
       [
-        { title: "Product Listing", description: "Organized product grids built for browsing and comparison." },
-        { title: "Product Detail", description: "Product pages with images, specs, pricing, and trust signals." },
-        { title: "Checkout Flow", description: "Simple purchase journeys that reduce friction." },
-        { title: "Payment Setup", description: "Secure payment integration and order handling." },
-        { title: "Inventory Structure", description: "Product categories, filters, and stock-friendly layouts." },
-        { title: "Sales Dashboard", description: "Store reporting for orders, revenue, and customer activity." },
+        {
+          title: "Product Listing",
+          description:
+            "Organized product grids built for browsing and comparison.",
+          link: "https://www.gratiaglobal.com/",
+        },
+        {
+          title: "Product Detail",
+          description:
+            "Product pages with images, specs, pricing, and trust signals.",
+          link: "https://www.gratiaglobal.com/products",
+        },
+        {
+          title: "Checkout Flow",
+          description: "Simple purchase journeys that reduce friction.",
+          link: "https://www.gratiaglobal.com/contact",
+        },
+        {
+          title: "Payment Setup",
+          description: "Secure payment integration and order handling.",
+          link: "https://swadistbite.com/#",
+        },
+        {
+          title: "Inventory Structure",
+          description:
+            "Product categories, filters, and stock-friendly layouts.",
+          link: "https://swadistbite.com/cookies",
+        },
+        {
+          title: "Sales Dashboard",
+          description:
+            "Store reporting for orders, revenue, and customer activity.",
+          link: "https://swadistbite.com/cup-cakes",
+        },
       ],
       ecommerceGalleryImages,
     ),
@@ -531,12 +768,36 @@ const galleryConfigs = {
     category: "Responsive Design",
     items: buildItems(
       [
-        { title: "Mobile Layouts", description: "Compact page layouts designed for thumb-friendly use." },
-        { title: "Tablet Views", description: "Balanced layouts for medium screen browsing." },
-        { title: "Desktop Experience", description: "Full-width website views with strong visual hierarchy." },
-        { title: "Adaptive Navigation", description: "Menus that remain simple across screen sizes." },
-        { title: "Responsive Media", description: "Images and sections sized to avoid layout breaks." },
-        { title: "Cross-Device QA", description: "Testing plans for consistent user experience." },
+        {
+          title: "Mobile Layouts",
+          description: "Compact page layouts designed for thumb-friendly use.",
+          link: "https://alfanio.com/",
+        },
+        {
+          title: "Tablet Views",
+          description: "Balanced layouts for medium screen browsing.",
+          link: "https://touchandmove.in/",
+        },
+        {
+          title: "Desktop Experience",
+          description: "Full-width website views with strong visual hierarchy.",
+          link: "https://kappstonerealty.com/",
+        },
+        {
+          title: "Adaptive Navigation",
+          description: "Menus that remain simple across screen sizes.",
+          link: "https://www.ddtech.in/",
+        },
+        {
+          title: "Responsive Media",
+          description: "Images and sections sized to avoid layout breaks.",
+          link: "https://www.sarveshmopkar.co/",
+        },
+        {
+          title: "Cross-Device QA",
+          description: "Testing plans for consistent user experience.",
+          link: "https://greenspacess.com/",
+        },
       ],
       responsiveGalleryImages,
     ),
@@ -550,12 +811,33 @@ const galleryConfigs = {
     category: "CMS",
     items: buildItems(
       [
-        { title: "WordPress Website", description: "Editable business websites with familiar admin workflows." },
-        { title: "Blog System", description: "Publishing setups for articles, updates, and SEO content." },
-        { title: "Page Builder", description: "Reusable sections for fast content updates." },
-        { title: "Media Library", description: "Organized image and document management." },
-        { title: "Admin Training", description: "Simple handover structure for everyday content changes." },
-        { title: "CMS Maintenance", description: "Updates, backups, and health checks for stability." },
+        {
+          title: "WordPress Website",
+          description:
+            "Editable business websites with familiar admin workflows.",
+        },
+        {
+          title: "Blog System",
+          description:
+            "Publishing setups for articles, updates, and SEO content.",
+        },
+        {
+          title: "Page Builder",
+          description: "Reusable sections for fast content updates.",
+        },
+        {
+          title: "Media Library",
+          description: "Organized image and document management.",
+        },
+        {
+          title: "Admin Training",
+          description:
+            "Simple handover structure for everyday content changes.",
+        },
+        {
+          title: "CMS Maintenance",
+          description: "Updates, backups, and health checks for stability.",
+        },
       ],
       cmsGalleryImages,
     ),
@@ -569,12 +851,30 @@ const galleryConfigs = {
     category: "Web Application",
     items: buildItems(
       [
-        { title: "Admin Dashboard", description: "Control panels for teams, metrics, and operations." },
-        { title: "Customer Portal", description: "Secure user areas for customers and members." },
-        { title: "Booking Flow", description: "Custom workflows for appointments and reservations." },
-        { title: "Data Tables", description: "Organized records with search, filters, and actions." },
-        { title: "User Management", description: "Roles, permissions, and account workflows." },
-        { title: "Scalable App UI", description: "Interfaces designed for growing business needs." },
+        {
+          title: "Admin Dashboard",
+          description: "Control panels for teams, metrics, and operations.",
+        },
+        {
+          title: "Customer Portal",
+          description: "Secure user areas for customers and members.",
+        },
+        {
+          title: "Booking Flow",
+          description: "Custom workflows for appointments and reservations.",
+        },
+        {
+          title: "Data Tables",
+          description: "Organized records with search, filters, and actions.",
+        },
+        {
+          title: "User Management",
+          description: "Roles, permissions, and account workflows.",
+        },
+        {
+          title: "Scalable App UI",
+          description: "Interfaces designed for growing business needs.",
+        },
       ],
       customAppGalleryImages,
     ),
@@ -588,12 +888,30 @@ const galleryConfigs = {
     category: "API Integration",
     items: buildItems(
       [
-        { title: "Payment Integration", description: "Secure payment gateways connected to website flows." },
-        { title: "CRM Sync", description: "Lead and customer data moved into business tools." },
-        { title: "WhatsApp Flow", description: "Enquiry and order journeys connected to messaging." },
-        { title: "Analytics Events", description: "Tracking key actions across the website." },
-        { title: "Custom APIs", description: "Backend endpoints built around business requirements." },
-        { title: "Automation Links", description: "Connected systems that reduce manual work." },
+        {
+          title: "Payment Integration",
+          description: "Secure payment gateways connected to website flows.",
+        },
+        {
+          title: "CRM Sync",
+          description: "Lead and customer data moved into business tools.",
+        },
+        {
+          title: "WhatsApp Flow",
+          description: "Enquiry and order journeys connected to messaging.",
+        },
+        {
+          title: "Analytics Events",
+          description: "Tracking key actions across the website.",
+        },
+        {
+          title: "Custom APIs",
+          description: "Backend endpoints built around business requirements.",
+        },
+        {
+          title: "Automation Links",
+          description: "Connected systems that reduce manual work.",
+        },
       ],
       apiGalleryImages,
     ),
@@ -607,12 +925,31 @@ const galleryConfigs = {
     category: "Speed Optimization",
     items: buildItems(
       [
-        { title: "Image Optimization", description: "Compressed, correctly sized assets for faster pages." },
-        { title: "Core Web Vitals", description: "Performance work around loading, stability, and responsiveness." },
-        { title: "Code Cleanup", description: "Smaller scripts and styles for lighter page weight." },
-        { title: "Caching Setup", description: "Browser and server caching for repeat visits." },
-        { title: "Mobile Speed", description: "Performance checks focused on mobile networks." },
-        { title: "Speed Reports", description: "Before-after metrics with clear improvements." },
+        {
+          title: "Image Optimization",
+          description: "Compressed, correctly sized assets for faster pages.",
+        },
+        {
+          title: "Core Web Vitals",
+          description:
+            "Performance work around loading, stability, and responsiveness.",
+        },
+        {
+          title: "Code Cleanup",
+          description: "Smaller scripts and styles for lighter page weight.",
+        },
+        {
+          title: "Caching Setup",
+          description: "Browser and server caching for repeat visits.",
+        },
+        {
+          title: "Mobile Speed",
+          description: "Performance checks focused on mobile networks.",
+        },
+        {
+          title: "Speed Reports",
+          description: "Before-after metrics with clear improvements.",
+        },
       ],
       websiteSpeedGalleryImages,
     ),
@@ -626,12 +963,31 @@ const galleryConfigs = {
     category: "Maintenance",
     items: buildItems(
       [
-        { title: "Website Updates", description: "Regular content, plugin, theme, and framework updates." },
-        { title: "Security Checks", description: "Monitoring for vulnerabilities, spam, and access issues." },
-        { title: "Backup Setup", description: "Scheduled backups for safer recovery." },
-        { title: "Bug Fixes", description: "Small fixes and improvements handled quickly." },
-        { title: "Uptime Monitoring", description: "Checks that help keep the site available." },
-        { title: "Support Reports", description: "Monthly maintenance summaries and recommendations." },
+        {
+          title: "Website Updates",
+          description: "Regular content, plugin, theme, and framework updates.",
+        },
+        {
+          title: "Security Checks",
+          description:
+            "Monitoring for vulnerabilities, spam, and access issues.",
+        },
+        {
+          title: "Backup Setup",
+          description: "Scheduled backups for safer recovery.",
+        },
+        {
+          title: "Bug Fixes",
+          description: "Small fixes and improvements handled quickly.",
+        },
+        {
+          title: "Uptime Monitoring",
+          description: "Checks that help keep the site available.",
+        },
+        {
+          title: "Support Reports",
+          description: "Monthly maintenance summaries and recommendations.",
+        },
       ],
       webMaintenanceGalleryImages,
       { fullCover: false, flushFit: true },

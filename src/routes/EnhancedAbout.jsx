@@ -114,7 +114,7 @@ const journey = [
   {
     year: "2022",
     title: "Building Trust",
-    copy: "Delivered 500+ projects and earned client trust.",
+    copy: "Delivered 100+ projects and earned client trust.",
     icon: FaMedal,
   },
   {

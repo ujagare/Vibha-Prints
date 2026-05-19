@@ -9,7 +9,6 @@ import {
   Instagram as FaInstagram,
   Linkedin as FaLinkedin,
   BriefcaseBusiness as FaBehanceSquare,
-  MessageCircle as FaWhatsapp,
   ChevronDown as FaChevronDown,
   Paintbrush as FaPaintBrush,
   Printer as FaPrint,
@@ -86,35 +85,29 @@ const Navbar = () => {
     },
   ];
 
-  // Social media links
+  // Social media links - using component references instead of JSX
   const socialLinks = [
     {
-      icon: <FaWhatsapp size={22} />,
-      url: "https://api.whatsapp.com/send?phone=918625948046&text=I%20am%20interested%20in%20your%20services%20please%20call%20back",
-      color: "#25D366",
-      ariaLabel: "WhatsApp",
-    },
-    {
-      icon: <FaFacebook size={22} />,
-      url: "https://www.facebook.com/share/15UZrzzFVz/",
+      Icon: FaFacebook,
+      url: "https://facebook.com/share/15UZrzzFVz",
       color: "#1877F2",
       ariaLabel: "Facebook",
     },
     {
-      icon: <FaBehanceSquare size={22} />,
-      url: "https://www.behance.net/komaljunghda64",
+      Icon: FaBehanceSquare,
+      url: "https://behance.net/komaljunghda64",
       color: "#053eff",
       ariaLabel: "Behance",
     },
     {
-      icon: <FaInstagram size={22} />,
-      url: "https://www.instagram.com/vibha_designing?igsh=MTMzMG92YWp0dGE3NA==",
+      Icon: FaInstagram,
+      url: "https://instagram.com/vibha_designing",
       color: "#E1306C",
       ariaLabel: "Instagram",
     },
     {
-      icon: <FaLinkedin size={22} />,
-      url: "https://www.linkedin.com/posts/vibha-designing-marketing_unused-logo-design-product-design-sell-activity-7305508738193330176--Tgf?utm_source=share&utm_medium=member_android&rcm=ACoAAB0TP1gBxmfSMwxYuudAITsUFo1JgiXnrlQ",
+      Icon: FaLinkedin,
+      url: "https://linkedin.com/in/vibha-designing-marketing",
       color: "#0A66C2",
       ariaLabel: "LinkedIn",
     },
@@ -308,34 +301,40 @@ const Navbar = () => {
 
             {/* Social Media Icons - Right Aligned */}
             <div className="hidden items-center gap-2 lg:flex">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.ariaLabel}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg ${
-                    isDarkPage
-                      ? "border-white/35 bg-transparent text-white"
-                      : "border-[#e2e7f0] bg-white text-[#536176]"
-                  }`}
-                  style={{
-                    boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = social.color;
-                    e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "";
-                    e.currentTarget.style.boxShadow =
-                      "0 2px 10px rgba(0,0,0,0.05)";
-                  }}
-                >
-                  {social.icon}
-                </a>
-              ))}
+              {socialLinks.map((social, index) => {
+                const IconComponent = social.Icon;
+                return (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.ariaLabel}
+                    className={`social-icon-link flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg ${
+                      isDarkPage
+                        ? "border-white/35 bg-transparent text-white"
+                        : "border-[#e2e7f0] bg-white text-[#536176]"
+                    }`}
+                    style={{
+                      boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+                      cursor: "pointer",
+                      position: "relative",
+                      zIndex: 100,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = social.color;
+                      e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = "";
+                      e.currentTarget.style.boxShadow =
+                        "0 2px 10px rgba(0,0,0,0.05)";
+                    }}
+                  >
+                    <IconComponent size={22} />
+                  </a>
+                );
+              })}
               {isDarkPage && (
                 <Link
                   to="/contact"
@@ -350,10 +349,14 @@ const Navbar = () => {
             <div className="flex items-center lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#071124] shadow-sm transition-all hover:text-[#ff525d] focus:outline-none"
+                className="nav-mobile-toggle flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#071124] shadow-sm transition-all hover:text-[#ff525d] focus:outline-none"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
               >
-                {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+                {isOpen ? (
+                  <FaTimes className="nav-mobile-toggle-icon" aria-hidden="true" />
+                ) : (
+                  <FaBars className="nav-mobile-toggle-icon" aria-hidden="true" />
+                )}
               </button>
             </div>
           </div>
@@ -463,30 +466,35 @@ const Navbar = () => {
                     Connect with us
                   </p>
                   <div className="flex flex-wrap items-center justify-center gap-3">
-                    {socialLinks.map((social, index) => (
-                      <a
-                        key={index}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={social.ariaLabel}
-                        className="flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#536176] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg"
-                        style={{
-                          boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = social.color;
-                          e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = "";
-                          e.currentTarget.style.boxShadow =
-                            "0 2px 10px rgba(0,0,0,0.05)";
-                        }}
-                      >
-                        {social.icon}
-                      </a>
-                    ))}
+                    {socialLinks.map((social, index) => {
+                      const IconComponent = social.Icon;
+                      return (
+                        <a
+                          key={index}
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={social.ariaLabel}
+                          className="social-icon-link flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#536176] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg"
+                          style={{
+                            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+                            cursor: "pointer",
+                          }}
+                          onClick={(e) => e.stopPropagation()}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = social.color;
+                            e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "";
+                            e.currentTarget.style.boxShadow =
+                              "0 2px 10px rgba(0,0,0,0.05)";
+                          }}
+                        >
+                          <IconComponent size={22} />
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

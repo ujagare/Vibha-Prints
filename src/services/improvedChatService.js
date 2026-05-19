@@ -44,8 +44,8 @@ const botResponses = {
     "Eye-catching packaging design jo sales badha de. Aapke product ke liye custom design banate hain.",
   ],
   contact: [
-    "Aap hume contact kar sakte ho:\n📧 info@vibhaprints.com\n📞 +91 86259 48046\n\nYa main aapka contact form fill kar dunga?",
-    "Contact karne ke liye:\nEmail: info@vibhaprints.com\nPhone: +91 86259 48046\n\nKya aap apna number dena chahte ho?",
+    "Aap hume contact kar sakte ho:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone: +91 86249 48046 / +91 89758 05789\n\nYa main aapka contact form fill kar dunga?",
+    "Contact karne ke liye:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone: +91 86249 48046 / +91 89758 05789\n\nKya aap apna number dena chahte ho?",
   ],
   pricing: [
     "Pricing aapke project ke hisaab se hoti hai:\n\n💰 Logo Design: ₹5,000 - ₹15,000\n💰 Business Cards: ₹2,000 - ₹5,000\n💰 Brochures: ₹3,000 - ₹10,000\n💰 Printing: ₹1,000 - ₹50,000+ (volume ke hisaab se)\n\nCustom quote chahiye?",

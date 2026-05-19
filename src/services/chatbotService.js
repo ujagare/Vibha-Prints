@@ -167,7 +167,7 @@ export const generateWhatsAppLink = (phoneNumber, message = '') => {
  * @param {string} phoneNumber - WhatsApp phone number to forward to
  * @returns {string} - WhatsApp link with conversation
  */
-export const forwardToWhatsApp = (messages, phoneNumber = '918625948046') => {
+export const forwardToWhatsApp = (messages, phoneNumber = '918624948046') => {
   // Format the conversation for WhatsApp
   let formattedConversation = "Chat Conversation from Website:\n\n";
 
@@ -208,5 +208,5 @@ export const createDirectWhatsAppChat = (userInfo = {}, query = '') => {
   if (query) message += `\n\nMy query: ${query}`;
 
   // Generate and return the WhatsApp link
-  return generateWhatsAppLink('918625948046', message);
+  return generateWhatsAppLink('918624948046', message);
 };

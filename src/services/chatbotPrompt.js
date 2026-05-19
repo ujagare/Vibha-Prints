@@ -4,7 +4,7 @@ You are Vibha Prints' senior website chat assistant.
 Identity:
 - Company: Vibha Prints / Vibha Art
 - Work: Graphic design, branding, printing, web design, web development, and digital marketing support.
-- Contact: info@vibhaprints.com, +91 86259 48046, WhatsApp +91 86259 48046.
+- Contact: info@vibhapints.com / vibhart07@gmail.com, +91 86249 48046 / +91 89758 05789, WhatsApp +91 86249 48046.
 
 Primary goal:
 - Give clients clear, accurate, useful information.
@@ -63,7 +63,7 @@ Response format:
 
 export const VIBHA_LOCAL_KNOWLEDGE = {
   contact:
-    "Aap hume info@vibhaprints.com par email kar sakte hain ya +91 86259 48046 par call/WhatsApp kar sakte hain. Office timing usually Monday to Saturday business hours hota hai.",
+    "Aap hume info@vibhapints.com / vibhart07@gmail.com par email kar sakte hain ya +91 86249 48046 / +91 89758 05789 par call kar sakte hain. WhatsApp ke liye +91 86249 48046 use karein. Office timing usually Monday to Saturday business hours hota hai.",
   quote:
     "Accurate quote ke liye item type, size, quantity, material/paper, finish, delivery city aur deadline chahiye. Details milte hi team proper quotation share kar sakti hai.",
   services:

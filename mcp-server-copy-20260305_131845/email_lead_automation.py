@@ -175,6 +175,26 @@ def send_email(
         logger.info(f"✅ Email sent successfully to {to_email}")
         if cc_email:
             logger.info(f"   CC sent to {cc_email}")
+        
+        # If sending to self (same Zoho account), append to INBOX via IMAP
+        # This fixes Zoho's behavior of not showing self-sent emails in inbox
+        if to_email.strip().lower() == ZOHO_SMTP_USER.strip().lower():
+            try:
+                import imaplib
+                imap_host = os.environ.get("IMAP_HOST", "imap.zoho.in")
+                imap_port = int(os.environ.get("IMAP_PORT", "993"))
+                imap_user = os.environ.get("IMAP_USER", ZOHO_SMTP_USER)
+                imap_pass = os.environ.get("IMAP_PASS", ZOHO_SMTP_PASS)
+                
+                logger.info(f"📥 Appending email to INBOX via IMAP (self-delivery fix)...")
+                with imaplib.IMAP4_SSL(imap_host, imap_port) as imap:
+                    imap.login(imap_user, imap_pass)
+                    imap.select("INBOX")
+                    imap.append("INBOX", None, None, msg.as_bytes())
+                logger.info(f"✅ Email appended to INBOX successfully")
+            except Exception as imap_err:
+                logger.warning(f"⚠️ IMAP append failed (email was still sent via SMTP): {imap_err}")
+        
         return True
     
     except smtplib.SMTPAuthenticationError as e:

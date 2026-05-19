@@ -573,6 +573,25 @@ button {
   }
 }
 
+.nav-mobile-toggle {
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  border-radius: 9999px !important;
+}
+
+.nav-mobile-toggle-icon {
+  width: 26px !important;
+  height: 26px !important;
+  min-width: 26px !important;
+  min-height: 26px !important;
+  flex: 0 0 auto;
+  stroke-width: 2.5;
+}
+
 /* ===== mobile-optimize-patch ===== */
 
 /* Tap targets minimum 48px */
@@ -607,10 +626,9 @@ html, body {
     line-height: 1.6;
   }
 
-  h1 { font-size: clamp(1.6rem, 6vw, 2.5rem); }
-  h2 { font-size: clamp(1.3rem, 5vw, 2rem); }
-  h3 { font-size: clamp(1.1rem, 4vw, 1.5rem); }
-  p, li, span, a { font-size: clamp(0.875rem, 3.5vw, 1rem); }
+  p, li {
+    font-size: clamp(0.875rem, 3.5vw, 1rem);
+  }
 
   /* Images responsive */
   img {

@@ -117,9 +117,9 @@ const workItems = [
 ];
 
 const stats = [
-  { value: "250+", label: "Projects Completed", icon: FaRegHandshake },
+  { value: "100+", label: "Projects Completed", icon: FaRegHandshake },
   { value: "98%", label: "Client Satisfaction", icon: FaRegStar },
-  { value: "10+", label: "Years Experience", icon: FaRegCalendarCheck },
+  { value: "7+", label: "Years Experience", icon: FaRegCalendarCheck },
   { value: "50+", label: "Brands Empowered", icon: FaUsers },
 ];
 
@@ -210,12 +210,12 @@ const EnhancedHero = () => {
               We Design. We Print. We Grow Brands.
             </p>
             <h1
-              className="mb-5 text-[2.35rem] font-extrabold leading-[1.08] text-white sm:mb-6 sm:text-5xl lg:text-6xl"
+              className="mb-5 text-[clamp(1.85rem,8vw,2.35rem)] font-extrabold leading-[1.08] text-white sm:mb-6 sm:text-5xl lg:text-6xl"
               style={{ WebkitTextFillColor: "currentColor" }}
             >
-              Creative Solutions
-              <span className="block text-[#ff525d]">
-                That Drive Results.
+              Converrt Your Dream
+              <span className="block whitespace-nowrap text-[#ff525d]">
+                Into a Brand
               </span>
             </h1>
             <p className="max-w-xl text-sm leading-7 text-white/78 sm:text-lg sm:leading-8">

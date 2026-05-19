@@ -111,7 +111,7 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
         </AnimatePresence>
 
         {/* Desktop Sidebar Toggle Button */}
-        <div className="hidden lg:block fixed top-24 left-0 z-40">
+        <div className="hidden lg:block fixed top-24 left-0 z-50">
           <motion.button
             onClick={toggleDesktopSidebar}
             className="ml-4 mt-2 text-gray-800 hover:text-brand-primary-600 transition-all duration-300 bg-white shadow-lg p-3 rounded-r-full"
@@ -145,15 +145,15 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
         </motion.div>
 
         {/* Main Content Area - Desktop */}
-        <div className="hidden min-h-[calc(100vh-6rem)] pt-24 lg:flex">
+        <div className="hidden min-h-[calc(100vh-6rem)] pt-24 lg:flex relative">
           <AnimatePresence initial={false}>
             {isDesktopSidebarOpen && (
               <motion.aside
-                className="sticky top-24 h-[calc(100vh-6rem)] w-80 shrink-0 self-start overflow-y-auto overscroll-contain border-r border-[#dfe6f0] bg-[#f8fafc] pt-4 shadow-[18px_0_55px_rgba(7,17,36,0.08)]"
+                className="fixed left-0 top-24 h-[calc(100vh-6rem)] w-80 shrink-0 overflow-y-auto overscroll-contain border-r border-[#dfe6f0] bg-[#f8fafc] pt-4 shadow-[18px_0_55px_rgba(7,17,36,0.08)] z-40"
                 data-lenis-prevent
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: 320, opacity: 1 }}
-                exit={{ width: 0, opacity: 0 }}
+                initial={{ x: -320, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -320, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 onWheelCapture={containSidebarScroll}
                 onTouchMoveCapture={containSidebarScroll}
@@ -161,7 +161,7 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
                 onHoverEnd={() => setIsHovered(false)}
               >
                 <motion.div
-                  className="mt-10 w-80 p-6 pb-24"
+                  className="w-80 p-6 pb-24"
                   animate={{ x: isHovered ? 3 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -184,7 +184,7 @@ const withGallerySidebar = (WrappedComponent, options = {}) => {
           </AnimatePresence>
 
           <motion.div
-            className={`min-w-0 flex-1 ${isDesktopSidebarOpen ? "" : "pl-16"}`}
+            className={`min-w-0 flex-1 relative z-10 transition-all duration-300 ${isDesktopSidebarOpen ? "ml-80" : "ml-0"}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
