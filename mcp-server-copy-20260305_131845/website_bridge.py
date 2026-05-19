@@ -89,6 +89,7 @@ FOLLOWUP_SCHEDULER_ENABLED = os.environ.get("FOLLOWUP_SCHEDULER_ENABLED", "").st
     "1", "true", "yes"
 }
 FOLLOWUP_SCHEDULER_TIME = os.environ.get("FOLLOWUP_SCHEDULER_TIME", "09:00").strip()
+GREEN_API_PROCESSED_MESSAGES = set()
 
 
 @app.after_request
@@ -1065,9 +1066,18 @@ def green_api_webhook():
     chat_id = (sender_data.get("chatId") or "").strip()
     sender_name = (sender_data.get("senderName") or "").strip()
     message = _extract_green_api_text(message_data)
+    message_id = (data.get("idMessage") or message_data.get("idMessage") or "").strip()
 
     if not chat_id or not message:
         return jsonify({"success": True, "skipped": "no_chat_or_text"})
+
+    if message_id:
+        dedupe_key = f"{chat_id}:{message_id}"
+        if dedupe_key in GREEN_API_PROCESSED_MESSAGES:
+            return jsonify({"success": True, "skipped": "duplicate", "message_id": message_id})
+        GREEN_API_PROCESSED_MESSAGES.add(dedupe_key)
+        if len(GREEN_API_PROCESSED_MESSAGES) > 500:
+            GREEN_API_PROCESSED_MESSAGES.clear()
 
     result = handle_whatsapp_message(chat_id, message, sender_name)
     reply = (result.get("response") or "").strip()

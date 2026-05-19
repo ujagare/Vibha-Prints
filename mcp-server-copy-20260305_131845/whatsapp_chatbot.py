@@ -90,6 +90,32 @@ Remember: You're having a real conversation, not sending templates!
 """
 
 
+def _rule_based_reply(user_message: str) -> str:
+    """Useful fallback when AI providers are unavailable."""
+    text = (user_message or "").lower()
+    if any(word in text for word in ["print", "printing", "card", "brochure", "banner", "flex", "vinyl", "sticker"]):
+        return (
+            "Namaste! Printing ke liye zaroor help karenge. "
+            "Please quantity, size, material aur delivery location share kar dijiye, "
+            "hum aapko best quote bhej denge."
+        )
+    if any(word in text for word in ["logo", "design", "branding", "packaging"]):
+        return (
+            "Namaste! Design requirement ke liye please brand name, style reference, "
+            "aur timeline share kar dijiye. Team aapko next steps aur quote bata degi."
+        )
+    if any(word in text for word in ["website", "web", "ecommerce", "seo"]):
+        return (
+            "Namaste! Website/digital work ke liye please project type, pages/features, "
+            "aur timeline share kar dijiye. Hum suitable package suggest karenge."
+        )
+    return (
+        "Namaste! Thanks for contacting Vibha Prints. "
+        "Please apni requirement, quantity/timeline aur contact details share kar dijiye. "
+        f"Urgent ho to call: {BUSINESS_PHONE}"
+    )
+
+
 def load_conversation(phone_number: str) -> List[Dict]:
     """Load conversation history for a phone number"""
     conv_file = CONVERSATIONS_DIR / f"{phone_number}.json"
@@ -178,9 +204,9 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
         if groq_client:
             logger.info("🤖 Using Groq for response")
             response = groq_client.chat.completions.create(
-                model="mixtral-8x7b-32768",
+                model=os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"),
                 messages=messages,
-                max_tokens=300,
+                max_tokens=220,
                 temperature=0.7,
             )
             ai_response = response.choices[0].message.content.strip()
@@ -199,7 +225,7 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
         # Fallback response
         else:
             logger.warning("⚠️  No AI client available, using fallback")
-            ai_response = f"Thank you for your message! We'll get back to you shortly. Contact us: {BUSINESS_PHONE}"
+            ai_response = _rule_based_reply(user_message)
         
         # Add AI response to history
         add_message(phone_number, "assistant", ai_response)
@@ -217,7 +243,7 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
     
     except Exception as e:
         logger.error(f"❌ Error generating response: {e}")
-        fallback = f"Thank you for your message! We're having a moment. Please call us: {BUSINESS_PHONE}"
+        fallback = _rule_based_reply(user_message)
         add_message(phone_number, "assistant", fallback)
         
         return {
