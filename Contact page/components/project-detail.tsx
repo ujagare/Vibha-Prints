@@ -83,7 +83,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
 
         {/* Hero Image */}
         <motion.div className="mb-12 rounded-2xl overflow-hidden" {...fadeInUp}>
-          <img
+          <img loading="lazy"
             src={project.heroImage || "/placeholder.svg"}
             alt={`${project.title} hero`}
             className="w-full aspect-[4/3] object-cover"
@@ -100,7 +100,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
         <div className="space-y-6 mb-12">
           {project.galleryImages.map((src, index) => (
             <motion.div key={index} className="rounded-2xl overflow-hidden" {...fadeInUp}>
-              <img
+              <img loading="lazy"
                 src={src || "/placeholder.svg"}
                 alt={`${project.title} gallery ${index + 1}`}
                 className="w-full aspect-[4/3] object-cover"

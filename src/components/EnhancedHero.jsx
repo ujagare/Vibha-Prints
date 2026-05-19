@@ -6,7 +6,11 @@ import {
   Play as FaPlay,
   CalendarCheck as FaRegCalendarCheck,
   Handshake as FaRegHandshake,
+  Headphones,
   Star as FaRegStar,
+  ShieldCheck,
+  Sparkles,
+  Truck,
   Users as FaUsers,
 } from "lucide-react";
 import {
@@ -20,25 +24,21 @@ import {
   Target as FiTarget,
 } from "lucide-react";
 import Testimonials from "./Testimonials";
-import heroShowcase from "../assets/Home/ChatGPT Image May 16, 2026, 04_34_55 PM.png";
-import heroShowcaseMobile from "../assets/Home/Mobile/ChatGPT Image May 18, 2026, 12_53_59 AM.png";
-import darkPattern from "../assets/Home/ChatGPT Image May 16, 2026, 04_50_15 PM.png";
-import packageWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_54_38 PM.png";
-import brandWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_55_27 PM.png";
-import websiteWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_57_33 PM.png";
-import marketingWork from "../assets/Home/ChatGPT Image May 16, 2026, 04_58_15 PM.png";
-import ctaShowcase from "../assets/Home/ChatGPT Image May 16, 2026, 05_07_33 PM.png";
-import ctaShowcaseMobile from "../assets/Home/Mobile/ChatGPT Image May 18, 2026, 12_54_46 AM.png";
-import designIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_39_19 PM.png";
-import printIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_41_01 PM.png";
-import marketingIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_41_38 PM.png";
-import websiteIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_42_17 PM.png";
-import creativeIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_44_31 PM.png";
-import qualityIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_45_09 PM.png";
-import deliveryIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_45_44 PM.png";
-import supportIcon from "../assets/Home/Icons/ChatGPT Image May 16, 2026, 04_47_29 PM.png";
+import heroShowcase from "../assets/Home/image-162.webp";
+import heroShowcaseMobile from "../assets/Home/Mobile/image-181.webp";
+import darkPattern from "../assets/Home/image-163.webp";
+import packageWork from "../assets/Home/image-164.webp";
+import brandWork from "../assets/Home/image-165.webp";
+import websiteWork from "../assets/Home/image-166.webp";
+import marketingWork from "../assets/Home/image-167.webp";
+import ctaShowcase from "../assets/Home/image-168.webp";
+import ctaShowcaseMobile from "../assets/Home/Mobile/image-182.webp";
+import designIcon from "../assets/Home/Icons/image-169.webp";
+import printIcon from "../assets/Home/Icons/image-170.webp";
+import marketingIcon from "../assets/Home/Icons/image-171.webp";
+import websiteIcon from "../assets/Home/Icons/image-172.webp";
 
-const pngLogoModules = import.meta.glob("../assets/png logos/*.png", {
+const pngLogoModules = import.meta.glob("../assets/png logos/*.{png,webp,svg}", {
   eager: true,
   import: "default",
 });
@@ -103,10 +103,10 @@ const services = [
 ];
 
 const whyItems = [
-  { title: "Creative Designers", icon: creativeIcon },
-  { title: "Quality Assurance", icon: qualityIcon },
-  { title: "On-Time Delivery", icon: deliveryIcon },
-  { title: "Customer Support", icon: supportIcon },
+  { title: "Creative Designers", icon: Sparkles },
+  { title: "Quality Assurance", icon: ShieldCheck },
+  { title: "On-Time Delivery", icon: Truck },
+  { title: "Customer Support", icon: Headphones },
 ];
 
 const workItems = [
@@ -191,7 +191,7 @@ const EnhancedHero = () => {
       <section className="relative min-h-[680px] overflow-hidden bg-[#050d1d] text-white sm:min-h-[820px] lg:min-h-[900px]">
         <picture>
           <source media="(max-width: 640px)" srcSet={heroShowcaseMobile} />
-          <img
+          <img loading="lazy"
             src={heroShowcase}
             alt="Vibha brand stationery, tablet and print mockups"
             className="absolute inset-0 h-full w-full object-cover object-center"
@@ -389,7 +389,7 @@ const EnhancedHero = () => {
                   {service.number}
                 </span>
                 <div
-                  className="mx-auto mt-7 flex h-28 w-28 items-center justify-center rounded-full border sm:mt-8 sm:h-40 sm:w-40"
+                  className="mx-auto mt-7 flex h-28 w-28 items-center justify-center overflow-hidden rounded-full border sm:mt-8 sm:h-40 sm:w-40"
                   style={{
                     borderColor: `${service.color}90`,
                     boxShadow: `0 0 40px ${service.color}24`,
@@ -397,8 +397,8 @@ const EnhancedHero = () => {
                 >
                   <img
                     src={service.icon}
-                    alt=""
-                    className="h-20 w-20 object-contain sm:h-28 sm:w-28"
+                    alt="Vibha Art - Creative Design Studio Hero Image"
+                    className="h-full w-full rounded-full object-cover"
                     loading="lazy"
                   />
                 </div>
@@ -444,24 +444,26 @@ const EnhancedHero = () => {
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-4">
-            {whyItems.map((item, index) => (
-              <div key={item.title} className="relative text-center">
-                {index > 0 && (
-                  <span className="absolute -left-3 top-12 hidden h-px w-6 bg-[#ff525d]/70 sm:block" />
-                )}
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-[#ff525d]/40 bg-white/5">
-                  <img
-                    src={item.icon}
-                    alt=""
-                    className="h-14 w-14 object-contain"
-                    loading="lazy"
-                  />
+            {whyItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="relative text-center">
+                  {index > 0 && (
+                    <span className="absolute -left-3 top-12 hidden h-px w-6 bg-[#ff525d]/70 sm:block" />
+                  )}
+                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-[#ff525d]/40 bg-white/5">
+                    <Icon
+                      className="h-12 w-12 text-[#ff525d] drop-shadow-[0_0_18px_rgba(255,82,93,0.55)]"
+                      strokeWidth={1.9}
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-lg font-extrabold leading-snug text-white">
+                    {item.title}
+                  </h3>
                 </div>
-                <h3 className="mt-4 text-lg font-extrabold leading-snug text-white">
-                  {item.title}
-                </h3>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

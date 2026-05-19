@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import packaging design images
-import Package1 from "../assets/Packeging/Almond Oil Packege.jpg";
-import Package2 from "../assets/Packeging/Almond Oil Packege_1.jpg";
-import Package3 from "../assets/Packeging/Behance Ad 1.jpg";
-import Package4 from "../assets/Packeging/Behance Ad 4.jpg";
-import Package5 from "../assets/Packeging/Behance Ad 6.jpg";
-import Package6 from "../assets/Packeging/Behance Ad.jpg";
-import Package7 from "../assets/Packeging/Beige and Blue Playful Cookie Food Product Label.jpg";
-import Package8 from "../assets/Packeging/Brown White 3D Chocolate Packaging Mockup Instagram Post.jpg";
-import Package9 from "../assets/Packeging/Green and White Modern Tea Mix Organic Product Label.jpg";
-import Package10 from "../assets/Packeging/Grey Green 3D Animated Tea Packaging Mockup Instagram Post.jpg";
-import Package11 from "../assets/Packeging/White and Yellow Playful illustrative Banana Chips Packaging Food Product Label.jpg";
-import Package12 from "../assets/Packeging/Yellow Modern Honey Bee Packaging Label.jpg";
+import Package1 from "../assets/Packeging/image-194.webp";
+import Package2 from "../assets/Packeging/image-195.webp";
+import Package3 from "../assets/Packeging/behance-ad-1.webp";
+import Package4 from "../assets/Packeging/behance-ad-4.webp";
+import Package5 from "../assets/Packeging/behance-ad-6.webp";
+import Package6 from "../assets/Packeging/behance-ad.webp";
+import Package7 from "../assets/Packeging/image-200.webp";
+import Package8 from "../assets/Packeging/image-201.webp";
+import Package9 from "../assets/Packeging/image-202.webp";
+import Package10 from "../assets/Packeging/image-203.webp";
+import Package11 from "../assets/Packeging/image-204.webp";
+import Package12 from "../assets/Packeging/image-205.webp";
 
 const ProductPackagingDesignGallery = createGalleryTemplate({
   title: "Product Packaging Design Gallery",

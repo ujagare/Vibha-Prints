@@ -3,11 +3,11 @@ import {
   Paintbrush as FaPaintBrush,
   Printer as FaPrint,
 } from "lucide-react";
-import logoImg1 from "../../assets/Logo/Logo_1.jpg";
-import logoImg2 from "../../assets/Logo/Logo_2.jpg";
-import logoImg3 from "../../assets/Logo/Logo_3.jpg";
-import packagingImg1 from "../../assets/Packeging/Almond Oil Packege_1.jpg";
-import packagingImg2 from "../../assets/Packeging/Behance Ad 1.jpg";
+import logoImg1 from "../../assets/Logo/logo-1.webp";
+import logoImg2 from "../../assets/Logo/logo-2.webp";
+import logoImg3 from "../../assets/Logo/logo-3.webp";
+import packagingImg1 from "../../assets/Packeging/image-195.webp";
+import packagingImg2 from "../../assets/Packeging/behance-ad-1.webp";
 import VibhaBrochurePdf from "../../assets/Brouchers/Vibha_Printing Media.pdf";
 import { submitBrochureLead } from "../../services/supabaseLeadService";
 import { useToast } from "./ToastProvider";
@@ -53,7 +53,7 @@ const AccordionItem = ({ item, isActive, onMouseEnter }) => {
       onMouseEnter={onMouseEnter}
     >
       {/* Background Image */}
-      <img
+      <img loading="lazy"
         src={item.imageUrl}
         alt={item.title}
         className="absolute inset-0 w-full h-full object-cover"

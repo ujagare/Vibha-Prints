@@ -19,21 +19,22 @@ import {
   Users as FaUsers,
 } from "lucide-react";
 import "./EnhancedAbout.css";
-import aboutHeroMobile from "../assets/About/Mobile/ChatGPT Image May 18, 2026, 01_04_55 AM.png";
+import aboutHeroMobile from "../assets/About/Mobile/image-026.webp";
+import SEO from "../components/SEO";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const aboutImages = import.meta.glob("../assets/About/*.png", {
+const aboutImages = import.meta.glob("../assets/About/*.{png,webp}", {
   eager: true,
   import: "default",
 });
 
-const aboutIconImages = import.meta.glob("../assets/About/Icons/*.png", {
+const aboutIconImages = import.meta.glob("../assets/About/Icons/*.{png,webp}", {
   eager: true,
   import: "default",
 });
 
-const clientLogoModules = import.meta.glob("../assets/png logos/*.{png,svg}", {
+const clientLogoModules = import.meta.glob("../assets/png logos/*.{png,webp,svg}", {
   eager: true,
   import: "default",
 });
@@ -164,7 +165,7 @@ function IconBadge({ icon: Icon, image, className = "" }) {
   return (
     <span className={`about-icon-badge ${className}`}>
       {image ? (
-        <img src={image} alt="" aria-hidden="true" loading="lazy" />
+        <img src={image} alt="About Vibha Art - Design Studio Pune" aria-hidden="true" loading="lazy" />
       ) : (
         <Icon />
       )}
@@ -222,10 +223,11 @@ export default function EnhancedAbout() {
 
   return (
     <div className="about-page" ref={rootRef}>
+      <SEO page="about" />
       <section className="about-hero-v2">
         <picture>
           <source media="(max-width: 680px)" srcSet={aboutHeroMobile} />
-          <img
+          <img loading="lazy"
             src={heroBg}
             alt="Vibha Prints design, printing, digital marketing and web development showcase"
             className="about-hero-art"
@@ -322,7 +324,6 @@ export default function EnhancedAbout() {
               <article className="about-timeline-item about-reveal" key={item.year}>
                 <IconBadge
                   icon={item.icon}
-                  image={iconList[index + 8]}
                   className={index === 1 || index === 3 ? "is-red" : ""}
                 />
                 <h3>{item.year}</h3>

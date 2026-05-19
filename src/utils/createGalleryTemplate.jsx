@@ -117,7 +117,7 @@ export const createGalleryTemplate = (config) => {
                   >
                     <div className="aspect-[1.18/1] w-full overflow-hidden">
                       {item.image ? (
-                        <img
+                        <img loading="lazy"
                           src={item.image}
                           alt={item.title}
                           className={`h-full w-full transition duration-500 group-hover:scale-105 ${
@@ -252,7 +252,7 @@ export const createGalleryTemplate = (config) => {
                     className="flex min-h-0 flex-1 items-center justify-center"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <img
+                    <img loading="lazy"
                       src={items[currentImageIndex]?.image}
                       alt={items[currentImageIndex]?.title}
                       className="max-h-[64vh] w-auto max-w-[86vw] rounded-lg object-contain shadow-[0_30px_90px_rgba(0,0,0,0.45)]"
@@ -294,7 +294,7 @@ export const createGalleryTemplate = (config) => {
                         type="button"
                         aria-label={`Preview ${item.title}`}
                       >
-                        <img src={item.image} alt="" className="h-full w-full object-cover" />
+                        <img loading="lazy" src={item.image} alt="Vibha Art Portfolio - Design & Print Gallery" className="h-full w-full object-cover" />
                       </button>
                     ))}
                   </div>

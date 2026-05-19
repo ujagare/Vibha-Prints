@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import business card printing images
-import BusinessCard1 from "../assets/Printing/Bussiness Card/Business Card Mockup.jpg";
-import BusinessCard2 from "../assets/Printing/Bussiness Card/Business card mockup file.jpg";
-import BusinessCard3 from "../assets/Printing/Bussiness Card/Business card template.jpg";
-import BusinessCard4 from "../assets/Printing/Bussiness Card/Close up on minimal business card mockup.jpg";
-import BusinessCard5 from "../assets/Printing/Bussiness Card/Floating business card mockup design with a blue polygonal background.jpg";
-import BusinessCard6 from "../assets/Printing/Bussiness Card/Logo Mockup on Business Card with Pressed Gold Print Effect.jpg";
-import BusinessCard7 from "../assets/Printing/Bussiness Card/Minimalistic business card template.jpg";
-import BusinessCard8 from "../assets/Printing/Bussiness Card/Mock up with young man and business card in foreground.jpg";
-import BusinessCard9 from "../assets/Printing/Bussiness Card/Monochrome business cards pack.jpg";
-import BusinessCard10 from "../assets/Printing/Bussiness Card/Orange elegant corporate card.jpg";
-import BusinessCard11 from "../assets/Printing/Bussiness Card/Orange shape visit card.jpg";
-import BusinessCard12 from "../assets/Printing/Bussiness Card/Realistic business stationary visit card.jpg";
+import BusinessCard1 from "../assets/Printing/Bussiness Card/image-262.webp";
+import BusinessCard2 from "../assets/Printing/Bussiness Card/image-261.webp";
+import BusinessCard3 from "../assets/Printing/Bussiness Card/image-263.webp";
+import BusinessCard4 from "../assets/Printing/Bussiness Card/image-264.webp";
+import BusinessCard5 from "../assets/Printing/Bussiness Card/image-265.webp";
+import BusinessCard6 from "../assets/Printing/Bussiness Card/image-266.webp";
+import BusinessCard7 from "../assets/Printing/Bussiness Card/image-267.webp";
+import BusinessCard8 from "../assets/Printing/Bussiness Card/image-268.webp";
+import BusinessCard9 from "../assets/Printing/Bussiness Card/image-269.webp";
+import BusinessCard10 from "../assets/Printing/Bussiness Card/image-270.webp";
+import BusinessCard11 from "../assets/Printing/Bussiness Card/image-271.webp";
+import BusinessCard12 from "../assets/Printing/Bussiness Card/image-272.webp";
 
 const BusinessCardPrintingGallery = createGalleryTemplate({
   title: "Business Card Printing Gallery",

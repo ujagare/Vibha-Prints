@@ -3,15 +3,15 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import business card images
-import Visi1 from "../assets/Visiting Card/Visi_1.jpg";
-import Visi2 from "../assets/Visiting Card/Visi_2.jpg";
-import Visi3 from "../assets/Visiting Card/Visi_3.jpg";
-import Visi4 from "../assets/Visiting Card/Visi_4.jpg";
-import Visi5 from "../assets/Visiting Card/Visi_5.jpg";
-import Visi6 from "../assets/Visiting Card/Visi_6.jpg";
-import Visi7 from "../assets/Visiting Card/Visi_7.jpg";
-import Visi8 from "../assets/Visiting Card/Visi_8.jpg";
-import Visi9 from "../assets/Visiting Card/Visi_9.jpg";
+import Visi1 from "../assets/Visiting Card/visi-1.webp";
+import Visi2 from "../assets/Visiting Card/visi-2.webp";
+import Visi3 from "../assets/Visiting Card/visi-3.webp";
+import Visi4 from "../assets/Visiting Card/visi-4.webp";
+import Visi5 from "../assets/Visiting Card/visi-5.webp";
+import Visi6 from "../assets/Visiting Card/visi-6.webp";
+import Visi7 from "../assets/Visiting Card/visi-7.webp";
+import Visi8 from "../assets/Visiting Card/visi-8.webp";
+import Visi9 from "../assets/Visiting Card/visi-9.webp";
 
 const BusinessCardDesignGallery = createGalleryTemplate({
   title: "Business Card Design Gallery",

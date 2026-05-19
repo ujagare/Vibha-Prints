@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import social media design images
-import SocialMedia1 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.18.18 PM.jpeg";
-import SocialMedia2 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.19.08 PM (1).jpeg";
-import SocialMedia3 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.19.08 PM.jpeg";
-import SocialMedia4 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.19.09 PM.jpeg";
-import SocialMedia5 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.19.48 PM (1).jpeg";
-import SocialMedia6 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.19.48 PM (2).jpeg";
-import SocialMedia7 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.19.48 PM.jpeg";
-import SocialMedia8 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.20.54 PM.jpeg";
-import SocialMedia9 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.20.55 PM (1).jpeg";
-import SocialMedia10 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.20.55 PM.jpeg";
-import SocialMedia11 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.21.55 PM (1).jpeg";
-import SocialMedia12 from "../assets/Social Media/WhatsApp Image 2025-06-07 at 4.21.55 PM.jpeg";
+import SocialMedia1 from "../assets/Social Media/image-361.webp";
+import SocialMedia2 from "../assets/Social Media/image-362.webp";
+import SocialMedia3 from "../assets/Social Media/image-363.webp";
+import SocialMedia4 from "../assets/Social Media/image-364.webp";
+import SocialMedia5 from "../assets/Social Media/image-365.webp";
+import SocialMedia6 from "../assets/Social Media/image-366.webp";
+import SocialMedia7 from "../assets/Social Media/image-367.webp";
+import SocialMedia8 from "../assets/Social Media/image-368.webp";
+import SocialMedia9 from "../assets/Social Media/image-369.webp";
+import SocialMedia10 from "../assets/Social Media/image-370.webp";
+import SocialMedia11 from "../assets/Social Media/image-371.webp";
+import SocialMedia12 from "../assets/Social Media/image-372.webp";
 
 const SocialMediaDesignGallery = createGalleryTemplate({
   title: "Social Media Design Gallery",

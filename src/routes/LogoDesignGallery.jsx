@@ -3,17 +3,17 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import logo images
-import Logo1 from "../assets/Logo/Logo_1.jpg";
-import Logo2 from "../assets/Logo/Logo_2.jpg";
-import Logo3 from "../assets/Logo/Logo_3.jpg";
-import Logo4 from "../assets/Logo/Logo_4.jpg";
-import Logo5 from "../assets/Logo/Logo_5.jpg";
-import Logo6 from "../assets/Logo/Logo_6.jpg";
-import Logo7 from "../assets/Logo/Logo_7.jpg";
-import Logo8 from "../assets/Logo/Logo_8.jpg";
-import Logo9 from "../assets/Logo/Logo_9 (1).jpg";
-import Logo10 from "../assets/Logo/Logo_10.jpg";
-import Logo11 from "../assets/Logo/Logo_11.jpg";
+import Logo1 from "../assets/Logo/logo-1.webp";
+import Logo2 from "../assets/Logo/logo-2.webp";
+import Logo3 from "../assets/Logo/logo-3.webp";
+import Logo4 from "../assets/Logo/logo-4.webp";
+import Logo5 from "../assets/Logo/logo-5.webp";
+import Logo6 from "../assets/Logo/logo-6.webp";
+import Logo7 from "../assets/Logo/logo-7.webp";
+import Logo8 from "../assets/Logo/logo-8.webp";
+import Logo9 from "../assets/Logo/logo-9-1.webp";
+import Logo10 from "../assets/Logo/logo-10.webp";
+import Logo11 from "../assets/Logo/logo-11.webp";
 
 const LogoDesignGallery = createGalleryTemplate({
   title: "Logo Design Gallery",

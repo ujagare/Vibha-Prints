@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
+import SEO from "./SEO";
   ArrowRight as FaArrowRight,
 } from "lucide-react";
 
@@ -90,7 +91,7 @@ const PortfolioPreview = () => {
             >
               <Link to={item.link}>
                 <div className="aspect-square overflow-hidden">
-                  <img
+                  <img loading="lazy"
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"

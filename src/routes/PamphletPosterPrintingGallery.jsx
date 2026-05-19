@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import pamphlet and poster printing images
-import Pamphlet1 from "../assets/Printing/Pamphlet & Poster Printing/32_pamphlet-mockup.jpg";
-import Pamphlet2 from "../assets/Printing/Pamphlet & Poster Printing/60-Free-A4-Flyer-Mockup-PSD-Files-2.jpg";
-import Pamphlet3 from "../assets/Printing/Pamphlet & Poster Printing/63JpIkbEsTXFV.jpg";
-import Pamphlet4 from "../assets/Printing/Pamphlet & Poster Printing/Business flyer template.jpg";
-import Pamphlet5 from "../assets/Printing/Pamphlet & Poster Printing/Mobile app flyer.jpg";
-import Pamphlet6 from "../assets/Printing/Pamphlet & Poster Printing/Poster or Flyer mockup.jpg";
-import Pamphlet7 from "../assets/Printing/Pamphlet & Poster Printing/Tri-Fold-Brochure-Mockup-PSD.jpg";
-import Pamphlet8 from "../assets/Printing/Pamphlet & Poster Printing/Web page template mock up.jpg";
-import Pamphlet9 from "../assets/Printing/Pamphlet & Poster Printing/dental-clinic-flyer-poster-template-cover.jpg";
-import Pamphlet10 from "../assets/Printing/Pamphlet & Poster Printing/featured-pamphlet-mockup.jpg";
-import Pamphlet11 from "../assets/Printing/Pamphlet & Poster Printing/free-travel-poster-templates.jpg";
-import Pamphlet12 from "../assets/Printing/Pamphlet & Poster Printing/sporting-goods-outlet-a4-poster-advertisement-templates.jpg";
+import Pamphlet1 from "../assets/Printing/Pamphlet & Poster Printing/image-294.webp";
+import Pamphlet2 from "../assets/Printing/Pamphlet & Poster Printing/image-295.webp";
+import Pamphlet3 from "../assets/Printing/Pamphlet & Poster Printing/63jpikbestxfv.webp";
+import Pamphlet4 from "../assets/Printing/Pamphlet & Poster Printing/image-297.webp";
+import Pamphlet5 from "../assets/Printing/Pamphlet & Poster Printing/image-301.webp";
+import Pamphlet6 from "../assets/Printing/Pamphlet & Poster Printing/image-302.webp";
+import Pamphlet7 from "../assets/Printing/Pamphlet & Poster Printing/image-304.webp";
+import Pamphlet8 from "../assets/Printing/Pamphlet & Poster Printing/image-305.webp";
+import Pamphlet9 from "../assets/Printing/Pamphlet & Poster Printing/image-298.webp";
+import Pamphlet10 from "../assets/Printing/Pamphlet & Poster Printing/image-299.webp";
+import Pamphlet11 from "../assets/Printing/Pamphlet & Poster Printing/image-300.webp";
+import Pamphlet12 from "../assets/Printing/Pamphlet & Poster Printing/image-303.webp";
 
 const PamphletPosterPrintingGallery = createGalleryTemplate({
   title: "Pamphlet & Poster Printing Gallery",

@@ -14,7 +14,7 @@ import {
   BriefcaseBusiness as FaBehanceSquare,
 } from "lucide-react";
 import { vibha } from "../assets";
-import footerBg from "../assets/Home/ChatGPT Image May 16, 2026, 04_50_15 PM.png";
+import footerBg from "../assets/Home/image-163.webp";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -94,7 +94,7 @@ const Footer = () => {
           {/* Logo and About */}
           <motion.div variants={itemVariants}>
             <div className="mb-6">
-              <img
+              <img loading="lazy"
                 src={vibha}
                 alt="Vibha Art Logo"
                 className="h-16 w-auto object-contain mb-4"

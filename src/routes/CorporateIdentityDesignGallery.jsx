@@ -3,27 +3,27 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import corporate identity design images
-import Corporate1 from "../assets/Corporate/10919666506709.5b1830b6ddbef.png";
-import Corporate2 from "../assets/Corporate/1695210509.jpg";
-import Corporate3 from "../assets/Corporate/3-3.jpg";
-import Corporate4 from "../assets/Corporate/3-4.jpg";
-import Corporate5 from "../assets/Corporate/Corporate-Brand-Identity-Stationery-Templates.webp";
-import Corporate6 from "../assets/Corporate/Free-Corporate-Brand-Identity-Template.webp";
-import Corporate7 from "../assets/Corporate/Free-Corporate-Identity-PSD-Mockup-scaled.jpg";
-import Corporate8 from "../assets/Corporate/Free-corporate-identity-mockup.jpg";
-import Corporate9 from "../assets/Corporate/Holt-Case-study-09.webp";
-import Corporate10 from "../assets/Corporate/Name-Corporate-Identity-Pack-Design-Template-1.webp";
-import Corporate11 from "../assets/Corporate/brand-identity-banner.jpg";
-import Corporate12 from "../assets/Corporate/business-stationery.jpg";
-import Corporate13 from "../assets/Corporate/corporate-identity-branding-mockup-in-top-view.jpg";
-import Corporate14 from "../assets/Corporate/corporate-identity-of-the-construction-company-corporate-identity-stationary-items-free-vector.jpg";
-import Corporate15 from "../assets/Corporate/corporate-identity-set-branding-template-design-kit-editable-brand-identity-with-abstract-background-color-for-business-company-free-vector.jpg";
-import Corporate16 from "../assets/Corporate/corporate-identity-template-flat-style-vector-4329597.jpg";
-import Corporate17 from "../assets/Corporate/corporate-identity-template-with-digital-elements-company-style-for-brand-book-and-guideline-eps-10-free-vector.jpg";
-import Corporate18 from "../assets/Corporate/d2a74f67254113.5b332f9419237.png";
-import Corporate19 from "../assets/Corporate/modern-corporate-identity-template-design-flat-vector-4329405.jpg";
-import Corporate20 from "../assets/Corporate/office-stationery-items-and-corporate-branding-identity-template-for-industrial-vector-element_301294-original.webp";
-import Corporate21 from "../assets/Corporate/rcsbranding-corporate-identity-design-umiyaji-enterprise.jpg";
+import Corporate1 from "../assets/Corporate/10919666506709.webp";
+import Corporate2 from "../assets/Corporate/1695210509.webp";
+import Corporate3 from "../assets/Corporate/3-3.webp";
+import Corporate4 from "../assets/Corporate/3-4.webp";
+import Corporate5 from "../assets/Corporate/image-062.webp";
+import Corporate6 from "../assets/Corporate/image-069.webp";
+import Corporate7 from "../assets/Corporate/image-071.webp";
+import Corporate8 from "../assets/Corporate/image-070.webp";
+import Corporate9 from "../assets/Corporate/holt-case-study-09.webp";
+import Corporate10 from "../assets/Corporate/image-074.webp";
+import Corporate11 from "../assets/Corporate/image-060.webp";
+import Corporate12 from "../assets/Corporate/image-061.webp";
+import Corporate13 from "../assets/Corporate/image-063.webp";
+import Corporate14 from "../assets/Corporate/image-064.webp";
+import Corporate15 from "../assets/Corporate/image-065.webp";
+import Corporate16 from "../assets/Corporate/image-066.webp";
+import Corporate17 from "../assets/Corporate/image-067.webp";
+import Corporate18 from "../assets/Corporate/d2a74f67254113.webp";
+import Corporate19 from "../assets/Corporate/image-073.webp";
+import Corporate20 from "../assets/Corporate/image-075.webp";
+import Corporate21 from "../assets/Corporate/image-076.webp";
 
 const CorporateIdentityDesignGallery = createGalleryTemplate({
   title: "Corporate Identity Design Gallery",

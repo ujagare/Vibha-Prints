@@ -3,15 +3,15 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import brochure images
-import Brochure1 from "../assets/Brouchers/17947819.jpg";
-import Brochure2 from "../assets/Brouchers/3327941.jpg";
-import Brochure3 from "../assets/Brouchers/3329102.jpg";
-import Brochure4 from "../assets/Brouchers/3593222.jpg";
-import Brochure5 from "../assets/Brouchers/380.jpg";
-import Brochure6 from "../assets/Brouchers/5506044.jpg";
-import Brochure7 from "../assets/Brouchers/Brochure_2.jpg";
-import Brochure8 from "../assets/Brouchers/WhatsApp Image 2025-06-07 at 1.04.52 PM.jpeg";
-import Brochure9 from "../assets/Brouchers/WhatsApp Image 2025-06-07 at 12.57.45 PM.jpeg";
+import Brochure1 from "../assets/Brouchers/17947819.webp";
+import Brochure2 from "../assets/Brouchers/3327941.webp";
+import Brochure3 from "../assets/Brouchers/3329102.webp";
+import Brochure4 from "../assets/Brouchers/3593222.webp";
+import Brochure5 from "../assets/Brouchers/380.webp";
+import Brochure6 from "../assets/Brouchers/5506044.webp";
+import Brochure7 from "../assets/Brouchers/brochure-2.webp";
+import Brochure8 from "../assets/Brouchers/image-034.webp";
+import Brochure9 from "../assets/Brouchers/image-035.webp";
 
 const BrochureBookletDesignGallery = createGalleryTemplate({
   title: "Brochure & Booklet Design Gallery",

@@ -152,7 +152,7 @@ const Navbar = () => {
                   : "rounded-2xl border border-[#edf1f7] bg-white shadow-sm hover:shadow-xl hover:shadow-slate-200/80"
               }`}
             >
-              <img
+              <img loading="lazy"
                 src={vibha}
                 alt="Vibha Art Logo"
                 className="h-14 w-auto transition duration-300 group-hover:scale-[1.03]"

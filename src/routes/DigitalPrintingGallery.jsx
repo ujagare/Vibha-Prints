@@ -135,7 +135,7 @@ const DigitalPrintingGallery = () => {
               whileHover={{ scale: 1.05 }}
               className="bg-gray-100 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
             >
-              <img 
+              <img loading="lazy" 
                 src={item.imageUrl} 
                 alt={item.title} 
                 className="w-full h-64 object-cover"

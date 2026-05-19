@@ -3,18 +3,18 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import brochure and booklet printing images
-import Brochure1 from "../assets/Printing/Broucher & Booklet/A5 bifold.jpg";
-import Brochure2 from "../assets/Printing/Broucher & Booklet/Brochure template layout.jpg";
-import Brochure3 from "../assets/Printing/Broucher & Booklet/Coffee shop bifold.jpg";
-import Brochure4 from "../assets/Printing/Broucher & Booklet/Corporate  bifold brochure template design.jpg";
-import Brochure5 from "../assets/Printing/Broucher & Booklet/Dietary program brochure template psd.jpg";
-import Brochure6 from "../assets/Printing/Broucher & Booklet/Geometric the paradise hotel bifold brochure.jpg";
-import Brochure7 from "../assets/Printing/Broucher & Booklet/Global food rescue charity trifold brochure.jpg";
-import Brochure8 from "../assets/Printing/Broucher & Booklet/Great leaflet template with blue shapes.jpg";
-import Brochure9 from "../assets/Printing/Broucher & Booklet/Marketing  brochure template design.jpg";
-import Brochure10 from "../assets/Printing/Broucher & Booklet/Top side view of cover of Bifold Mockup.jpg";
-import Brochure11 from "../assets/Printing/Broucher & Booklet/US LETTER BROCHURE MOCKUP.jpg";
-import Brochure12 from "../assets/Printing/Broucher & Booklet/trifold brochure or invitation mockup still life concept.jpg";
+import Brochure1 from "../assets/Printing/Broucher & Booklet/a5-bifold.webp";
+import Brochure2 from "../assets/Printing/Broucher & Booklet/image-250.webp";
+import Brochure3 from "../assets/Printing/Broucher & Booklet/image-251.webp";
+import Brochure4 from "../assets/Printing/Broucher & Booklet/image-252.webp";
+import Brochure5 from "../assets/Printing/Broucher & Booklet/image-253.webp";
+import Brochure6 from "../assets/Printing/Broucher & Booklet/image-254.webp";
+import Brochure7 from "../assets/Printing/Broucher & Booklet/image-255.webp";
+import Brochure8 from "../assets/Printing/Broucher & Booklet/image-256.webp";
+import Brochure9 from "../assets/Printing/Broucher & Booklet/image-257.webp";
+import Brochure10 from "../assets/Printing/Broucher & Booklet/image-258.webp";
+import Brochure11 from "../assets/Printing/Broucher & Booklet/image-260.webp";
+import Brochure12 from "../assets/Printing/Broucher & Booklet/image-259.webp";
 
 const BrochureBookletPrintingGallery = createGalleryTemplate({
   title: "Brochure & Booklet Printing Gallery",

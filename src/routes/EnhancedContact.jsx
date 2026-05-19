@@ -12,13 +12,13 @@ import {
 } from "lucide-react";
 import { submitContactLead } from "../services/supabaseLeadService";
 import { useToast } from "../components/ui/ToastProvider";
-import heroBg from "../assets/Contact/ChatGPT Image May 17, 2026, 01_10_55 AM.png";
-import mapBg from "../assets/Contact/ChatGPT Image May 17, 2026, 01_12_51 AM.png";
-import envelopeArt from "../assets/Contact/ChatGPT Image May 17, 2026, 01_17_28 AM.png";
-import ctaBg from "../assets/Contact/ChatGPT Image May 17, 2026, 02_02_25 AM.png";
-import fastResponseIcon from "../assets/Contact/Icons/ChatGPT Image May 17, 2026, 01_25_16 AM.png";
-import expertSupportIcon from "../assets/Contact/Icons/ChatGPT Image May 17, 2026, 01_24_50 AM.png";
-import projectDiscussionIcon from "../assets/Contact/Icons/ChatGPT Image May 17, 2026, 01_26_28 AM.png";
+import heroBg from "../assets/Contact/image-045.webp";
+import mapBg from "../assets/Contact/image-046.webp";
+import envelopeArt from "../assets/Contact/image-047.webp";
+import ctaBg from "../assets/Contact/image-048.webp";
+import fastResponseIcon from "../assets/Contact/Icons/image-050.webp";
+import expertSupportIcon from "../assets/Contact/Icons/image-049.webp";
+import projectDiscussionIcon from "../assets/Contact/Icons/image-051.webp";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -156,7 +156,7 @@ const EnhancedContact = () => {
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center sm:h-24 sm:w-24">
                     <img
                       src={item.icon}
-                      alt=""
+                      alt="Contact Vibha Art - Printing Services Pune"
                       aria-hidden="true"
                       className="h-16 w-16 object-contain sm:h-24 sm:w-24"
                       loading="lazy"

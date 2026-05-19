@@ -4,15 +4,15 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import pamphlet and poster images
-import Pamphlet1 from "../assets/Pamphlet/1984.jpg";
-import Pamphlet2 from "../assets/Pamphlet/2036992.jpg";
-import Pamphlet3 from "../assets/Pamphlet/2123.jpg";
-import Pamphlet4 from "../assets/Pamphlet/429363-PEB6V6-74.jpg";
-import Pamphlet5 from "../assets/Pamphlet/508383-PI3JZN-432.jpg";
-import Pamphlet6 from "../assets/Pamphlet/509096-PIAGSV-693.jpg";
-import Pamphlet7 from "../assets/Pamphlet/Black and Grey Modern Business Webinar Flyer.jpg";
-import Pamphlet8 from "../assets/Pamphlet/Blue Modern Home For Sale Flyer.jpg";
-import Pamphlet9 from "../assets/Pamphlet/Blue and Yellow Modern Digital Marketing Flyer (1).jpg";
+import Pamphlet1 from "../assets/Pamphlet/1984.webp";
+import Pamphlet2 from "../assets/Pamphlet/2036992.webp";
+import Pamphlet3 from "../assets/Pamphlet/2123.webp";
+import Pamphlet4 from "../assets/Pamphlet/image-209.webp";
+import Pamphlet5 from "../assets/Pamphlet/image-210.webp";
+import Pamphlet6 from "../assets/Pamphlet/image-211.webp";
+import Pamphlet7 from "../assets/Pamphlet/image-212.webp";
+import Pamphlet8 from "../assets/Pamphlet/image-214.webp";
+import Pamphlet9 from "../assets/Pamphlet/image-213.webp";
 
 const PamphletPosterDesignGallery = createGalleryTemplate({
   title: "Pamphlet & Poster Design Gallery",

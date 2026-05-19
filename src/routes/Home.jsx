@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import EnhancedHero from "../components/EnhancedHero";
 import FaqSection from "../components/FaqSection";
+import SEO from "../components/SEO";
 
 const Home = () => {
   // Comprehensive SEO Keywords (50+)
@@ -225,6 +226,7 @@ const Home = () => {
 
   return (
     <div className="overflow-x-hidden pt-[7rem] md:pt-[6.5rem]">
+      <SEO page="home" />
       <Helmet>
         {/* ===== PRIMARY META TAGS ===== */}
         <title>

@@ -22,7 +22,6 @@ import HotjarScript from "./components/HotjarScript";
 import GoogleAdsScript from "./components/GoogleAdsScript";
 import EnhancedChatBot from "./components/EnhancedChatBot";
 import WhatsAppOrderWidget from "./components/WhatsAppOrderWidget";
-import WhatsAppChatbot from "./components/WhatsAppChatbot";
 import { ToastProvider } from "./components/ui/ToastProvider";
 
 // Lazy load components for better performance
@@ -60,6 +59,7 @@ import SocialMediaDesignGallery from "./routes/SocialMediaDesignGallery";
 import CorporateIdentityDesignGallery from "./routes/CorporateIdentityDesignGallery";
 import WebsiteDesignGallery from "./routes/WebsiteDesignGallery";
 import NotFound from "./routes/NotFound";
+import SEO from "./components/SEO";
 
 // Security Configurations
 const securityConfig = {
@@ -259,6 +259,7 @@ function RootLayout() {
 
   return (
     <>
+      <SEO page="home" />
       {loading && <Loader finishLoading={() => setLoading(false)} />}
       <div className="flex flex-col min-h-screen bg-brand-white-50 text-brand-white-900 overflow-x-hidden max-w-full">
         <SecurityHeaders />
@@ -271,7 +272,6 @@ function RootLayout() {
           }
         />
         <EnhancedChatBot />
-        <WhatsAppChatbot />
         <Helmet
           defaultTitle={defaultSEO.title}
           titleTemplate="%s | Vibha Art"

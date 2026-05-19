@@ -3,15 +3,15 @@ import { createGalleryTemplate } from "../utils/createGalleryTemplate.jsx";
 import withGallerySidebar from "../components/withGallerySidebar";
 
 // Import company profile images
-import CompanyProfile1 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 3.43.50 PM.jpeg";
-import CompanyProfile2 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 3.50.04 PM.jpeg";
-import CompanyProfile3 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 3.57.17 PM.jpeg";
-import CompanyProfile4 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 3.59.34 PM.jpeg";
-import CompanyProfile5 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 4.01.56 PM.jpeg";
-import CompanyProfile6 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 4.05.34 PM.jpeg";
-import CompanyProfile7 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 4.07.48 PM.jpeg";
-import CompanyProfile8 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 4.10.21 PM.jpeg";
-import CompanyProfile9 from "../assets/Comoany Profile/WhatsApp Image 2025-06-07 at 4.12.32 PM.jpeg";
+import CompanyProfile1 from "../assets/Comoany Profile/image-036.webp";
+import CompanyProfile2 from "../assets/Comoany Profile/image-037.webp";
+import CompanyProfile3 from "../assets/Comoany Profile/image-038.webp";
+import CompanyProfile4 from "../assets/Comoany Profile/image-039.webp";
+import CompanyProfile5 from "../assets/Comoany Profile/image-040.webp";
+import CompanyProfile6 from "../assets/Comoany Profile/image-041.webp";
+import CompanyProfile7 from "../assets/Comoany Profile/image-042.webp";
+import CompanyProfile8 from "../assets/Comoany Profile/image-043.webp";
+import CompanyProfile9 from "../assets/Comoany Profile/image-044.webp";
 
 const CompanyProfileDesignGallery = createGalleryTemplate({
   title: "Company Profile Design Gallery",

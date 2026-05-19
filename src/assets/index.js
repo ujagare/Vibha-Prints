@@ -1,4 +1,4 @@
-import vibha from './vibha.png';
+import vibha from './vibha.webp';
 import clientLogo1 from './client-logo1.svg';
 import clientLogo2 from './client-logo2.svg';
 import clientLogo3 from './client-logo3.svg';

@@ -17,7 +17,7 @@ export const PortfolioLayout = () => {
             className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative"
           >
             <div className="relative overflow-hidden">
-              <img
+              <img loading="lazy"
                 src={project.heroImage || "/placeholder.svg"}
                 alt={project.title}
                 className="w-full aspect-[4/3] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
