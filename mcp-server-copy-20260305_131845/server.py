@@ -223,7 +223,8 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
     from email_lead_automation import (
         send_contact_form_reply,
         send_brochure_download_email,
-        send_hot_lead_alert
+        send_hot_lead_alert,
+        send_internal_lead_notification,
     )
     import logging
     
@@ -278,6 +279,17 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
 
         # Send hot lead alert if applicable
         if result.get("success"):
+            logger.info(f"📧 Sending internal lead notification...")
+            internal_alert_sent = send_internal_lead_notification(
+                name=name,
+                email=email,
+                message=message or "",
+                phone=phone or "",
+                company=company or "",
+                lead_type=lead_type,
+            )
+            logger.info(f"📧 Internal lead notification sent: {internal_alert_sent}")
+
             logger.info(f"🔥 Checking for hot lead...")
             alert_sent = send_hot_lead_alert(name, email, message or "", lead_type)
 
@@ -286,6 +298,8 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
                 create_pipeline_entry(lead_id, lead_type, status="new")
                 add_lead_activity(lead_id, lead_type, "lead_created")
                 add_lead_activity(lead_id, lead_type, "email_sent")
+                if internal_alert_sent:
+                    add_lead_activity(lead_id, lead_type, "internal_lead_notification")
                 if lead_type == "brochure":
                     add_lead_activity(lead_id, lead_type, "brochure_sent")
                 if alert_sent:

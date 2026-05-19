@@ -280,6 +280,68 @@ def send_contact_form_reply(name: str, email: str, message: str) -> bool:
     )
 
 
+def send_internal_lead_notification(
+    name: str,
+    email: str,
+    message: str = "",
+    phone: str = "",
+    company: str = "",
+    lead_type: str = "contact",
+) -> bool:
+    """Send an internal notification for every saved website lead."""
+    internal_email = (
+        os.environ.get("MAIL_TO")
+        or os.environ.get("LEADS_EMAIL_TO")
+        or os.environ.get("HOT_LEAD_ALERT_EMAIL")
+        or BRAND_EMAIL
+    )
+    lead_score = score_lead(name, email, message, lead_type)
+
+    html_content = f"""
+    <html>
+        <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+            <div style='max-width: 640px; margin: 0 auto; padding: 20px;'>
+                <h2 style='color: #6A11CB;'>New Website Lead</h2>
+                <div style='background-color: #f7f4ff; padding: 16px; border-radius: 6px;'>
+                    <p><strong>Name:</strong> {name}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Phone:</strong> {phone or "-"}</p>
+                    <p><strong>Company:</strong> {company or "-"}</p>
+                    <p><strong>Type:</strong> {lead_type}</p>
+                    <p><strong>Score:</strong> {lead_score['score']}/100 ({lead_score['priority'].upper()})</p>
+                </div>
+                <div style='margin-top: 16px; padding: 16px; border-left: 4px solid #6A11CB; background: #fafafa;'>
+                    <p><strong>Message:</strong></p>
+                    <p>{message or "-"}</p>
+                </div>
+            </div>
+        </body>
+    </html>
+    """
+
+    text_content = f"""
+    New Website Lead
+
+    Name: {name}
+    Email: {email}
+    Phone: {phone or "-"}
+    Company: {company or "-"}
+    Type: {lead_type}
+    Score: {lead_score['score']}/100 ({lead_score['priority'].upper()})
+
+    Message:
+    {message or "-"}
+    """
+
+    logger.info(f"Internal lead notification channel: email -> {internal_email}")
+    return send_email(
+        internal_email,
+        f"New Website Lead: {name} - {lead_type.upper()}",
+        html_content,
+        text_content,
+    )
+
+
 def send_brochure_download_email(name: str, email: str, company: str = "") -> bool:
     """
     Send brochure download confirmation email
