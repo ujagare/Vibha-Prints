@@ -17,7 +17,6 @@ import QueryProvider from "./providers/QueryProvider";
 import CursorEffect from "./components/CursorEffect";
 import BackToTop from "./components/BackToTop";
 import Footer from "./components/Footer";
-import FaqSection from "./components/FaqSection";
 import Loader from "./components/Loader";
 import HotjarScript from "./components/HotjarScript";
 import GoogleAdsScript from "./components/GoogleAdsScript";
@@ -197,8 +196,6 @@ function ScrollToTop() {
 // Root layout component
 function RootLayout() {
   const [loading, setLoading] = useState(true);
-  const { pathname } = useLocation();
-  const showFaqSection = pathname === "/";
 
   const defaultSEO = {
     title: "Vibha Prints - Creative Design & Printing Services",
@@ -314,7 +311,6 @@ function RootLayout() {
           </main>
         </AnimatePresence>
         <WhatsAppOrderWidget />
-        {showFaqSection && <FaqSection />}
         <Footer />
       </div>
     </>

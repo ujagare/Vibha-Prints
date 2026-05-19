@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import EnhancedHero from "../components/EnhancedHero";
+import FaqSection from "../components/FaqSection";
 
 const Home = () => {
   // Comprehensive SEO Keywords (50+)
@@ -335,6 +336,7 @@ const Home = () => {
         />
       </Helmet>
       <EnhancedHero />
+      <FaqSection />
     </div>
   );
 };
