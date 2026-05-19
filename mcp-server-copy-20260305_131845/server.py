@@ -240,6 +240,7 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
 
     try:
         logger.info(f"📝 Creating lead: {name} ({email})")
+        email_sent = False
         
         # Save to Supabase
         if lead_type == "brochure":
@@ -297,7 +298,8 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
             if lead_id:
                 create_pipeline_entry(lead_id, lead_type, status="new")
                 add_lead_activity(lead_id, lead_type, "lead_created")
-                add_lead_activity(lead_id, lead_type, "email_sent")
+                if email_sent:
+                    add_lead_activity(lead_id, lead_type, "email_sent")
                 if internal_alert_sent:
                     add_lead_activity(lead_id, lead_type, "internal_lead_notification")
                 if lead_type == "brochure":

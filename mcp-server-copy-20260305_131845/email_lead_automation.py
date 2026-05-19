@@ -158,14 +158,14 @@ def send_email(
         # Send via Zoho - Use SSL for port 465, TLS for port 587
         if ZOHO_SMTP_PORT == 465:
             logger.info(f"🔐 Starting SSL connection...")
-            with smtplib.SMTP_SSL(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=10) as server:
+            with smtplib.SMTP_SSL(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=30) as server:
                 logger.info(f"🔑 Logging in as {ZOHO_SMTP_USER}...")
                 server.login(ZOHO_SMTP_USER, ZOHO_SMTP_PASS)
                 logger.info(f"📤 Sending email...")
                 server.send_message(msg)
         else:
             logger.info(f"🔐 Starting TLS connection...")
-            with smtplib.SMTP(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=10) as server:
+            with smtplib.SMTP(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=30) as server:
                 server.starttls()
                 logger.info(f"🔑 Logging in as {ZOHO_SMTP_USER}...")
                 server.login(ZOHO_SMTP_USER, ZOHO_SMTP_PASS)
@@ -280,7 +280,6 @@ def send_contact_form_reply(name: str, email: str, message: str) -> bool:
         html_content,
         text_content,
         cc_email=MAIL_FROM,
-        attachment_path=BROCHURE_PATH,
     )
 
 
