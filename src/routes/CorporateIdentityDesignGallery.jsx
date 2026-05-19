@@ -11,7 +11,7 @@ import Corporate5 from "../assets/Corporate/image-062.webp";
 import Corporate6 from "../assets/Corporate/image-069.webp";
 import Corporate7 from "../assets/Corporate/image-071.webp";
 import Corporate8 from "../assets/Corporate/image-070.webp";
-import Corporate9 from "../assets/Corporate/holt-case-study-09.webp";
+import Corporate9 from "../assets/Corporate/Holt-Case-study-09.webp";
 import Corporate10 from "../assets/Corporate/image-074.webp";
 import Corporate11 from "../assets/Corporate/image-060.webp";
 import Corporate12 from "../assets/Corporate/image-061.webp";
