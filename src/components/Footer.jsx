@@ -51,12 +51,6 @@ const Footer = () => {
       { name: "Printing Services", path: "/printing" },
       { name: "Digital Marketing", path: "/digital-marketing" },
       { name: "Web Development", path: "/web-development" },
-      { name: "Logo Design", path: "/logo-design-gallery" },
-      { name: "Business Cards", path: "/business-card-design-gallery" },
-      {
-        name: "Brochures & Booklets",
-        path: "/brochure-booklet-design-gallery",
-      },
     ],
     company: [
       { name: "Home", path: "/" },
