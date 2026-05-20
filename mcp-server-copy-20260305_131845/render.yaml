@@ -21,3 +21,5 @@ services:
         value: "true"
       - key: INBOUND_EMAIL_POLL_SECONDS
         value: "120"
+      - key: SMTP_TIMEOUT_SECONDS
+        value: "45"

@@ -50,6 +50,7 @@ SMTP_HOST = os.environ.get("ZOHO_SMTP_HOST", "smtp.zoho.in")
 SMTP_PORT = int(os.environ.get("ZOHO_SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("ZOHO_SMTP_USER", "info@vibhaprints.com")
 SMTP_PASS = os.environ.get("ZOHO_SMTP_PASS", "")
+SMTP_TIMEOUT_SECONDS = int(os.environ.get("SMTP_TIMEOUT_SECONDS", "45"))
 MAIL_FROM = os.environ.get("MAIL_FROM", "info@vibhaprints.com")
 
 # AI Clients
@@ -289,6 +290,7 @@ Vibha Prints Team"""
 
 def send_reply_email(to_email: str, to_name: str, subject: str, body: str, original_message_id: str = "") -> bool:
     """Send reply email to client"""
+    clean_to_email = clean_email_address(to_email)
     
     logger.info(f"📧 Sending reply to {to_email}")
     
@@ -326,7 +328,7 @@ def send_reply_email(to_email: str, to_name: str, subject: str, body: str, origi
         msg = MIMEMultipart("alternative")
         msg["Subject"] = reply_subject
         msg["From"] = MAIL_FROM
-        msg["To"] = to_email
+        msg["To"] = clean_to_email or to_email
         msg["Reply-To"] = MAIL_FROM
         msg["In-Reply-To"] = original_message_id
         msg["References"] = original_message_id
@@ -336,11 +338,11 @@ def send_reply_email(to_email: str, to_name: str, subject: str, body: str, origi
         
         # Send via SMTP
         if SMTP_PORT == 465:
-            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+            with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT_SECONDS) as server:
                 server.login(SMTP_USER, SMTP_PASS)
                 server.send_message(msg)
         else:
-            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
+            with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=SMTP_TIMEOUT_SECONDS) as server:
                 server.starttls()
                 server.login(SMTP_USER, SMTP_PASS)
                 server.send_message(msg)
