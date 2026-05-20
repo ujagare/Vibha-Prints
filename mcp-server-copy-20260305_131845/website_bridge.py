@@ -89,6 +89,11 @@ FOLLOWUP_SCHEDULER_ENABLED = os.environ.get("FOLLOWUP_SCHEDULER_ENABLED", "").st
     "1", "true", "yes"
 }
 FOLLOWUP_SCHEDULER_TIME = os.environ.get("FOLLOWUP_SCHEDULER_TIME", "09:00").strip()
+INBOUND_EMAIL_POLL_ENABLED = os.environ.get(
+    "INBOUND_EMAIL_POLL_ENABLED",
+    os.environ.get("INBOUND_AUTO_REPLY_ENABLED", "false"),
+).strip().lower() in {"1", "true", "yes"}
+INBOUND_EMAIL_POLL_SECONDS = max(60, int(os.environ.get("INBOUND_EMAIL_POLL_SECONDS", "120")))
 GREEN_API_PROCESSED_MESSAGES = set()
 
 
@@ -168,6 +173,24 @@ def _start_followup_scheduler():
     if not FOLLOWUP_SCHEDULER_ENABLED:
         return
     thread = threading.Thread(target=_followup_scheduler_loop, daemon=True)
+    thread.start()
+
+
+def _inbound_email_poll_loop():
+    print(f"Inbound email auto-reply enabled. Polling every {INBOUND_EMAIL_POLL_SECONDS}s")
+    while True:
+        try:
+            result = process_inbound_emails()
+            print("Inbound email poll result:", result)
+        except Exception as exc:
+            print("Inbound email poll error:", exc)
+        time.sleep(INBOUND_EMAIL_POLL_SECONDS)
+
+
+def _start_inbound_email_poller():
+    if not INBOUND_EMAIL_POLL_ENABLED:
+        return
+    thread = threading.Thread(target=_inbound_email_poll_loop, daemon=True)
     thread.start()
 
 
@@ -1390,5 +1413,6 @@ def post_to_facebook():
 
 if __name__ == "__main__":
     _start_followup_scheduler()
+    _start_inbound_email_poller()
     port = int(os.environ.get("PORT", "8000"))
     app.run(host="0.0.0.0", port=port, debug=False)

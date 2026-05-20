@@ -13,6 +13,7 @@ import os
 import imaplib
 import email
 from email.header import decode_header
+from email.utils import parseaddr
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
@@ -107,6 +108,78 @@ def is_email_processed(email_id: str) -> bool:
     """Check if email already has a reply"""
     log = load_processed_emails()
     return email_id in log
+
+
+def clean_email_address(value: str) -> str:
+    """Extract the mailbox from a From/To header."""
+    return parseaddr(value or "")[1].strip().lower()
+
+
+def should_skip_sender(from_email: str, msg) -> bool:
+    """Avoid replying to our own account, no-reply senders, and automated mail."""
+    sender = clean_email_address(from_email)
+    own_addresses = {
+        clean_email_address(IMAP_USER),
+        clean_email_address(SMTP_USER),
+        clean_email_address(MAIL_FROM),
+        "info@vibhaprints.com",
+    }
+    if sender in own_addresses:
+        return True
+
+    if any(token in sender for token in ("no-reply", "noreply", "mailer-daemon", "postmaster")):
+        return True
+
+    precedence = (msg.get("Precedence") or "").strip().lower()
+    auto_submitted = (msg.get("Auto-Submitted") or "").strip().lower()
+    if precedence in {"bulk", "junk", "list", "auto_reply"}:
+        return True
+    if auto_submitted and auto_submitted != "no":
+        return True
+
+    return False
+
+
+def record_client_reply_activity(sender_email: str, subject: str, message_id: str):
+    """Mark matching leads as replied so no-response follow-ups stop."""
+    try:
+        from supabase_client import (
+            add_lead_activity,
+            is_supabase_configured,
+            supabase,
+            update_pipeline_status,
+        )
+
+        sender = clean_email_address(sender_email)
+        if not sender or not is_supabase_configured():
+            return
+
+        response = (
+            supabase.table("contact_leads")
+            .select("*")
+            .eq("email", sender)
+            .limit(1)
+            .execute()
+        )
+        leads = response.data or []
+        if not leads:
+            return
+
+        lead_id = leads[0].get("id")
+        if not lead_id:
+            return
+
+        meta = {"from": sender, "subject": subject, "message_id": message_id}
+        add_lead_activity(lead_id, "contact", "inbound_email_received", meta)
+        add_lead_activity(lead_id, "contact", "client_replied", meta)
+        update_pipeline_status(
+            lead_id,
+            "contact",
+            "client_replied",
+            notes="Client replied by email; automatic no-response follow-up stopped",
+        )
+    except Exception as e:
+        logger.warning(f"Could not record inbound reply activity: {e}")
 
 
 def decode_email_header(header_value: str) -> str:
@@ -338,8 +411,8 @@ def fetch_unread_emails() -> List[Dict]:
                     logger.info(f"⏭️  Skipping already processed email: {subject}")
                     continue
                 
-                # Skip if from our own email
-                if "info@vibhaprints.com" in from_email.lower():
+                # Skip own, no-reply, and automated/bulk emails to avoid reply loops.
+                if should_skip_sender(from_email, msg):
                     logger.info(f"⏭️  Skipping own email: {subject}")
                     continue
                 
@@ -420,6 +493,11 @@ def process_inbound_emails() -> Dict:
             )
             
             if success:
+                record_client_reply_activity(
+                    email_data['from_email'],
+                    email_data['subject'],
+                    email_data['message_id'],
+                )
                 # Mark as processed
                 mark_email_processed(
                     email_data['email_id'],

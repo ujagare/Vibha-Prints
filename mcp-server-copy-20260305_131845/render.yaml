@@ -12,4 +12,12 @@ services:
       - key: BRIDGE_ALLOWED_ORIGINS
         value: "*"
       - key: FOLLOWUP_SCHEDULER_ENABLED
-        value: "false"
+        value: "true"
+      - key: FOLLOWUP_SCHEDULER_TIME
+        value: "09:00"
+      - key: INBOUND_AUTO_REPLY_ENABLED
+        value: "true"
+      - key: INBOUND_EMAIL_POLL_ENABLED
+        value: "true"
+      - key: INBOUND_EMAIL_POLL_SECONDS
+        value: "120"
