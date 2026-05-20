@@ -52,6 +52,15 @@ SMTP_USER = os.environ.get("ZOHO_SMTP_USER", "info@vibhaprints.com")
 SMTP_PASS = os.environ.get("ZOHO_SMTP_PASS", "")
 SMTP_TIMEOUT_SECONDS = int(os.environ.get("SMTP_TIMEOUT_SECONDS", "45"))
 MAIL_FROM = os.environ.get("MAIL_FROM", "info@vibhaprints.com")
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
+INBOUND_SKIP_DOMAINS = {
+    domain.strip().lower()
+    for domain in os.environ.get(
+        "INBOUND_SKIP_DOMAINS",
+        "zohocorp.com,zohocreator.com,zohoworkplace.com",
+    ).split(",")
+    if domain.strip()
+}
 
 # AI Clients
 groq_client = None
@@ -130,12 +139,17 @@ def should_skip_sender(from_email: str, msg) -> bool:
 
     if any(token in sender for token in ("no-reply", "noreply", "mailer-daemon", "postmaster")):
         return True
+    if sender.split("@")[-1] in INBOUND_SKIP_DOMAINS:
+        return True
 
     precedence = (msg.get("Precedence") or "").strip().lower()
     auto_submitted = (msg.get("Auto-Submitted") or "").strip().lower()
+    list_headers = [msg.get("List-Unsubscribe"), msg.get("List-Id")]
     if precedence in {"bulk", "junk", "list", "auto_reply"}:
         return True
     if auto_submitted and auto_submitted != "no":
+        return True
+    if any(list_headers):
         return True
 
     return False
@@ -254,7 +268,7 @@ Generate ONLY the email body (no subject line, no greeting with name - just the 
     try:
         if groq_client:
             response = groq_client.chat.completions.create(
-                model="mixtral-8x7b-32768",
+                model=GROQ_MODEL,
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=500,
                 temperature=0.7

@@ -23,3 +23,7 @@ services:
         value: "120"
       - key: SMTP_TIMEOUT_SECONDS
         value: "45"
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: INBOUND_SKIP_DOMAINS
+        value: zohocorp.com,zohocreator.com,zohoworkplace.com
