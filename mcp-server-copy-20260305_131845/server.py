@@ -94,8 +94,50 @@ client_type = "groq" if groq_client else ("gemini" if gemini_client else None)
 print("AI Client initialized:", client_type)
 
 
+def _seed_session_history(
+    session_id: str,
+    conversation_history: str = "",
+    current_message: str = "",
+) -> None:
+    if not conversation_history:
+        return
+
+    try:
+        parsed = json.loads(conversation_history)
+    except Exception:
+        return
+
+    if not isinstance(parsed, list):
+        return
+
+    from session_manager import get_session, add_to_history
+
+    session = get_session(session_id)
+    if session.get("history"):
+        return
+
+    normalized = parsed[-10:]
+    if normalized:
+        last = normalized[-1]
+        last_role = last.get("role") or ("assistant" if last.get("sender") == "bot" else "user")
+        last_content = last.get("content") or last.get("text") or ""
+        if last_role == "user" and str(last_content).strip() == current_message.strip():
+            normalized = normalized[:-1]
+
+    for item in normalized:
+        role = item.get("role") or ("assistant" if item.get("sender") == "bot" else "user")
+        content = item.get("content") or item.get("text") or ""
+        if role in ("user", "assistant") and content:
+            add_to_history(session_id, role, str(content))
+
+
 @mcp.tool()
-def chat(message: str, session_id: str = "", client_email: str = ""):
+def chat(
+    message: str,
+    session_id: str = "",
+    client_email: str = "",
+    conversation_history: str = "",
+):
     """
     Chatbot-only MCP tool.
     Uses Gemini handler if available, otherwise falls back to llm_handler.
@@ -111,6 +153,7 @@ def chat(message: str, session_id: str = "", client_email: str = ""):
 
     session = get_session(session_id)
     session_id = session["session_id"]
+    _seed_session_history(session_id, conversation_history, message)
     context = get_context_for_reply(client_email, session)
     session["client_context"] = context
 
@@ -189,13 +232,23 @@ def chat(message: str, session_id: str = "", client_email: str = ""):
 
 
 @mcp.tool()
-def chat_reply(message: str, client_email: str = "", session_id: str = ""):
+def chat_reply(
+    message: str,
+    client_email: str = "",
+    session_id: str = "",
+    conversation_history: str = "",
+):
     """
     Context-aware chatbot reply tool.
     Fetches Supabase lead context, applies guardrails, saves chat history/activity,
     and returns a short client-ready reply.
     """
-    return chat(message=message, session_id=session_id, client_email=client_email)
+    return chat(
+        message=message,
+        session_id=session_id,
+        client_email=client_email,
+        conversation_history=conversation_history,
+    )
 
 
 @mcp.tool()

@@ -122,6 +122,8 @@ def chat_with_llm(message: str, session: dict) -> dict:
         "- Ask maximum 2 questions at a time\n"
         "- Read conversation history\n"
         "- If user says 'yes/interested' → refer to previous topic\n"
+        "- If the answer is unknown or outside Vibha Art's scope, say exactly: \"Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi.\"\n"
+        "- Never guess or make up information you are not sure about\n"
         "- Suggest tools: calculate_quote(), seo_audit(), generate_image()\n"
         "\n"
         "TONE: Warm, professional, helpful, not pushy"

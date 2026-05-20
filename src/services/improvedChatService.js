@@ -3,7 +3,7 @@
  * Better error handling and proper API integration
  */
 
-import { VIBHA_CHATBOT_SYSTEM_PROMPT } from "./chatbotPrompt";
+import { buildSystemPrompt } from "./chatbotPrompt";
 
 const MCP_TIMEOUT_MS = 12000;
 
@@ -13,6 +13,8 @@ const EXTERNAL_CHAT_MODEL =
   import.meta.env.VITE_CHATBOT_MODEL || "openai/gpt-oss-120b";
 
 const CHAT_SESSION_STORAGE_KEY = "vibha_chat_session_id";
+const CHAT_HISTORY_STORAGE_KEY = "vibha_chat_history";
+const MAX_CHAT_HISTORY_MESSAGES = 12;
 
 const getStoredChatSessionId = () => {
   if (typeof window === "undefined") return "";
@@ -22,6 +24,27 @@ const getStoredChatSessionId = () => {
 const storeChatSessionId = (sessionId) => {
   if (typeof window === "undefined" || !sessionId) return;
   window.localStorage.setItem(CHAT_SESSION_STORAGE_KEY, sessionId);
+};
+
+const getStoredChatHistory = () => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const parsed = JSON.parse(
+      window.sessionStorage.getItem(CHAT_HISTORY_STORAGE_KEY) || "[]",
+    );
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const storeChatHistory = (messages) => {
+  if (typeof window === "undefined") return;
+  window.sessionStorage.setItem(
+    CHAT_HISTORY_STORAGE_KEY,
+    JSON.stringify(messages.slice(-MAX_CHAT_HISTORY_MESSAGES)),
+  );
 };
 
 // Predefined responses for the chatbot
@@ -56,8 +79,8 @@ const botResponses = {
     "Eye-catching packaging design jo sales badha de. Aapke product ke liye custom design banate hain.",
   ],
   contact: [
-    "Aap hume contact kar sakte ho:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nYa main aapka contact form fill kar dunga?",
-    "Contact karne ke liye:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nKya aap apna number dena chahte ho?",
+    "Aap hume contact kar sakte ho:\nEmail: info@vibhaprints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nYa main aapka contact form fill kar dunga?",
+    "Contact karne ke liye:\nEmail: info@vibhaprints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nKya aap apna number dena chahte ho?",
   ],
   pricing: [
     "Pricing aapke project ke hisaab se hoti hai:\n\n💰 Logo Design: ₹5,000 - ₹15,000\n💰 Business Cards: ₹2,000 - ₹5,000\n💰 Brochures: ₹3,000 - ₹10,000\n💰 Printing: ₹1,000 - ₹50,000+ (volume ke hisaab se)\n\nCustom quote chahiye?",
@@ -76,9 +99,7 @@ const botResponses = {
     "Step-by-step process jo transparent aur professional hai. Aapka feedback har step mein important hai.",
   ],
   default: [
-    "Samajh nahi aaya. Kya aap apna question dobara pooch sakte ho? Services, pricing, ya contact ke baare mein pooch sakte ho.",
-    "Mujhe samajh nahi aaya. Kya aap apne question ko alag tarike se pooch sakte ho?",
-    "Aapke liye main kya kar sakta hoon? Services, pricing, ya contact info chahiye?",
+    "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi.",
   ],
 };
 
@@ -280,6 +301,11 @@ const callExternalChatApi = async (message) => {
   }
 
   try {
+    const conversationHistory = [
+      ...getStoredChatHistory(),
+      { role: "user", content: message },
+    ].slice(-MAX_CHAT_HISTORY_MESSAGES);
+
     const headers = {
       "Content-Type": "application/json",
     };
@@ -292,11 +318,13 @@ const callExternalChatApi = async (message) => {
     const payload = isBackendGroqEndpoint
       ? {
           input: message,
+          messages: conversationHistory,
           model: EXTERNAL_CHAT_MODEL,
         }
       : isWebsiteBridgeEndpoint
       ? {
           message,
+          messages: conversationHistory,
           session_id: getStoredChatSessionId(),
           source: "vibha-prints-website",
         }
@@ -305,9 +333,9 @@ const callExternalChatApi = async (message) => {
           messages: [
             {
               role: "system",
-              content: VIBHA_CHATBOT_SYSTEM_PROMPT,
+              content: buildSystemPrompt(),
             },
-            { role: "user", content: message },
+            ...conversationHistory,
           ],
           temperature: 0.35,
           max_tokens: 320,
@@ -327,6 +355,10 @@ const callExternalChatApi = async (message) => {
     const extractedReply = extractReplyFromApiResponse(response);
     if (extractedReply) {
       console.log("API Response:", extractedReply);
+      storeChatHistory([
+        ...conversationHistory,
+        { role: "assistant", content: extractedReply },
+      ]);
       return extractedReply;
     }
 
@@ -334,6 +366,10 @@ const callExternalChatApi = async (message) => {
       const reply =
         response.choices[0].message?.content || response.choices[0].text || "";
       console.log("API Response:", reply);
+      storeChatHistory([
+        ...conversationHistory,
+        { role: "assistant", content: reply },
+      ]);
       return reply;
     }
 

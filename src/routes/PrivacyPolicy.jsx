@@ -21,8 +21,8 @@ const PrivacyPolicy = () => {
         </p>
         <p className="text-gray-700">
           For any privacy request, contact us at{" "}
-          <a className="text-[#E65056]" href="mailto:info@vibhapints.com">
-            info@vibhapints.com
+          <a className="text-[#E65056]" href="mailto:info@vibhaprints.com">
+            info@vibhaprints.com
           </a>
           {" "}or{" "}
           <a className="text-[#E65056]" href="mailto:vibhart07@gmail.com">

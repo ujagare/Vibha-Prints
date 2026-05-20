@@ -199,11 +199,17 @@ def chat():
     message = (data.get("message") or "").strip()
     session_id = (data.get("session_id") or "").strip()
     client_email = (data.get("client_email") or data.get("email") or "").strip()
+    conversation_history = data.get("messages") or data.get("conversationHistory") or []
 
     if not message:
         return jsonify({"error": "message_required"}), 400
 
-    response = mcp_chat(message=message, session_id=session_id, client_email=client_email)
+    response = mcp_chat(
+        message=message,
+        session_id=session_id,
+        client_email=client_email,
+        conversation_history=json.dumps(conversation_history),
+    )
     payload = _normalize_mcp_output(response)
     return jsonify(payload)
 

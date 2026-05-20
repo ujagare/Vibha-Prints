@@ -23,7 +23,7 @@ const supabase =
     : null;
 
 const SYSTEM_PROMPT = `
-You are a professional AI assistant for Vibha Prints.
+You are Vibha, Vibha Art's senior website chat assistant.
 
 Rules:
 - Reply like a calm, experienced Vibha Prints support person chatting on WhatsApp.
@@ -34,11 +34,13 @@ Rules:
 - Help users with printing services, graphic design, branding, digital marketing, and web development.
 - Services include logo design, brand identity, business cards, brochures, pamphlets, posters, catalogs, company profile, packaging, labels, stickers, hangtags, corporate stationery, flex/vinyl/banner printing, bags, T-shirts, social media creatives, websites, landing pages, ecommerce, SEO, ads, and email marketing.
 - Contact details: info@vibhaprints.com, +91 86249 48046, and https://www.vibhaprints.com/.
+- Accurate quote ke liye item type, size, quantity, material/paper, finish, delivery city aur deadline chahiye.
+- Always refer to what the user has already shared in this conversation. If user already gave their name or requirement, do not ask again.
 - Suggest relevant Vibha Prints services when helpful.
 - Speak Hindi + English naturally using Roman Hindi/Hinglish.
 - Do not use emojis, Devanagari, Marathi script, or long paragraphs.
 - Keep WhatsApp-style replies complete in 2 to 4 short sentences.
-- Ask one useful follow-up question at a time.
+- Ask maximum 2 useful follow-up questions at a time.
 - Avoid repeating the company name in every reply.
 - Avoid saying "as an AI", "I am a bot", or "I cannot" unless directly necessary.
 - If the customer only says hi/hello, greet them warmly and ask how you can help.
@@ -53,12 +55,31 @@ Rules:
 - If the user is ready to proceed, collect name, phone, service requirement, and preferred callback time.
 - If the request is urgent or complex, say the Vibha Prints team can follow up.
 - Never claim an order is confirmed, payment is received, or production has started unless the user explicitly provides that status.
+- If you don't know the answer or the question is outside Vibha Art's scope, say exactly: "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi."
+- Never guess or make up information you are not sure about.
 - Stay polite, helpful, and sales-focused without sounding pushy.
 - Prefer replies like:
   "Haan, ye ho jayega. Aap quantity aur size bata do, main aapko proper quote ke liye guide kar deta hoon."
   "Samajh gaya. Aapko logo modern chahiye ya premium/classic style me?"
   "Sure, iske liye design ready hai ya design bhi banana hai?"
 `.trim();
+
+const VIBHA_LOCAL_KNOWLEDGE = {
+  contact:
+    "Aap hume info@vibhaprints.com / vibhart07@gmail.com par email kar sakte hain ya +91 86249 48046 par call/WhatsApp kar sakte hain. Monday to Saturday, business hours.",
+  quote:
+    "Accurate quote ke liye item type, size, quantity, material/paper, finish, delivery city aur deadline chahiye. Details milte hi team proper quotation share kar sakti hai.",
+  services:
+    "Vibha Art logo design, branding, business cards, brochures, packaging, stickers, labels, flex/banner printing, corporate stationery, social media creatives, website design/development aur digital marketing support provide karta hai.",
+};
+
+const buildSystemPrompt = () =>
+  `${SYSTEM_PROMPT}
+
+## Knowledge Base
+Contact: ${VIBHA_LOCAL_KNOWLEDGE.contact}
+Quote process: ${VIBHA_LOCAL_KNOWLEDGE.quote}
+Services: ${VIBHA_LOCAL_KNOWLEDGE.services}`;
 
 // Initialize Express app
 const app = express();
@@ -356,7 +377,7 @@ const generateGeminiReply = async ({ message, senderName }) => {
           systemInstruction: {
             parts: [
               {
-                text: SYSTEM_PROMPT,
+                text: buildSystemPrompt(),
               },
             ],
           },
@@ -478,9 +499,7 @@ const botResponses = {
     "Our design process typically includes:\n\n1. Initial consultation\n2. Research & concept development\n3. Design presentation\n4. Revisions based on feedback\n5. Final delivery\n\nWould you like more details about any of these steps?"
   ],
   default: [
-    "I'm not sure I understand. Could you please rephrase your question or select from one of these common topics: services, pricing, contact information, or turnaround time?",
-    "I didn't quite catch that. Can you try asking in a different way or let me know if you need information about our design services, pricing, or how to contact us?",
-    "I'm still learning! Could you please clarify what you're looking for? You can ask about our design services, printing options, or how to get in touch with our team."
+    "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi."
   ]
 };
 
@@ -521,7 +540,32 @@ const getBotResponse = (message) => {
 
 // ─── Supabase Helper Functions ───────────────────────────────────────────────
 
-const callGroqChat = async (input, requestedModel) => {
+const normalizeGroqMessages = (messages = []) => {
+  if (!Array.isArray(messages)) return [];
+
+  return messages
+    .map((message) => {
+      if (message?.role && message?.content) {
+        return {
+          role: message.role === "assistant" ? "assistant" : "user",
+          content: String(message.content),
+        };
+      }
+
+      if (message?.sender && message?.text) {
+        return {
+          role: message.sender === "bot" ? "assistant" : "user",
+          content: String(message.text),
+        };
+      }
+
+      return null;
+    })
+    .filter(Boolean)
+    .slice(-12);
+};
+
+const callGroqChat = async (input, requestedModel, conversationHistory = []) => {
   const apiKey = process.env.GROQ_API_KEY || process.env.VITE_CHATBOT_API_KEY || "";
   if (!apiKey || apiKey.includes("YOUR_")) {
     throw new Error("GROQ_API_KEY is not configured");
@@ -546,12 +590,17 @@ const callGroqChat = async (input, requestedModel) => {
         messages: [
           {
             role: "system",
-            content: SYSTEM_PROMPT,
+            content: buildSystemPrompt(),
           },
-          {
-            role: "user",
-            content: input,
-          },
+          ...normalizeGroqMessages(conversationHistory),
+          ...(conversationHistory?.length
+            ? []
+            : [
+                {
+                  role: "user",
+                  content: input,
+                },
+              ]),
         ],
         temperature: 0.3,
         max_tokens: 300,
@@ -697,7 +746,11 @@ io.on('connection', async (socket) => {
       console.log(`Generating response for ${socket.id}`);
       let botResponse = "";
       try {
-        const groqReply = await callGroqChat(data.message);
+        const groqReply = await callGroqChat(
+          data.message,
+          undefined,
+          activeSessions[socket.id].messages,
+        );
         botResponse = groqReply.text;
       } catch (error) {
         console.warn("Groq socket reply unavailable, using local response:", error.message);
@@ -807,7 +860,11 @@ app.get('/', (req, res) => {
 app.post("/api/groq/chat", async (req, res) => {
   try {
     const input = req.body?.input || "write a haiku about ai";
-    const result = await callGroqChat(input, req.body?.model);
+    const result = await callGroqChat(
+      input,
+      req.body?.model,
+      req.body?.messages || req.body?.conversationHistory || [],
+    );
 
     return res.json({
       success: true,

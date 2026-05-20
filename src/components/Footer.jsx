@@ -62,8 +62,8 @@ const Footer = () => {
       { icon: <FaPhone />, text: "+91 86249 48046", link: "tel:+918624948046" },
       {
         icon: <FaEnvelope />,
-        text: "info@vibhapints.com",
-        link: "mailto:info@vibhapints.com",
+        text: "info@vibhaprints.com",
+        link: "mailto:info@vibhaprints.com",
       },
       {
         icon: <FaEnvelope />,

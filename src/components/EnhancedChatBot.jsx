@@ -204,7 +204,7 @@ const EnhancedChatBot = () => {
       if (!response.success) {
         const botMessage = {
           id: messages.length + 1,
-          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
+          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com or vibhart07@gmail.com.",
           sender: "bot",
           timestamp: new Date(),
         };
@@ -364,7 +364,7 @@ const EnhancedChatBot = () => {
       // Even the fallback failed, show a generic message
       const botMessage = {
         id: messages.length + 2,
-        text: "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
+        text: "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment or contact us directly at info@vibhaprints.com or vibhart07@gmail.com.",
         sender: "bot",
         timestamp: new Date(),
       };
@@ -521,7 +521,7 @@ const EnhancedChatBot = () => {
       setTimeout(() => {
         const botMessage = {
           id: messages.length + 2,
-          text: "No problem! You can reach our team at info@vibhapints.com / vibhart07@gmail.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
+          text: "No problem! You can reach our team at info@vibhaprints.com / vibhart07@gmail.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
           sender: "bot",
           timestamp: new Date(),
           contactInfo: true,
@@ -637,7 +637,7 @@ const EnhancedChatBot = () => {
 
         const botMessage = {
           id: messages.length + 1,
-          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
+          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com or vibhart07@gmail.com.",
           sender: "bot",
           timestamp: new Date(),
         };
@@ -703,7 +703,7 @@ const EnhancedChatBot = () => {
       // Show error message
       const botMessage = {
         id: messages.length + 1,
-        text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
+        text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhaprints.com or vibhart07@gmail.com.",
         sender: "bot",
         timestamp: new Date(),
       };
@@ -878,7 +878,7 @@ const EnhancedChatBot = () => {
                       {message.contactInfo && (
                         <div className="mt-3 flex flex-wrap gap-2">
                           <a
-                            href="mailto:info@vibhapints.com"
+                            href="mailto:info@vibhaprints.com"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
                           >
                             <FaEnvelope className="mr-1" size={10} /> Email 1

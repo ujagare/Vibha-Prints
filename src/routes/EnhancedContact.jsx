@@ -49,7 +49,7 @@ const infoItems = [
   {
     icon: <Mail size={26} />,
     title: "Email",
-    lines: ["info@vibhapints.com", "vibhart07@gmail.com"],
+    lines: ["info@vibhaprints.com", "vibhart07@gmail.com"],
   },
   {
     icon: <MapPin size={26} />,

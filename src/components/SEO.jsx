@@ -15,7 +15,7 @@ const SEO_DATA = {
   },
   services: {
     title: "Printing & Design Services | Vibha Art Pune",
-    description: "Vibha Art offers flex printing, visiting cards, banners, T-shirt printing, logo design, branding & more in Pune. Get instant quote at info@vibhapints.com or vibhart07@gmail.com.",
+    description: "Vibha Art offers flex printing, visiting cards, banners, T-shirt printing, logo design, branding & more in Pune. Get instant quote at info@vibhaprints.com or vibhart07@gmail.com.",
     keywords: "flex printing pune, visiting card printing pune, banner printing pune, logo design pune, t-shirt printing pune, brochure printing pune, sticker printing pune",
     canonical: "https://www.vibhaprints.com/services",
   },
@@ -27,8 +27,8 @@ const SEO_DATA = {
   },
   contact: {
     title: "Contact Vibha Art | Get Quote for Printing & Design Pune",
-    description: "Contact Vibha Art Pune for printing and design services. Get free quotes. WhatsApp or call +91-8624948046 or email info@vibhapints.com / vibhart07@gmail.com today!",
-    keywords: "contact vibha art pune, printing quote pune, vibha art phone number, info@vibhapints.com, vibhart07@gmail.com",
+    description: "Contact Vibha Art Pune for printing and design services. Get free quotes. WhatsApp or call +91-8624948046 or email info@vibhaprints.com / vibhart07@gmail.com today!",
+    keywords: "contact vibha art pune, printing quote pune, vibha art phone number, info@vibhaprints.com, vibhart07@gmail.com",
     canonical: "https://www.vibhaprints.com/contact",
   },
 };
@@ -40,7 +40,7 @@ const SCHEMA = {
   "description": "Professional graphic design and printing services in Pune, Maharashtra.",
   "url": "https://www.vibhaprints.com/",
   "telephone": "+91-8624948046",
-  "email": ["info@vibhapints.com", "vibhart07@gmail.com"],
+  "email": ["info@vibhaprints.com", "vibhart07@gmail.com"],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Pune SB Road",

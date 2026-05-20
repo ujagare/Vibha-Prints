@@ -77,7 +77,7 @@ const Home = () => {
       "Professional graphic design and printing services. We specialize in logo design, branding, brochures, packaging, business cards, and digital/offset printing solutions for businesses.",
     url: "https://www.vibhaprints.com/",
     telephone: "+91-86249-48046",
-    email: ["info@vibhapints.com", "vibhart07@gmail.com"],
+    email: ["info@vibhaprints.com", "vibhart07@gmail.com"],
     address: {
       "@type": "PostalAddress",
       streetAddress: "Pune SB Road",
@@ -129,7 +129,7 @@ const Home = () => {
       "@type": "ContactPoint",
       contactType: "Customer Service",
       telephone: "+91-86249-48046",
-      email: ["info@vibhapints.com", "vibhart07@gmail.com"],
+      email: ["info@vibhaprints.com", "vibhart07@gmail.com"],
     },
   };
 

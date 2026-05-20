@@ -19,7 +19,7 @@ SRC_DIR  = os.path.join(PROJECT, "src")
 PUB_DIR  = os.path.join(PROJECT, "public")
 
 PHONE = "+91-8624948046 / +91-8975805789"
-EMAIL = "info@vibhapints.com / vibhart07@gmail.com"
+EMAIL = "info@vibhaprints.com / vibhart07@gmail.com"
 SITE_URL = "https://vibha-prints.vercel.app"
 
 SKIP = {"node_modules", ".git", ".next", "dist", "build", ".vercel"}
@@ -72,7 +72,7 @@ const SEO_DATA = {{
   contact: {{
     title: "Contact Vibha Art | Get Quote for Printing & Design Pune",
     description: "Contact Vibha Art Pune for printing and design services. Get free quotes. WhatsApp or call {PHONE} or email {EMAIL} today!",
-    keywords: "contact vibha art pune, printing quote pune, vibha art phone number, info@vibhapints.com, vibhart07@gmail.com",
+    keywords: "contact vibha art pune, printing quote pune, vibha art phone number, info@vibhaprints.com, vibhart07@gmail.com",
     canonical: "{SITE_URL}/contact",
   }},
 }};

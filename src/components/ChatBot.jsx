@@ -18,7 +18,7 @@ const botResponses = {
     "We offer a range of graphic design and printing services including logo design, business cards, brochures, and more. Would you like to know more about any specific service?"
   ],
   contact: [
-    "You can reach us at info@vibhapints.com / vibhart07@gmail.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Would you like us to contact you?"
+    "You can reach us at info@vibhaprints.com / vibhart07@gmail.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Would you like us to contact you?"
   ],
   pricing: [
     "Our pricing varies based on the specific requirements of your project. Would you like to get a custom quote for your project?"
@@ -27,9 +27,7 @@ const botResponses = {
     "Our typical turnaround time depends on the complexity of the project. Simple designs may take 2-3 days, while more complex projects might take 1-2 weeks. Would you like to discuss your specific timeline?"
   ],
   default: [
-    "I'm not sure I understand. Could you please rephrase your question or select from one of these common topics: services, pricing, contact information, or turnaround time?",
-    "I didn't quite catch that. Can you try asking in a different way or let me know if you need information about our services, pricing, or how to contact us?",
-    "I'm still learning! Could you please clarify what you're looking for? You can ask about our design services, printing options, or how to get in touch with our team."
+    "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi."
   ]
 };
 
