@@ -294,6 +294,8 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
     try:
         logger.info(f"📝 Creating lead: {name} ({email})")
         email_sent = False
+        internal_alert_sent = False
+        hot_lead_alert_sent = False
         
         # Save to Supabase
         if lead_type == "brochure":
@@ -345,7 +347,7 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
             logger.info(f"📧 Internal lead notification sent: {internal_alert_sent}")
 
             logger.info(f"🔥 Checking for hot lead...")
-            alert_sent = send_hot_lead_alert(name, email, message or "", lead_type)
+            hot_lead_alert_sent = send_hot_lead_alert(name, email, message or "", lead_type)
 
             lead_id = _extract_lead_id(result) or ""
             if lead_id:
@@ -357,10 +359,17 @@ def create_lead(name: str, email: str, message: str = "", phone: str = "", compa
                     add_lead_activity(lead_id, lead_type, "internal_lead_notification")
                 if lead_type == "brochure":
                     add_lead_activity(lead_id, lead_type, "brochure_sent")
-                if alert_sent:
+                if hot_lead_alert_sent:
                     add_lead_activity(lead_id, lead_type, "hot_lead_alert")
         
         logger.info(f"✅ Lead creation complete")
+        if isinstance(result, dict):
+            result["email_status"] = {
+                "customer_auto_reply_sent": bool(email_sent),
+                "internal_lead_notification_sent": bool(internal_alert_sent),
+                "hot_lead_alert_sent": bool(hot_lead_alert_sent),
+                "hot_lead_alert_note": "only sent when lead score is hot",
+            }
         
         return {
             "content": [{
