@@ -255,7 +255,7 @@ const EnhancedContact = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className="mx-auto grid w-full max-w-[1440px] gap-9 px-4 sm:px-6 md:px-10 lg:grid-cols-[360px_1fr] lg:gap-14 lg:px-16 xl:px-20">
+        <div className="mx-auto w-full max-w-[760px] px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20">
           <div>
             <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.24em] text-[#ff3344]">
               Contact Information
@@ -287,28 +287,6 @@ const EnhancedContact = () => {
             </div>
           </div>
 
-          <div className="relative min-h-[320px] overflow-hidden rounded-2xl shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:min-h-[430px]">
-            <div className="absolute inset-x-4 bottom-4 rounded-xl bg-[#071426] p-5 shadow-2xl sm:bottom-auto sm:left-10 sm:top-1/2 sm:w-[260px] sm:-translate-y-1/2 sm:p-8">
-              <h3 className="mb-4 text-xl font-black text-[#ff3344]">
-                Vibha Prints
-              </h3>
-              <p className="text-sm leading-7 text-white/88">
-                Pune SB Road
-              </p>
-              <a
-                href="https://maps.google.com/?q=Pune+SB+Road"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-[#ff3344]"
-              >
-                Get Directions <ArrowRight size={16} />
-              </a>
-            </div>
-            <div className="absolute right-4 top-4 grid overflow-hidden rounded-lg bg-[#071426] text-white sm:bottom-5 sm:right-5 sm:top-auto">
-              <button className="h-9 w-9 border-b border-white/10 text-lg">+</button>
-              <button className="h-9 w-9 text-lg">-</button>
-            </div>
-          </div>
         </div>
       </section>
 
