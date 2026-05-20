@@ -49,11 +49,11 @@ BROCHURE_PATH = os.environ.get("BROCHURE_PATH", "")
 # Vibha Prints Branding
 BRAND_NAME = "Vibha Prints"
 BRAND_EMAIL = "info@vibhaprints.com"
-BRAND_PHONE = "+91 86259 48046"
+BRAND_PHONE = "+91 86249 48046"
 BRAND_WEBSITE = (
     os.environ.get("BUSINESS_WEBSITE")
     or os.environ.get("VITE_APP_URL")
-    or "https://vibha-prints.vercel.app"
+    or "https://www.vibhaprints.com/"
 ).rstrip("/")
 
 BRAND_SIGNATURE_HTML = f"""

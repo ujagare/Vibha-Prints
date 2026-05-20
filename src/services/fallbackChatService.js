@@ -30,11 +30,14 @@ const normalizeBranding = (text) => {
   if (typeof text !== "string") return text;
   return text
     .replaceAll("CodeSunny", "Vibha Prints")
-    .replaceAll("codesunny.com", "vibhaart.com")
-    .replaceAll("codesunny.in", "vibhaart.com")
+    .replaceAll("codesunny.com", "www.vibhaprints.com")
+    .replaceAll("codesunny.in", "www.vibhaprints.com")
     .replaceAll("information@codesunny.in", "info@vibhapints.com")
     .replaceAll("hello@codesunny.com", "vibhart07@gmail.com")
-    .replaceAll("+91 89758075789", "+91 86249 48046 / +91 89758 05789");
+    .replaceAll("+91 89758075789", "+91 86249 48046")
+    .replaceAll("+91 86259 48046", "+91 86249 48046")
+    .replaceAll("https://vibha-prints.vercel.app", "https://www.vibhaprints.com/")
+    .replaceAll("http://localhost:5173", "https://www.vibhaprints.com/");
 };
 
 // Predefined responses for the chatbot
@@ -60,7 +63,7 @@ const botResponses = {
     "Our packaging design services help your products stand out on the shelf. We create designs for boxes, labels, bags, and other packaging materials. Would you like to discuss your packaging design needs?",
   ],
   contact: [
-    "You can reach us at info@vibhapints.com / vibhart07@gmail.com or call us at +91 86249 48046 / +91 89758 05789. Would you like us to contact you instead? I can take your details right now.",
+    "You can reach us at info@vibhapints.com / vibhart07@gmail.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Would you like us to contact you instead? I can take your details right now.",
   ],
   pricing: [
     "Our pricing varies based on the specific requirements of your project. Here's a general range:\n\n• Logo Design: ₹5,000 - ₹15,000\n• Business Cards: ₹2,000 - ₹5,000\n• Brochures: ₹3,000 - ₹10,000\n\nWould you like to get a custom quote for your project?",

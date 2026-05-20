@@ -44,7 +44,7 @@ const infoItems = [
   {
     icon: <Phone size={26} />,
     title: "Phone",
-    lines: ["+91 86249 48046", "+91 89758 05789"],
+    lines: ["+91 86249 48046"],
   },
   {
     icon: <Mail size={26} />,
@@ -54,7 +54,7 @@ const infoItems = [
   {
     icon: <MapPin size={26} />,
     title: "Location",
-    lines: ["123, Creative Street, Design City,", "Ahmedabad, Gujarat 380001"],
+    lines: ["Pune SB Road"],
   },
   {
     icon: <Clock3 size={26} />,
@@ -293,14 +293,10 @@ const EnhancedContact = () => {
                 Vibha Prints
               </h3>
               <p className="text-sm leading-7 text-white/88">
-                123, Creative Street,
-                <br />
-                Design City, Ahmedabad,
-                <br />
-                Gujarat 380001
+                Pune SB Road
               </p>
               <a
-                href="https://maps.google.com"
+                href="https://maps.google.com/?q=Pune+SB+Road"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-[#ff3344]"

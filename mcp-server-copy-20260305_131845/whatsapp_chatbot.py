@@ -46,12 +46,12 @@ if GEMINI_AVAILABLE and os.environ.get("GEMINI_API_KEY"):
 
 # Business info
 BUSINESS_NAME = "Vibha Prints"
-BUSINESS_PHONE = "+91 86259 48046"
+BUSINESS_PHONE = "+91 86249 48046"
 BUSINESS_EMAIL = "info@vibhaprints.com"
 BUSINESS_WEBSITE = (
     os.environ.get("BUSINESS_WEBSITE")
     or os.environ.get("VITE_APP_URL")
-    or "https://vibha-prints.vercel.app"
+    or "https://www.vibhaprints.com/"
 ).rstrip("/")
 
 # Data directory

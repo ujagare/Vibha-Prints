@@ -33,8 +33,8 @@ logger = logging.getLogger("printing_quote_generator")
 MAIL_FROM = os.environ.get("MAIL_FROM", "info@vibhaprints.com")
 BRAND_NAME = "Vibha Prints"
 BRAND_EMAIL = "info@vibhaprints.com"
-BRAND_PHONE = "+91 86259 48046"
-BRAND_WEBSITE = "http://localhost:5173"
+BRAND_PHONE = "+91 86249 48046"
+BRAND_WEBSITE = "https://www.vibhaprints.com/"
 
 # Data directory
 DATA_DIR = Path(__file__).parent / "data"

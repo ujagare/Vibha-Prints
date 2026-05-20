@@ -12,6 +12,18 @@ const EXTERNAL_CHAT_API_KEY = import.meta.env.VITE_CHATBOT_API_KEY || "";
 const EXTERNAL_CHAT_MODEL =
   import.meta.env.VITE_CHATBOT_MODEL || "openai/gpt-oss-120b";
 
+const CHAT_SESSION_STORAGE_KEY = "vibha_chat_session_id";
+
+const getStoredChatSessionId = () => {
+  if (typeof window === "undefined") return "";
+  return window.localStorage.getItem(CHAT_SESSION_STORAGE_KEY) || "";
+};
+
+const storeChatSessionId = (sessionId) => {
+  if (typeof window === "undefined" || !sessionId) return;
+  window.localStorage.setItem(CHAT_SESSION_STORAGE_KEY, sessionId);
+};
+
 // Predefined responses for the chatbot
 const botResponses = {
   greeting: [
@@ -44,8 +56,8 @@ const botResponses = {
     "Eye-catching packaging design jo sales badha de. Aapke product ke liye custom design banate hain.",
   ],
   contact: [
-    "Aap hume contact kar sakte ho:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone: +91 86249 48046 / +91 89758 05789\n\nYa main aapka contact form fill kar dunga?",
-    "Contact karne ke liye:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone: +91 86249 48046 / +91 89758 05789\n\nKya aap apna number dena chahte ho?",
+    "Aap hume contact kar sakte ho:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nYa main aapka contact form fill kar dunga?",
+    "Contact karne ke liye:\nEmail: info@vibhapints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nKya aap apna number dena chahte ho?",
   ],
   pricing: [
     "Pricing aapke project ke hisaab se hoti hai:\n\n💰 Logo Design: ₹5,000 - ₹15,000\n💰 Business Cards: ₹2,000 - ₹5,000\n💰 Brochures: ₹3,000 - ₹10,000\n💰 Printing: ₹1,000 - ₹50,000+ (volume ke hisaab se)\n\nCustom quote chahiye?",
@@ -228,6 +240,38 @@ const postWithTimeout = async (
   }
 };
 
+const getByPath = (obj, path) => {
+  if (!obj || !path) return undefined;
+  return path
+    .split(".")
+    .reduce((acc, key) => (acc && key in acc ? acc[key] : undefined), obj);
+};
+
+const extractReplyFromApiResponse = (response) => {
+  if (!response || typeof response !== "object") return "";
+
+  const directCandidates = ["reply", "text", "response", "message", "output"];
+  for (const key of directCandidates) {
+    if (typeof response[key] === "string" && response[key].trim()) {
+      return response[key];
+    }
+  }
+
+  const nestedCandidates = [
+    getByPath(response, "data.reply"),
+    getByPath(response, "data.text"),
+    getByPath(response, "result.reply"),
+    getByPath(response, "choices.0.message.content"),
+    getByPath(response, "choices.0.text"),
+  ];
+
+  return (
+    nestedCandidates.find(
+      (value) => typeof value === "string" && value.trim(),
+    ) || ""
+  );
+};
+
 // Call external chat API
 const callExternalChatApi = async (message) => {
   if (!EXTERNAL_CHAT_API_URL) {
@@ -244,10 +288,17 @@ const callExternalChatApi = async (message) => {
     }
 
     const isBackendGroqEndpoint = EXTERNAL_CHAT_API_URL.includes("/api/groq/chat");
+    const isWebsiteBridgeEndpoint = EXTERNAL_CHAT_API_URL.includes("/api/chat");
     const payload = isBackendGroqEndpoint
       ? {
           input: message,
           model: EXTERNAL_CHAT_MODEL,
+        }
+      : isWebsiteBridgeEndpoint
+      ? {
+          message,
+          session_id: getStoredChatSessionId(),
+          source: "vibha-prints-website",
         }
       : {
           model: EXTERNAL_CHAT_MODEL,
@@ -262,22 +313,28 @@ const callExternalChatApi = async (message) => {
           max_tokens: 320,
         };
 
-    console.log("Calling Groq API...");
+    console.log("Calling chat API...");
     const response = await postWithTimeout(
       EXTERNAL_CHAT_API_URL,
       payload,
       headers,
     );
 
-    if (response && response.choices && response.choices[0]) {
-      const reply = response.choices[0].message?.content || "";
-      console.log("API Response:", reply);
-      return reply;
+    if (response?.session_id) {
+      storeChatSessionId(response.session_id);
     }
 
-    if (response?.text) {
-      console.log("API Response:", response.text);
-      return response.text;
+    const extractedReply = extractReplyFromApiResponse(response);
+    if (extractedReply) {
+      console.log("API Response:", extractedReply);
+      return extractedReply;
+    }
+
+    if (response && response.choices && response.choices[0]) {
+      const reply =
+        response.choices[0].message?.content || response.choices[0].text || "";
+      console.log("API Response:", reply);
+      return reply;
     }
 
     console.log("No valid response from API");

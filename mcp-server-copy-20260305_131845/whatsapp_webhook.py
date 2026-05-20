@@ -62,7 +62,7 @@ Generate a helpful, professional reply (max 100 words) that:
 1. Acknowledges their specific request
 2. Provides relevant information
 3. Asks 1-2 clarifying questions
-4. Includes contact: information@codesunny.in or +91 89758075789
+4. Includes contact: info@vibhaprints.com, +91 86249 48046, or https://www.vibhaprints.com/
 
 Be conversational and helpful. Return only the reply text.
 """.strip()
@@ -74,7 +74,7 @@ Be conversational and helpful. Return only the reply text.
                 temperature=0.6,
                 max_tokens=150,
                 messages=[
-                    {"role": "system", "content": "You are a helpful WhatsApp assistant for CodeSunny."},
+                    {"role": "system", "content": "You are a helpful WhatsApp assistant for Vibha Prints. Use +91 86249 48046 and https://www.vibhaprints.com/ as the official contact details."},
                     {"role": "user", "content": prompt}
                 ]
             )
@@ -85,12 +85,12 @@ Be conversational and helpful. Return only the reply text.
         else:
             # Fallback response
             if services_mentioned:
-                return f"Thank you for your interest in {', '.join(services_mentioned)}! I'd love to help. Could you share more details about your requirements? Call us: +91 89758075789 or email: information@codesunny.in"
+                return f"Thank you for your interest in {', '.join(services_mentioned)}! I'd love to help. Could you share more details about your requirements? Call/WhatsApp us: +91 86249 48046 or visit https://www.vibhaprints.com/"
             else:
-                return "Thank you for contacting CodeSunny! How can we help you today? We offer Web Development, E-commerce, SEO, and Design services. Call: +91 89758075789"
+                return "Thank you for contacting Vibha Prints! How can we help you today? We offer design, printing, web development, and marketing services. Call/WhatsApp: +91 86249 48046"
     except Exception as e:
         print(f"AI error: {e}")
-        return "Thank you for your message! Our team will respond shortly. For urgent queries: +91 89758075789 or information@codesunny.in"
+        return "Thank you for your message! Our team will respond shortly. For urgent queries: +91 86249 48046 or https://www.vibhaprints.com/"
 
 
 @app.route("/whatsapp", methods=['POST'])

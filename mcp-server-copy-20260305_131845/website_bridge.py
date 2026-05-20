@@ -662,8 +662,8 @@ def generate_printing_quote():
                             <strong style='color:#6A11CB;'>Vibha Prints</strong><br/>
                             Design &amp; Printing Solutions<br/>
                             📧 <a href='mailto:info@vibhaprints.com' style='color:#6A11CB;text-decoration:none;'>info@vibhaprints.com</a><br/>
-                            📱 <a href='tel:+918625948046' style='color:#6A11CB;text-decoration:none;'>+91 86259 48046</a><br/>
-                            🌐 <a href='{os.environ.get("BUSINESS_WEBSITE") or os.environ.get("VITE_APP_URL") or "https://vibha-prints.vercel.app"}' style='color:#6A11CB;text-decoration:none;'>vibhaprints.com</a>
+                            📱 <a href='tel:+918624948046' style='color:#6A11CB;text-decoration:none;'>+91 86249 48046</a><br/>
+                            🌐 <a href='{os.environ.get("BUSINESS_WEBSITE") or os.environ.get("VITE_APP_URL") or "https://www.vibhaprints.com/"}' style='color:#6A11CB;text-decoration:none;'>https://www.vibhaprints.com/</a>
                         </p>
                     </div>
                 </div>

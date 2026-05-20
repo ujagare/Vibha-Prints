@@ -60,7 +60,6 @@ const Footer = () => {
     ],
     contact: [
       { icon: <FaPhone />, text: "+91 86249 48046", link: "tel:+918624948046" },
-      { icon: <FaPhone />, text: "+91 89758 05789", link: "tel:+918975805789" },
       {
         icon: <FaEnvelope />,
         text: "info@vibhapints.com",
@@ -73,8 +72,8 @@ const Footer = () => {
       },
       {
         icon: <FaMapMarkerAlt />,
-        text: "Pune, India",
-        link: "https://maps.google.com",
+        text: "Pune SB Road",
+        link: "https://maps.google.com/?q=Pune+SB+Road",
       },
     ],
   };

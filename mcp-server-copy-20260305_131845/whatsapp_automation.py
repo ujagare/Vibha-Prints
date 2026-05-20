@@ -35,7 +35,7 @@ GREEN_API_BASE_URL = os.environ.get("GREEN_API_BASE_URL", "https://api.green-api
 
 # Business info
 BUSINESS_NAME = "Vibha Prints"
-BUSINESS_PHONE = "+91 86259 48046"
+BUSINESS_PHONE = "+91 86249 48046"
 BUSINESS_EMAIL = "info@vibhaprints.com"
 
 # Data directory

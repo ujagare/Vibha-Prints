@@ -156,8 +156,8 @@ def send_invoice_email(invoice, recipient_email, recipient_name="Client"):
             
             <p>For any queries, contact us at:</p>
             <ul>
-                <li>Email: information@codesunny.in</li>
-                <li>Phone: +91 89758075789</li>
+                <li>Email: info@vibhaprints.com</li>
+                <li>Phone: +91 86249 48046</li>
             </ul>
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #64748b; font-size: 12px;">
@@ -190,7 +190,7 @@ Account: 50200012345678
 IFSC: HDFC0001234
 UPI: codesunny@hdfcbank
 
-Contact: information@codesunny.in | +91 89758075789
+Contact: info@vibhaprints.com | +91 86249 48046 | https://www.vibhaprints.com/
 
 Best regards,
 CodeSunny Team
@@ -276,7 +276,7 @@ def send_payment_reminder(invoice, recipient_email, recipient_name="Client", rem
             UPI: codesunny@hdfcbank<br>
             Account: 50200012345678 (HDFC Bank)</p>
             
-            <p>Contact: information@codesunny.in | +91 89758075789</p>
+            <p>Contact: info@vibhaprints.com | +91 86249 48046 | https://www.vibhaprints.com/</p>
         </div>
     </body>
     </html>
@@ -296,7 +296,7 @@ Due Date: {invoice['due_date'][:10]}
 {msg_data['tone']}
 
 Payment: codesunny@hdfcbank or 50200012345678 (HDFC)
-Contact: information@codesunny.in
+Contact: info@vibhaprints.com | +91 86249 48046 | https://www.vibhaprints.com/
 
 Best regards,
 CodeSunny Team

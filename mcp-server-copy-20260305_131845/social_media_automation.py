@@ -48,7 +48,7 @@ if GEMINI_AVAILABLE and os.environ.get("GEMINI_API_KEY"):
 # Business info
 BUSINESS_NAME = "Vibha Prints"
 BUSINESS_HANDLE = "vibhaprints"
-BUSINESS_WEBSITE = "http://localhost:5173"
+BUSINESS_WEBSITE = "https://www.vibhaprints.com/"
 
 # Data directory
 DATA_DIR = Path(__file__).parent / "data"

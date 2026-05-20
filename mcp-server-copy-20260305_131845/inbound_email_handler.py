@@ -241,8 +241,8 @@ def send_reply_email(to_email: str, to_name: str, subject: str, body: str, origi
                             <strong style='color:#6A11CB;'>Vibha Prints</strong><br/>
                             Design &amp; Printing Solutions<br/>
                             📧 <a href='mailto:info@vibhaprints.com' style='color:#6A11CB;text-decoration:none;'>info@vibhaprints.com</a><br/>
-                            📱 <a href='tel:+918625948046' style='color:#6A11CB;text-decoration:none;'>+91 86259 48046</a><br/>
-                            🌐 <a href='http://localhost:5173' style='color:#6A11CB;text-decoration:none;'>vibhaprints.com</a>
+                            📱 <a href='tel:+918624948046' style='color:#6A11CB;text-decoration:none;'>+91 86249 48046</a><br/>
+                            🌐 <a href='https://www.vibhaprints.com/' style='color:#6A11CB;text-decoration:none;'>https://www.vibhaprints.com/</a>
                         </p>
                     </div>
                 </div>

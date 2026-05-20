@@ -70,18 +70,19 @@ const Home = () => {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://vibhaprints.com",
+    "@id": "https://www.vibhaprints.com/",
     name: "Vibha Prints",
-    image: "https://vibhaprints.com/logo.png",
+    image: "https://www.vibhaprints.com/logo.png",
     description:
       "Professional graphic design and printing services. We specialize in logo design, branding, brochures, packaging, business cards, and digital/offset printing solutions for businesses.",
-    url: "https://vibhaprints.com",
-    telephone: ["+91-86249-48046", "+91-89758-05789"],
+    url: "https://www.vibhaprints.com/",
+    telephone: "+91-86249-48046",
     email: ["info@vibhapints.com", "vibhart07@gmail.com"],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Vibha Prints Studio",
-      addressLocality: "India",
+      streetAddress: "Pune SB Road",
+      addressLocality: "Pune",
+      addressRegion: "Maharashtra",
       addressCountry: "IN",
     },
     priceRange: "₹5,000 - ₹5,00,000+",
@@ -116,8 +117,8 @@ const Home = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Vibha Prints",
-    url: "https://vibhaprints.com",
-    logo: "https://vibhaprints.com/logo.png",
+    url: "https://www.vibhaprints.com/",
+    logo: "https://www.vibhaprints.com/logo.png",
     description: "Creative design and printing solutions for businesses",
     sameAs: [
       "https://www.facebook.com/vibhaprints",
@@ -127,7 +128,7 @@ const Home = () => {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Service",
-      telephone: ["+91-86249-48046", "+91-89758-05789"],
+      telephone: "+91-86249-48046",
       email: ["info@vibhapints.com", "vibhart07@gmail.com"],
     },
   };
@@ -146,7 +147,7 @@ const Home = () => {
     areaServed: "IN",
     availableChannel: {
       "@type": "ServiceChannel",
-      serviceUrl: "https://vibhaprints.com",
+      serviceUrl: "https://www.vibhaprints.com/",
     },
   };
 
@@ -207,19 +208,19 @@ const Home = () => {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://vibhaprints.com",
+        item: "https://www.vibhaprints.com/",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Graphic Design",
-        item: "https://vibhaprints.com/graphic-design",
+        item: "https://www.vibhaprints.com/graphic-design",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Printing Services",
-        item: "https://vibhaprints.com/printing",
+        item: "https://www.vibhaprints.com/printing",
       },
     ],
   };
@@ -249,10 +250,10 @@ const Home = () => {
           property="og:description"
           content="Professional graphic design and printing services. Logo design, branding, brochures, packaging, and digital/offset printing."
         />
-        <meta property="og:url" content="https://vibhaprints.com" />
+        <meta property="og:url" content="https://www.vibhaprints.com/" />
         <meta
           property="og:image"
-          content="https://vibhaprints.com/og-image.jpg"
+          content="https://www.vibhaprints.com/og-image.jpg"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -271,7 +272,7 @@ const Home = () => {
         />
         <meta
           name="twitter:image"
-          content="https://vibhaprints.com/twitter-image.jpg"
+          content="https://www.vibhaprints.com/twitter-image.jpg"
         />
         <meta name="twitter:creator" content="@vibhaprints" />
 
@@ -295,11 +296,11 @@ const Home = () => {
         <meta name="theme-color" content="#6A11CB" />
 
         {/* ===== CANONICAL URL ===== */}
-        <link rel="canonical" href="https://vibhaprints.com" />
+        <link rel="canonical" href="https://www.vibhaprints.com/" />
 
         {/* ===== ALTERNATE LINKS ===== */}
-        <link rel="alternate" hrefLang="en-IN" href="https://vibhaprints.com" />
-        <link rel="alternate" hrefLang="en" href="https://vibhaprints.com" />
+        <link rel="alternate" hrefLang="en-IN" href="https://www.vibhaprints.com/" />
+        <link rel="alternate" hrefLang="en" href="https://www.vibhaprints.com/" />
 
         {/* ===== STRUCTURED DATA (JSON-LD) ===== */}
         <script type="application/ld+json">

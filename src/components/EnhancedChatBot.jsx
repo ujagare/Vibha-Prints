@@ -10,12 +10,9 @@ import {
   MessageCircle as FaWhatsapp,
   ArrowRight as FaArrowRight,
   Check as FaCheck,
-  RefreshCw as FaSync,
 } from "lucide-react";
 import {
   logChatInteraction,
-  forwardToWhatsApp,
-  createDirectWhatsAppChat,
 } from "../services/chatbotService";
 import {
   getDelayedBotResponse,
@@ -37,8 +34,14 @@ let dummySocket = {
 
 // We'll use this as a fallback when socket connection fails
 const createSocket = () => {
+  const socketUrl = import.meta.env.VITE_CHATBOT_SOCKET_URL || "";
+
+  if (!socketUrl) {
+    return dummySocket;
+  }
+
   try {
-    const newSocket = io.connect("http://localhost:3001", {
+    const newSocket = io.connect(socketUrl, {
       reconnection: false, // Disable reconnection to avoid repeated errors
       reconnectionAttempts: 1,
       reconnectionDelay: 1000,
@@ -48,7 +51,7 @@ const createSocket = () => {
     });
 
     return newSocket;
-  } catch (error) {
+  } catch {
     console.warn("Socket server not available, using fallback mode");
     return dummySocket;
   }
@@ -91,7 +94,6 @@ const EnhancedChatBot = () => {
   const [whatsAppMessage, setWhatsAppMessage] = useState("");
   // Socket connection state
   const [socketConnected, setSocketConnected] = useState(false);
-  const [connectionAttempts, setConnectionAttempts] = useState(0);
   const [isInFallbackMode, setIsInFallbackMode] = useState(false);
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -168,7 +170,7 @@ const EnhancedChatBot = () => {
           socketRef.current = null;
         }
       };
-    } catch (error) {
+    } catch {
       // Silently handle initialization errors
       setIsInFallbackMode(true);
     }
@@ -519,7 +521,7 @@ const EnhancedChatBot = () => {
       setTimeout(() => {
         const botMessage = {
           id: messages.length + 2,
-          text: "No problem! You can reach our team at info@vibhapints.com / vibhart07@gmail.com or call us at +91 86249 48046 / +91 89758 05789. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
+          text: "No problem! You can reach our team at info@vibhapints.com / vibhart07@gmail.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Our office hours are Monday to Saturday, 10:00 AM to 6:00 PM IST.",
           sender: "bot",
           timestamp: new Date(),
           contactInfo: true,
@@ -600,60 +602,27 @@ const EnhancedChatBot = () => {
     // Show typing indicator
     setIsTyping(true);
 
-    try {
-      // Try to submit form data to socket.io server
-      socket.emit("submit_contact_form", contactForm);
+    const submitWithFallback = async () => {
+      try {
+        const response = await fallbackSubmitForm(contactForm);
 
-      // If no response after 3 seconds, use fallback
-      const fallbackTimer = setTimeout(async () => {
-        console.log("Using fallback form submission");
-
-        try {
-          // Submit form using fallback service
-          const response = await fallbackSubmitForm(contactForm);
-
-          if (response.success) {
-            // Set form as submitted and hide it
-            setFormSubmitted(true);
-            setShowContactForm(false);
-
-            // Add bot response
-            const botMessage = {
-              id: messages.length + 1,
-              text: `Thank you, ${contactForm.name}! Your contact information has been submitted. Our team will get in touch with you soon at ${contactForm.email} or ${contactForm.phone}.`,
-              sender: "bot",
-              timestamp: new Date(),
-            };
-
-            setMessages((prev) => [...prev, botMessage]);
-            setIsTyping(false);
-          } else {
-            throw new Error("Form submission failed");
-          }
-        } catch (fallbackError) {
-          console.error("Fallback form submission error:", fallbackError);
-
-          // Show error message
-          const botMessage = {
-            id: messages.length + 1,
-            text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
-            sender: "bot",
-            timestamp: new Date(),
-          };
-
-          setMessages((prev) => [...prev, botMessage]);
-          setIsTyping(false);
+        if (!response.success) {
+          throw new Error("Form submission failed");
         }
 
-        // Reset form
-        setContactForm({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
+        setFormSubmitted(true);
+        setShowContactForm(false);
 
-        // Log the interaction
+        const botMessage = {
+          id: messages.length + 1,
+          text: `Thank you, ${contactForm.name}! Your contact information has been submitted. Our team will get in touch with you soon at ${contactForm.email} or ${contactForm.phone}.`,
+          sender: "bot",
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, botMessage]);
+        setIsTyping(false);
+
         logChatInteraction({
           type: "form_submission",
           userDetails: {
@@ -663,10 +632,45 @@ const EnhancedChatBot = () => {
           },
           isFallback: true,
         });
+      } catch (fallbackError) {
+        console.error("Fallback form submission error:", fallbackError);
+
+        const botMessage = {
+          id: messages.length + 1,
+          text: "I'm sorry, there was an error submitting your information. Please try again or contact us directly at info@vibhapints.com or vibhart07@gmail.com.",
+          sender: "bot",
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, botMessage]);
+        setIsTyping(false);
+      } finally {
+        setContactForm({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      }
+    };
+
+    if (!socketRef.current || !socketConnected) {
+      await submitWithFallback();
+      return;
+    }
+
+    try {
+      // Try to submit form data to socket.io server
+      socketRef.current.emit("submit_contact_form", contactForm);
+
+      // If no response after 3 seconds, use fallback
+      const fallbackTimer = setTimeout(async () => {
+        console.log("Using fallback form submission");
+        await submitWithFallback();
       }, 3000);
 
       // Clear fallback timer if we get a response from the server
-      socket.once("form_submission_response", (response) => {
+      socketRef.current.once("form_submission_response", (response) => {
         clearTimeout(fallbackTimer);
 
         if (response.success) {
@@ -890,12 +894,6 @@ const EnhancedChatBot = () => {
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
                           >
                             <FaPhone className="mr-1" size={10} /> Call 1
-                          </a>
-                          <a
-                            href="tel:+918975805789"
-                            className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"
-                          >
-                            <FaPhone className="mr-1" size={10} /> Call 2
                           </a>
                           <a
                             href="https://wa.me/918624948046"

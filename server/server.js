@@ -33,7 +33,7 @@ Rules:
 - If the customer asks casually, reply casually. If they ask business details, become precise.
 - Help users with printing services, graphic design, branding, digital marketing, and web development.
 - Services include logo design, brand identity, business cards, brochures, pamphlets, posters, catalogs, company profile, packaging, labels, stickers, hangtags, corporate stationery, flex/vinyl/banner printing, bags, T-shirts, social media creatives, websites, landing pages, ecommerce, SEO, ads, and email marketing.
-- Contact details: info@vibhaprints.com and +91 86259 48046.
+- Contact details: info@vibhaprints.com, +91 86249 48046, and https://www.vibhaprints.com/.
 - Suggest relevant Vibha Prints services when helpful.
 - Speak Hindi + English naturally using Roman Hindi/Hinglish.
 - Do not use emojis, Devanagari, Marathi script, or long paragraphs.
@@ -115,8 +115,8 @@ const brandEmailHtml = ({ title, name, body, ctaText = "", ctaHref = "" }) => `
       </div>
       <div style="border-top:1px solid #e5e7eb;padding:16px 24px;color:#6b7280;font-size:13px;">
         Email: ${escapeHtml(process.env.MAIL_FROM || "info@vibhaprints.com")}<br/>
-        Phone/WhatsApp: +91 86259 48046<br/>
-        Website: vibhaprints.com
+        Phone/WhatsApp: +91 86249 48046<br/>
+        Website: https://www.vibhaprints.com/
       </div>
     </div>
   </div>
@@ -463,7 +463,7 @@ const botResponses = {
     "Our packaging design services help your products stand out on the shelf. We create designs for boxes, labels, bags, and other packaging materials. Would you like to discuss your packaging design needs?"
   ],
   contact: [
-    "You can reach us at info@vibhaprints.com or call us at +91 86259 48046. Would you like us to contact you instead? I can take your details right now."
+    "You can reach us at info@vibhaprints.com, call or WhatsApp us at +91 86249 48046, or visit https://www.vibhaprints.com/. Would you like us to contact you instead? I can take your details right now."
   ],
   pricing: [
     "Our pricing varies based on the specific requirements of your project. Here's a general range:\n\n• Logo Design: ₹5,000 - ₹15,000\n• Business Cards: ₹2,000 - ₹5,000\n• Brochures: ₹3,000 - ₹10,000\n\nWould you like to get a custom quote for your project?"

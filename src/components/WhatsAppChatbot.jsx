@@ -81,7 +81,7 @@ const WhatsAppChatbot = () => {
       console.error("Error:", error);
       const errorMessage = {
         id: messages.length + 2,
-        text: "Connection error. Please try again or call us at +91 86249 48046 / +91 89758 05789",
+        text: "Connection error. Please try again or call/WhatsApp us at +91 86249 48046. Website: https://www.vibhaprints.com/",
         sender: "bot",
         timestamp: new Date(),
       };

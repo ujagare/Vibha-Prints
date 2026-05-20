@@ -47,14 +47,14 @@ BRAND_SIGNATURE_EN = (
     "Best regards,\n"
     "Vibha Prints Team\n"
     "Design & Printing Solutions\n"
-    "Email: info@vibhaprints.com | Phone: +91 86259 48046 | https://vibhaprints.com"
+    "Email: info@vibhaprints.com | Phone: +91 86249 48046 | https://www.vibhaprints.com/"
 )
 
 BRAND_SIGNATURE_HI = (
     "Dhanyavaad,\n"
     "Vibha Prints Team\n"
     "Design & Printing Solutions\n"
-    "Email: info@vibhaprints.com | Phone: +91 86259 48046 | https://vibhaprints.com"
+    "Email: info@vibhaprints.com | Phone: +91 86249 48046 | https://www.vibhaprints.com/"
 )
 
 DATA_DIR = Path(__file__).parent / "data"
@@ -278,8 +278,8 @@ def send_reply(to_email: str, subject: str, body: str):
         f"<strong>Vibha Prints Team</strong><br/>"
         f"Design &amp; Printing Solutions<br/>"
         f"Email: <a href='mailto:info@vibhaprints.com'>info@vibhaprints.com</a> | "
-        f"Phone: <a href='tel:+918625948046'>+91 86259 48046</a><br/>"
-        f"<a href='https://vibhaprints.com'>vibhaprints.com</a>"
+        f"Phone: <a href='tel:+918624948046'>+91 86249 48046</a><br/>"
+        f"<a href='https://www.vibhaprints.com/'>https://www.vibhaprints.com/</a>"
         f"</p></div></div>"
     )
     msg.add_alternative(html_body, subtype="html")

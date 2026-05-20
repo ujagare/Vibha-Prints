@@ -51,34 +51,34 @@ SERVICES = [
 ]
 BRAND_SIGNATURE_TEXT_EN = (
     "Best regards,\n"
-    "CodeSunny Team\n"
-    "Web & Digital Solutions\n"
-    "Email: information@codesunny.in | Phone: +91 89758075789 | https://codesunny.com"
+    "Vibha Prints Team\n"
+    "Design, Printing & Digital Solutions\n"
+    "Email: info@vibhaprints.com | Phone: +91 86249 48046 | https://www.vibhaprints.com/"
 )
 BRAND_SIGNATURE_TEXT_HI = (
     "Dhanyavaad,\n"
-    "CodeSunny Team\n"
-    "Web & Digital Solutions\n"
-    "Email: information@codesunny.in | Phone: +91 89758075789 | https://codesunny.com"
+    "Vibha Prints Team\n"
+    "Design, Printing & Digital Solutions\n"
+    "Email: info@vibhaprints.com | Phone: +91 86249 48046 | https://www.vibhaprints.com/"
 )
 BRAND_SIGNATURE_HTML = (
     "<hr style='border:1px solid #e5e7eb;margin-top:20px;margin-bottom:14px;'/>"
     "<p style='margin:0;line-height:1.6;'>"
-    "<strong>CodeSunny Team</strong><br/>"
-    "Web &amp; Digital Solutions<br/>"
-    "Email: <a href='mailto:information@codesunny.in'>information@codesunny.in</a><br/>"
-    "Phone: <a href='tel:+918975807578'>+91 89758075789</a><br/>"
-    "<a href='https://codesunny.com'>codesunny.com</a>"
+    "<strong>Vibha Prints Team</strong><br/>"
+    "Design, Printing &amp; Digital Solutions<br/>"
+    "Email: <a href='mailto:info@vibhaprints.com'>info@vibhaprints.com</a><br/>"
+    "Phone: <a href='tel:+918624948046'>+91 86249 48046</a><br/>"
+    "<a href='https://www.vibhaprints.com/'>https://www.vibhaprints.com/</a>"
     "</p>"
 )
 PROFESSIONAL_FOOTER_HTML = (
     "<div style='margin-top:20px;padding-top:14px;border-top:1px solid #e5e7eb;'>"
     "<p style='margin:0;font-size:13px;color:#334155;line-height:1.6;'>"
-    "<strong>CodeSunny Team</strong><br/>"
-    "Web &amp; Digital Solutions<br/>"
-    "Email: <a href='mailto:information@codesunny.in'>information@codesunny.in</a> | "
-    "Phone: <a href='tel:+918975807578'>+91 89758075789</a><br/>"
-    "<a href='https://codesunny.com'>codesunny.com</a>"
+    "<strong>Vibha Prints Team</strong><br/>"
+    "Design, Printing &amp; Digital Solutions<br/>"
+    "Email: <a href='mailto:info@vibhaprints.com'>info@vibhaprints.com</a> | "
+    "Phone: <a href='tel:+918624948046'>+91 86249 48046</a><br/>"
+    "<a href='https://www.vibhaprints.com/'>https://www.vibhaprints.com/</a>"
     "</p>"
     "</div>"
 )
@@ -513,7 +513,7 @@ def send_followup_day7(lead):
             
             <p><a href="https://codesunny.com/contact" style="background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 16px;">Claim Your Discount Now</a></p>
             
-            <p>Questions? Reply to this email or call us at +91 89758075789</p>
+            <p>Questions? Reply to this email or call us at +91 86249 48046</p>
             
             <p>Best regards,<br>
             <strong>CodeSunny Team</strong></p>
@@ -551,9 +551,9 @@ def send_followup_day10(lead):
             
             <p>Feel free to reach out anytime:</p>
             <ul>
-                <li>📧 Email: information@codesunny.in</li>
-                <li>📱 Phone: +91 89758075789</li>
-                <li>🌐 Website: codesunny.com</li>
+                <li>📧 Email: info@vibhaprints.com</li>
+                <li>📱 Phone: +91 86249 48046</li>
+                <li>🌐 Website: https://www.vibhaprints.com/</li>
             </ul>
             
             <p>Best regards,<br>
@@ -563,7 +563,7 @@ def send_followup_day10(lead):
     </html>
     """
     
-    text = f"Hi {name},\n\nFinal check-in! If you're interested, I'm here to help. If not, no worries!\n\nContact: information@codesunny.in | +91 89758075789\n\nBest regards,\nCodeSunny Team"
+    text = f"Hi {name},\n\nFinal check-in! If you're interested, I'm here to help. If not, no worries!\n\nContact: info@vibhaprints.com | +91 86249 48046 | https://www.vibhaprints.com/\n\nBest regards,\nVibha Prints Team"
     
     ai = generate_ai_followup_email(lead, "day10")
     if ai:
