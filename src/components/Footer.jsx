@@ -103,7 +103,9 @@ const Footer = () => {
                 to="/"
                 className="mb-4 inline-flex items-center rounded-2xl border border-[#edf1f7] bg-white px-3 py-2 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20"
               >
-                <img decoding="async" loading="lazy"
+                <img
+                  decoding="async"
+                  loading="lazy"
                   src={vibha}
                   alt="Vibha Art Logo"
                   className="h-14 w-auto object-contain transition duration-300 hover:scale-[1.03]"
@@ -228,6 +230,17 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
               &copy; {currentYear} Vibha Art. All rights reserved.
+            </p>
+            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+              Design & Develop by{" "}
+              <a
+                href="https://codesunny.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-[#ff3f51] font-semibold transition-colors"
+              >
+                CODESUNNY.IN
+              </a>
             </p>
             <div className="flex space-x-6">
               <Link
