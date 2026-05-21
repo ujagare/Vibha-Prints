@@ -11,6 +11,10 @@ const EXTERNAL_CHAT_API_URL = import.meta.env.VITE_CHATBOT_API_URL || "";
 const EXTERNAL_CHAT_API_KEY = import.meta.env.VITE_CHATBOT_API_KEY || "";
 const EXTERNAL_CHAT_MODEL =
   import.meta.env.VITE_CHATBOT_MODEL || "openai/gpt-oss-120b";
+const LEAD_API_URL =
+  import.meta.env.VITE_CHATBOT_LEAD_API_URL ||
+  import.meta.env.VITE_CONTACT_NOTIFY_API_URL ||
+  "";
 
 const CHAT_SESSION_STORAGE_KEY = "vibha_chat_session_id";
 const CHAT_HISTORY_STORAGE_KEY = "vibha_chat_history";
@@ -55,12 +59,12 @@ const botResponses = {
     "Welcome to Vibha Prints! Aapke liye main kya kar sakta hoon?",
   ],
   services: [
-    "Hum ye services provide karte hain:\n\n✓ Logo Design\n✓ Business Cards\n✓ Brochures\n✓ Packaging Design\n✓ Brand Identity\n\nKaunsi service ke baare mein jaankari chahiye?",
-    "Hamari services:\n• Graphic Design\n• Printing Services\n• Branding Solutions\n• Marketing Materials\n\nKya aap kisi specific service ke baare mein poochna chahte ho?",
+    "Hum ye services provide karte hain:\n\n- Logo Design\n- Business Cards\n- Brochures\n- Packaging Design\n- Brand Identity\n\nKaunsi service ke baare mein jaankari chahiye?",
+    "Hamari services:\n- Graphic Design\n- Printing Services\n- Branding Solutions\n- Marketing Materials\n\nKya aap kisi specific service ke baare mein poochna chahte ho?",
   ],
   printing: [
-    "Hamari printing services mein ye sab included hain:\n\n🖨️ Digital Printing - Fast aur cost-effective\n🖨️ Offset Printing - High volume ke liye\n🖨️ Business Cards - Premium quality\n🖨️ Brochures & Booklets - Professional design\n🖨️ Banners & Flex - Large format printing\n🖨️ Packaging - Custom boxes aur labels\n\nKaunsi printing service chahiye aapko?",
-    "Printing services ke liye hum best quality guarantee karte hain:\n\n✓ Fast turnaround\n✓ Affordable pricing\n✓ Premium materials\n✓ Professional output\n\nAapko kaunsi printing chahiye? Business cards, brochures, banners, ya kuch aur?",
+    "Hamari printing services mein ye sab included hain:\n\n- Digital Printing - fast aur cost-effective\n- Offset Printing - high volume ke liye\n- Business Cards - premium quality\n- Brochures & Booklets - professional design\n- Banners & Flex - large format printing\n- Packaging - custom boxes aur labels\n\nKaunsi printing service chahiye aapko?",
+    "Printing services ke liye hum quality output par focus karte hain:\n\n- Fast turnaround\n- Affordable pricing\n- Premium materials\n- Professional output\n\nAapko kaunsi printing chahiye? Business cards, brochures, banners, ya kuch aur?",
   ],
   logo: [
     "Logo design mein hum concept se lekar final delivery tak sab karte hain. Aapka brand identity banate hain jo memorable ho. Kya aap apna logo design karana chahte ho?",
@@ -83,11 +87,11 @@ const botResponses = {
     "Contact karne ke liye:\nEmail: info@vibhaprints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nKya aap apna number dena chahte ho?",
   ],
   pricing: [
-    "Pricing aapke project ke hisaab se hoti hai:\n\n💰 Logo Design: ₹5,000 - ₹15,000\n💰 Business Cards: ₹2,000 - ₹5,000\n💰 Brochures: ₹3,000 - ₹10,000\n💰 Printing: ₹1,000 - ₹50,000+ (volume ke hisaab se)\n\nCustom quote chahiye?",
+    "Pricing aapke project ke hisaab se hoti hai:\n\n- Logo Design: Rs 5,000 - Rs 15,000\n- Business Cards: Rs 2,000 - Rs 5,000\n- Brochures: Rs 3,000 - Rs 10,000\n- Printing: Rs 1,000 - Rs 50,000+ (volume ke hisaab se)\n\nCustom quote chahiye?",
     "Pricing flexible hai. Aapke budget aur requirements bataye, hum quote denge.",
   ],
   turnaround: [
-    "Turnaround time:\n⏱️ Logo: 3-5 days\n⏱️ Business Cards: 2-3 days\n⏱️ Brochures: 3-7 days\n⏱️ Printing: 1-3 days (volume ke hisaab se)\n⏱️ Complex: 1-2 weeks\n\nAapka deadline kya hai?",
+    "Turnaround time:\n- Logo: 3-5 days\n- Business Cards: 2-3 days\n- Brochures: 3-7 days\n- Printing: 1-3 days (volume ke hisaab se)\n- Complex projects: 1-2 weeks\n\nAapka deadline kya hai?",
     "Turnaround time project ke hisaab se hoti hai. Urgent kaam bhi kar sakte hain.",
   ],
   portfolio: [
@@ -95,14 +99,13 @@ const botResponses = {
     "Hamari previous work dekh sakte ho website par. Kaunsi category mein interested ho?",
   ],
   process: [
-    "Hamari process:\n1️⃣ Consultation\n2️⃣ Research & Concepts\n3️⃣ Design Presentation\n4️⃣ Revisions\n5️⃣ Final Delivery\n\nKya aur jaankari chahiye?",
+    "Hamari process:\n1. Consultation\n2. Research & Concepts\n3. Design Presentation\n4. Revisions\n5. Final Delivery\n\nKya aur jaankari chahiye?",
     "Step-by-step process jo transparent aur professional hai. Aapka feedback har step mein important hai.",
   ],
   default: [
-    "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi.",
+    "Is baare mein main sure nahi hoon. Aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi.",
   ],
 };
-
 // Keywords to match user queries
 const keywords = {
   greeting: [
@@ -228,6 +231,56 @@ const getRandomResponse = (responses) => {
   return responses[Math.floor(Math.random() * responses.length)];
 };
 
+const priorityCategories = [
+  "printing",
+  "logo",
+  "business_cards",
+  "brochures",
+  "packaging",
+  "pricing",
+  "turnaround",
+  "contact",
+  "portfolio",
+  "process",
+  "services",
+  "greeting",
+];
+
+const unsafeAutomationActions = new Set([
+  "generate_image",
+  "image_generation",
+  "seo_audit",
+  "calculate_quote",
+  "schedule_meeting",
+]);
+
+const looksLikeAutomationReply = (reply = "") => {
+  const normalized = reply.toLowerCase();
+  return [
+    "image generate",
+    "generating image",
+    "prompt:",
+    "seo audit",
+    "calculating quote",
+    "quote calculate kar raha",
+  ].some((phrase) => normalized.includes(phrase));
+};
+
+const shouldRejectApiResponse = (response, reply) => {
+  if (!response || typeof response !== "object") return false;
+
+  const action = String(
+    response.action ||
+      response.intent ||
+      getByPath(response, "data.action") ||
+      getByPath(response, "data.intent") ||
+      "",
+  ).toLowerCase();
+  if (unsafeAutomationActions.has(action)) return true;
+
+  return looksLikeAutomationReply(reply);
+};
+
 // Post with timeout
 const postWithTimeout = async (
   url,
@@ -320,6 +373,8 @@ const callExternalChatApi = async (message) => {
           input: message,
           messages: conversationHistory,
           model: EXTERNAL_CHAT_MODEL,
+          mode: "website_chat",
+          force_chat: true,
         }
       : isWebsiteBridgeEndpoint
       ? {
@@ -327,6 +382,8 @@ const callExternalChatApi = async (message) => {
           messages: conversationHistory,
           session_id: getStoredChatSessionId(),
           source: "vibha-prints-website",
+          mode: "website_chat",
+          force_chat: true,
         }
       : {
           model: EXTERNAL_CHAT_MODEL,
@@ -348,12 +405,18 @@ const callExternalChatApi = async (message) => {
       headers,
     );
 
-    if (response?.session_id) {
-      storeChatSessionId(response.session_id);
+    const sessionId = response?.session_id || getByPath(response, "data.session_id");
+    if (sessionId) {
+      storeChatSessionId(sessionId);
     }
 
     const extractedReply = extractReplyFromApiResponse(response);
     if (extractedReply) {
+      if (shouldRejectApiResponse(response, extractedReply)) {
+        console.warn("Rejected non-chat API response, using local chatbot fallback");
+        return "";
+      }
+
       console.log("API Response:", extractedReply);
       storeChatHistory([
         ...conversationHistory,
@@ -385,16 +448,8 @@ const callExternalChatApi = async (message) => {
 export const getBotResponse = (message) => {
   const lowerMessage = message.toLowerCase().trim();
 
-  // Check for keywords - PRINTING FIRST (most specific)
-  if (keywords.printing.some((keyword) => lowerMessage.includes(keyword))) {
-    const response = getRandomResponse(botResponses.printing);
-    console.log("Matched: printing");
-    return response;
-  }
-
-  // Then check other categories
-  for (const [category, categoryKeywords] of Object.entries(keywords)) {
-    if (category === "printing") continue; // Skip printing as we already checked it
+  for (const category of priorityCategories) {
+    const categoryKeywords = keywords[category] || [];
     if (categoryKeywords.some((keyword) => lowerMessage.includes(keyword))) {
       const response = getRandomResponse(botResponses[category]);
       console.log(`Matched: ${category}`);
@@ -435,15 +490,22 @@ export const getDelayedBotResponse = async (message) => {
 export const submitContactForm = async (formData) => {
   await new Promise((resolve) => setTimeout(resolve, 800));
 
+  if (!LEAD_API_URL) {
+    console.warn("Lead API not configured");
+    return { success: true, message: "Form captured locally" };
+  }
+
   try {
     const response = await postWithTimeout(
-      import.meta.env.VITE_CONTACT_NOTIFY_API_URL || "",
+      LEAD_API_URL,
       {
         name: formData?.name || "Website Visitor",
         email: formData?.email || "",
         phone: formData?.phone || "",
+        mobile: formData?.phone || "",
         message: formData?.message || "",
         source: "vibha-prints-website",
+        lead_type: "contact",
       },
       { "Content-Type": "application/json" },
     );

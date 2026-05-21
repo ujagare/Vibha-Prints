@@ -47,7 +47,7 @@ Classify the user's message into ONE of the following intents:
 
 Intents:
 - seo_audit: User wants SEO analysis, website audit, performance check
-- image_generation: User wants to generate image, logo, design, mockup
+- image_generation: User explicitly asks to generate/create an image, picture, banner image, or visual mockup
 - landing_page_demo: User wants to see demo, example, landing page, website preview
 - pricing_query: User asks about cost, price, packages, budget, how much
 - consultation_booking: User wants to schedule meeting, book call, consultation
@@ -60,8 +60,9 @@ Intents:
 
 Priority rules (VERY IMPORTANT):
 1) If message asks for landing page, website demo, static preview, mockup, "dikhaiye", "create page", classify as landing_page_demo.
-2) If message asks to generate design/image/mockup/banner/logo, classify as image_generation.
-3) Do NOT classify landing page demo requests as quote_request unless user explicitly asks cost/price/quote.
+2) If message asks to generate/create an image, picture, banner image, or visual mockup, classify as image_generation.
+3) If user asks for logo design, branding design, brochure design, packaging design, printing, or any normal Vibha service, classify as quote_request unless they explicitly ask to generate an image asset.
+4) Do NOT classify landing page demo requests as quote_request unless user explicitly asks cost/price/quote.
 
 CRITICAL: Respond ONLY in valid JSON. No markdown. No explanation. No extra text.
 
@@ -180,7 +181,18 @@ def detect_intent_with_gemini(message: str) -> dict:
         "web development", "ecommerce", "e-commerce", "ui ux", "ui/ux",
         "design", "automation", "ai solutions"
     ]
-    image_keywords = ["generate image", "create image", "image", "banner", "logo", "mockup design"]
+    image_keywords = [
+        "generate image",
+        "create image",
+        "make image",
+        "generate picture",
+        "create picture",
+        "generate mockup",
+        "create mockup",
+        "mockup design",
+        "generate banner",
+        "create banner",
+    ]
     seo_keywords = ["seo", "audit", "analyze my site", "website audit", "site performance"]
     consultation_keywords = ["book call", "consultation", "schedule meeting", "schedule call", "meeting"]
     greeting_keywords = ["hi", "hello", "hey", "namaste"]

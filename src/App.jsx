@@ -6,7 +6,6 @@ import {
   createRoutesFromElements,
   Outlet,
   useLocation,
-  ScrollRestoration,
 } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -183,12 +182,40 @@ function ScrollProgressBar() {
   );
 }
 
+function scrollWindowToTop() {
+  const root = document.documentElement;
+  const previousScrollBehavior = root.style.scrollBehavior;
+
+  root.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+
+  requestAnimationFrame(() => {
+    root.style.scrollBehavior = previousScrollBehavior;
+  });
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollWindowToTop();
   }, [pathname]);
+
+  return null;
+}
+
+function DisableScrollRestoration() {
+  useEffect(() => {
+    if (!("scrollRestoration" in window.history)) return undefined;
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    scrollWindowToTop();
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
 
   return null;
 }
@@ -298,14 +325,14 @@ function RootLayout() {
         />
         <Navbar />
         <ScrollProgressBar />
+        <DisableScrollRestoration />
         <ScrollToTop />
-        <ScrollRestoration />
         <AnimatePresence mode="wait">
           <main
-            className="flex-1 w-full max-w-full overflow-x-hidden bg-brand-white-100"
+            className="flex-1 min-h-screen w-full max-w-full overflow-x-hidden bg-brand-white-100"
             key="main-content"
           >
-            <Suspense fallback={null}>
+            <Suspense fallback={<div className="min-h-screen bg-white" />}>
               <Outlet />
             </Suspense>
           </main>
