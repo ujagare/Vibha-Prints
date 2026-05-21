@@ -40,7 +40,9 @@ const AnimatedNumber = ({
         enableScrollSpy
         scrollSpyOnce
         scrollSpyDelay={120}
-      />
+      >
+        {({ countUpRef }) => <span ref={countUpRef} />}
+      </CountUp>
     </Component>
   );
 };
