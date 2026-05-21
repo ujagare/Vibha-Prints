@@ -156,7 +156,7 @@ export const createGalleryTemplate = (config) => {
                   }}
                   role={item.link ? "link" : undefined}
                   tabIndex={item.link ? 0 : undefined}
-                  className={`group relative overflow-hidden rounded-lg border border-[#e6ebf3] bg-white shadow-[0_24px_80px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ffd5db] hover:shadow-[0_34px_95px_rgba(7,17,36,0.14)] ${
+                  className={`group relative flex h-full flex-col overflow-hidden rounded-lg border border-[#e6ebf3] bg-white shadow-[0_24px_80px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ffd5db] hover:shadow-[0_34px_95px_rgba(7,17,36,0.14)] ${
                     item.link ? "cursor-pointer" : ""
                   }`}
                 >
@@ -177,10 +177,10 @@ export const createGalleryTemplate = (config) => {
                             loading="lazy"
                             src={item.image}
                             alt={item.title}
-                            className="h-auto w-full transition duration-500 group-hover:scale-105 object-contain"
+                            className="h-56 w-full transition duration-500 group-hover:scale-105 object-contain bg-[#f1f5f9]"
                           />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-[#e9eef5] px-6 text-center text-xl font-extrabold text-[#536176]">
+                          <div className="flex h-56 w-full items-center justify-center bg-[#e9eef5] px-6 text-center text-xl font-extrabold text-[#536176]">
                             {title} {index + 1}
                           </div>
                         )}
@@ -206,10 +206,10 @@ export const createGalleryTemplate = (config) => {
                             loading="lazy"
                             src={item.image}
                             alt={item.title}
-                            className="h-auto w-full transition duration-500 group-hover:scale-105 object-contain"
+                            className="h-56 w-full transition duration-500 group-hover:scale-105 object-contain bg-[#f1f5f9]"
                           />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-[#e9eef5] px-6 text-center text-xl font-extrabold text-[#536176]">
+                          <div className="flex h-56 w-full items-center justify-center bg-[#e9eef5] px-6 text-center text-xl font-extrabold text-[#536176]">
                             {title} {index + 1}
                           </div>
                         )}
@@ -224,7 +224,7 @@ export const createGalleryTemplate = (config) => {
                     </button>
                   )}
 
-                  <div className="p-5 sm:p-6">
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
                     {item.tagline && (
                       <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#ff3f51]">
                         {item.tagline}
@@ -258,7 +258,7 @@ export const createGalleryTemplate = (config) => {
                         </button>
                       )}
                     </div>
-                    <p className="min-h-[54px] text-sm font-medium leading-7 text-[#667085]">
+                    <p className="min-h-[54px] flex-1 text-sm font-medium leading-7 text-[#667085]">
                       {item.description}
                     </p>
                     <div className="mt-5 flex items-center justify-between border-t border-[#eef1f7] pt-4">
