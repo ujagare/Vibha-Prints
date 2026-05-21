@@ -14,6 +14,8 @@ import os
 import json
 import smtplib
 import re
+import base64
+import requests
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -45,6 +47,10 @@ ZOHO_SMTP_USER = os.environ.get("ZOHO_SMTP_USER", "info@vibhaprints.com")
 ZOHO_SMTP_PASS = os.environ.get("ZOHO_SMTP_PASS", "")
 MAIL_FROM = os.environ.get("MAIL_FROM", "info@vibhaprints.com")
 BROCHURE_PATH = os.environ.get("BROCHURE_PATH", "")
+EMAIL_PROVIDER = os.environ.get("EMAIL_PROVIDER", "smtp").strip().lower()
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
+RESEND_FROM = os.environ.get("RESEND_FROM", MAIL_FROM)
+RESEND_API_URL = os.environ.get("RESEND_API_URL", "https://api.resend.com/emails")
 
 # Vibha Prints Branding
 BRAND_NAME = "Vibha Prints"
@@ -104,6 +110,16 @@ def send_email(
         True if sent successfully, False otherwise
     """
     logger.info(f"📧 Attempting to send email to {to_email}")
+    if EMAIL_PROVIDER == "resend":
+        return send_email_resend(
+            to_email=to_email,
+            subject=subject,
+            html_content=html_content,
+            text_content=text_content,
+            cc_email=cc_email,
+            attachment_path=attachment_path,
+        )
+
     if cc_email:
         logger.info(f"   CC: {cc_email}")
     logger.info(f"ZOHO_SMTP_HOST: {ZOHO_SMTP_HOST}")
@@ -210,6 +226,60 @@ def send_email(
         logger.error(f"❌ Failed to send email to {to_email}: {type(e).__name__}: {e}")
         import traceback
         logger.error(traceback.format_exc())
+        return False
+
+
+def send_email_resend(
+    to_email: str,
+    subject: str,
+    html_content: str,
+    text_content: str = "",
+    cc_email: str = "",
+    attachment_path: str = "",
+) -> bool:
+    """Send email using Resend HTTP API."""
+    if not RESEND_API_KEY:
+        logger.error("RESEND_API_KEY not configured")
+        return False
+
+    payload = {
+        "from": RESEND_FROM,
+        "to": [to_email],
+        "subject": subject,
+        "html": html_content,
+    }
+    if text_content:
+        payload["text"] = text_content
+    if cc_email:
+        payload["cc"] = [cc_email]
+    if attachment_path and os.path.exists(attachment_path):
+        try:
+            with open(attachment_path, "rb") as file:
+                payload["attachments"] = [{
+                    "filename": os.path.basename(attachment_path),
+                    "content": base64.b64encode(file.read()).decode("ascii"),
+                }]
+        except Exception as e:
+            logger.error(f"Failed to attach file for Resend: {attachment_path} ({e})")
+
+    try:
+        response = requests.post(
+            RESEND_API_URL,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+            timeout=30,
+        )
+        if 200 <= response.status_code < 300:
+            logger.info(f"Email sent via Resend to {to_email}")
+            return True
+
+        logger.error(f"Resend send failed ({response.status_code}): {response.text[:500]}")
+        return False
+    except Exception as e:
+        logger.error(f"Resend send error: {type(e).__name__}: {e}")
         return False
 
 

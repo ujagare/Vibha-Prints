@@ -28,3 +28,7 @@ services:
         value: llama-3.3-70b-versatile
       - key: INBOUND_SKIP_DOMAINS
         value: zohocorp.com,zohocreator.com,zohoworkplace.com
+      - key: EMAIL_PROVIDER
+        value: resend
+      - key: RESEND_FROM
+        value: Vibha Prints <info@vibhaprints.com>

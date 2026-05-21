@@ -19,6 +19,7 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 import json
 import logging
+import requests
 from datetime import datetime, timedelta
 from pathlib import Path
 from dotenv import load_dotenv
@@ -52,6 +53,10 @@ SMTP_USER = os.environ.get("ZOHO_SMTP_USER", "info@vibhaprints.com")
 SMTP_PASS = os.environ.get("ZOHO_SMTP_PASS", "")
 SMTP_TIMEOUT_SECONDS = int(os.environ.get("SMTP_TIMEOUT_SECONDS", "45"))
 MAIL_FROM = os.environ.get("MAIL_FROM", "info@vibhaprints.com")
+EMAIL_PROVIDER = os.environ.get("EMAIL_PROVIDER", "smtp").strip().lower()
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
+RESEND_FROM = os.environ.get("RESEND_FROM", MAIL_FROM)
+RESEND_API_URL = os.environ.get("RESEND_API_URL", "https://api.resend.com/emails")
 GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
 INBOUND_SKIP_DOMAINS = {
     domain.strip().lower()
@@ -308,7 +313,7 @@ def send_reply_email(to_email: str, to_name: str, subject: str, body: str, origi
     
     logger.info(f"📧 Sending reply to {to_email}")
     
-    if not SMTP_HOST or not SMTP_USER or not SMTP_PASS:
+    if EMAIL_PROVIDER != "resend" and (not SMTP_HOST or not SMTP_USER or not SMTP_PASS):
         logger.error("❌ SMTP credentials not configured")
         return False
     
@@ -338,6 +343,9 @@ def send_reply_email(to_email: str, to_name: str, subject: str, body: str, origi
             </body>
         </html>
         """
+
+        if EMAIL_PROVIDER == "resend":
+            return send_reply_email_resend(clean_to_email, reply_subject, body, html_content)
         
         msg = MIMEMultipart("alternative")
         msg["Subject"] = reply_subject
@@ -366,6 +374,42 @@ def send_reply_email(to_email: str, to_name: str, subject: str, body: str, origi
     
     except Exception as e:
         logger.error(f"❌ Failed to send reply: {e}")
+        return False
+
+
+def send_reply_email_resend(to_email: str, subject: str, text_content: str, html_content: str) -> bool:
+    """Send AI reply using Resend HTTP API."""
+    if not RESEND_API_KEY:
+        logger.error("RESEND_API_KEY not configured")
+        return False
+    if not to_email:
+        logger.error("Reply recipient email is empty or invalid")
+        return False
+
+    try:
+        response = requests.post(
+            RESEND_API_URL,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "from": RESEND_FROM,
+                "to": [to_email],
+                "subject": subject,
+                "text": text_content,
+                "html": html_content,
+            },
+            timeout=30,
+        )
+        if 200 <= response.status_code < 300:
+            logger.info(f"Reply sent via Resend to {to_email}")
+            return True
+
+        logger.error(f"Resend reply failed ({response.status_code}): {response.text[:500]}")
+        return False
+    except Exception as e:
+        logger.error(f"Resend reply error: {type(e).__name__}: {e}")
         return False
 
 
