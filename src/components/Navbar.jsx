@@ -3,8 +3,10 @@ import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { vibha } from "../assets";
 import {
-  Menu as FaBars,
-  X as FaTimes,
+  Home as FaHome,
+  Info as FaInfo,
+  Phone as FaPhone,
+  MessageCircle as FaMessageCircle,
   Facebook as FaFacebook,
   Instagram as FaInstagram,
   Linkedin as FaLinkedin,
@@ -53,9 +55,9 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "/", icon: <FaHome size={20} /> },
+    { name: "About", path: "/about", icon: <FaInfo size={20} /> },
+    { name: "Contact", path: "/contact", icon: <FaPhone size={20} /> },
   ];
 
   const serviceLinks = [
@@ -131,7 +133,7 @@ const Navbar = () => {
         className={`fixed top-0 z-50 w-full py-3 backdrop-blur-xl ${
           isDarkPage
             ? "border-b border-white/10 bg-[#051225] shadow-none"
-            : "border-b border-white/70 bg-white/86 shadow-[0_18px_50px_rgba(7,17,36,0.08)]"
+            : "border-b border-white/80 bg-white/95 shadow-[0_18px_50px_rgba(7,17,36,0.12)]"
         }`}
       >
         <div className="container mx-auto px-4">
@@ -158,7 +160,7 @@ const Navbar = () => {
                 className={`flex items-center gap-2 px-3 py-2 backdrop-blur ${
                   isDarkPage
                     ? "rounded-none border border-transparent bg-transparent shadow-none"
-                    : "rounded-full border border-[#e2e7f0] bg-white/82 shadow-[0_12px_36px_rgba(7,17,36,0.07)]"
+                    : "rounded-full border border-[#e2e7f0] bg-white/95 shadow-[0_12px_36px_rgba(7,17,36,0.1)]"
                 }`}
               >
                 {/* Home */}
@@ -167,9 +169,9 @@ const Navbar = () => {
                   className={`relative px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
                     isDarkPage
                       ? "rounded-none text-white hover:text-[#ff525d]"
-                      : location.pathname === "/"
-                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
-                      : "text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
+                    : location.pathname === "/"
+                      ? "rounded-full bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                      : "rounded-full text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                   }`}
                 >
                   Home
@@ -187,8 +189,8 @@ const Navbar = () => {
                       isDarkPage
                         ? "rounded-none text-white hover:text-[#ff525d]"
                         : isServicesActive
-                        ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
-                        : "text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
+                        ? "rounded-full bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                        : "rounded-full text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                     }`}
                     onClick={() => setIsServicesOpen(!isServicesOpen)}
                   >
@@ -290,8 +292,8 @@ const Navbar = () => {
                         ? "rounded-none text-[#ff525d] after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-10 after:-translate-x-1/2 after:bg-[#ff525d]"
                         : "rounded-none text-white hover:text-[#ff525d]"
                       : location.pathname === "/contact"
-                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
-                      : "text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
+                      ? "rounded-full bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/25"
+                      : "rounded-full text-[#071124] hover:bg-[#f4f6fb] hover:text-[#ff525d]"
                   }`}
                 >
                   Contact
@@ -349,14 +351,35 @@ const Navbar = () => {
             <div className="flex items-center lg:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="nav-mobile-toggle flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#071124] shadow-sm transition-all hover:text-[#ff525d] focus:outline-none"
+                className={`nav-mobile-toggle flex h-12 w-12 items-center justify-center rounded-full border text-[#071124] shadow-sm transition-all hover:-translate-y-0.5 hover:text-[#ff525d] focus:outline-none focus:ring-4 focus:ring-[#ff525d]/15 ${
+                  isOpen
+                    ? "border-[#ff525d]/25 bg-[#fff1f2] shadow-[#ff525d]/10"
+                    : "border-[#e2e7f0] bg-white"
+                }`}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
               >
-                {isOpen ? (
-                  <FaTimes className="nav-mobile-toggle-icon" aria-hidden="true" />
-                ) : (
-                  <FaBars className="nav-mobile-toggle-icon" aria-hidden="true" />
-                )}
+                <span
+                  className="relative block h-6 w-7"
+                  aria-hidden="true"
+                >
+                  <span
+                    className="absolute left-0 top-1/2 block h-0.5 w-7 rounded-full bg-current transition-transform duration-300 ease-out"
+                    style={{
+                      transform: isOpen
+                        ? "translateY(-50%) rotate(45deg)"
+                        : "translateY(calc(-50% - 5px)) rotate(0deg)",
+                    }}
+                  />
+                  <span
+                    className="absolute left-0 top-1/2 block h-0.5 w-7 rounded-full bg-current transition-transform duration-300 ease-out"
+                    style={{
+                      transform: isOpen
+                        ? "translateY(-50%) rotate(-45deg)"
+                        : "translateY(calc(-50% + 5px)) rotate(0deg)",
+                    }}
+                  />
+                </span>
               </button>
             </div>
           </div>
@@ -366,140 +389,190 @@ const Navbar = () => {
       {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="fixed left-0 right-0 top-[6.5rem] z-40 overflow-hidden border-b border-[#e2e7f0] bg-white/95 shadow-[0_24px_70px_rgba(7,17,36,0.14)] backdrop-blur-xl lg:hidden"
-          >
-            <div className="container mx-auto px-4 py-5">
-              <div className="space-y-2 rounded-2xl border border-[#edf1f7] bg-[#f8fafc] p-3">
-                {/* Home */}
-                <Link
-                  to="/"
-                  className={`block rounded-xl py-3 text-center text-base font-bold transition-all ${
-                    location.pathname === "/"
-                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
-                      : "bg-white text-[#071124] hover:text-[#ff525d]"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  Home
-                </Link>
-
-                {/* Services Accordion */}
-                <div>
-                  <button
-                    onClick={() =>
-                      setIsMobileServicesOpen(!isMobileServicesOpen)
-                    }
-                    className={`flex w-full items-center justify-center gap-2 rounded-xl py-3 text-center text-base font-bold transition-all ${
-                      isServicesActive
-                        ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
-                        : "bg-white text-[#071124] hover:text-[#ff525d]"
-                    }`}
-                  >
-                    Services
-                    <FaChevronDown
-                      className={`text-xs transition-transform duration-200 ${
-                        isMobileServicesOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  <AnimatePresence>
-                    {isMobileServicesOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="mx-1 mt-2 overflow-hidden rounded-xl border border-[#e2e7f0] bg-white"
-                      >
-                        {serviceLinks.map((service) => (
-                          <Link
-                            key={service.name}
-                            to={service.path}
-                            className="flex items-center gap-3 border-b border-[#edf1f7] px-5 py-3 text-[#536176] transition-all last:border-b-0 hover:bg-[#fff3f4] hover:text-[#ff525d]"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            <span className="text-[#E65056]">
-                              {service.icon}
-                            </span>
-                            <span className="font-medium">{service.name}</span>
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close mobile menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 top-[6.5rem] z-40 bg-[#071124]/30 backdrop-blur-[2px] lg:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -28, scaleY: 0.96 }}
+              animate={{ opacity: 1, y: 0, scaleY: 1 }}
+              exit={{ opacity: 0, y: -22, scaleY: 0.96 }}
+              transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed left-0 right-0 top-[6.5rem] z-50 origin-top px-3 lg:hidden"
+            >
+              <div className="mx-auto max-h-[calc(100vh-7.75rem)] max-w-md overflow-y-auto rounded-[1.75rem] border border-white/80 bg-white shadow-[0_28px_80px_rgba(7,17,36,0.2)]">
+                <div className="border-b border-[#edf1f7] bg-[#f8fafc] px-5 py-4">
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#ff525d]">
+                    Vibha Prints
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-[#536176]">
+                    Design, printing and digital growth support.
+                  </p>
                 </div>
 
-                {/* About */}
-                <Link
-                  to="/about"
-                  className={`block rounded-xl py-3 text-center text-base font-bold transition-all ${
-                    location.pathname === "/about"
-                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
-                      : "bg-white text-[#071124] hover:text-[#ff525d]"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  About
-                </Link>
+                <div className="space-y-2 p-3">
+                  {navLinks.map((link) => {
+                    const isActive = location.pathname === link.path;
 
-                {/* Contact */}
-                <Link
-                  to="/contact"
-                  className={`block rounded-xl py-3 text-center text-base font-bold transition-all ${
-                    location.pathname === "/contact"
-                      ? "bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
-                      : "bg-white text-[#071124] hover:text-[#ff525d]"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  Contact
-                </Link>
+                    return (
+                      <Link
+                        key={link.name}
+                        to={link.path}
+                        className={`group flex min-h-[54px] items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all ${
+                          isActive
+                            ? "border-[#ff525d] bg-[#ff525d] text-white shadow-lg shadow-[#ff525d]/20"
+                            : "border-[#edf1f7] bg-white text-[#071124] shadow-sm hover:border-[#ff525d]/30 hover:bg-[#fff7f8] hover:text-[#ff525d]"
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span
+                          className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-all ${
+                            isActive
+                              ? "bg-white/18 text-white"
+                              : "bg-[#f4f6fb] text-[#ff525d] group-hover:bg-white"
+                          }`}
+                        >
+                          {link.icon}
+                        </span>
+                        <span className="text-base font-black">{link.name}</span>
+                      </Link>
+                    );
+                  })}
+
+                  {/* Services Accordion */}
+                  <div className="rounded-2xl border border-[#edf1f7] bg-white shadow-sm">
+                    <button
+                      onClick={() =>
+                        setIsMobileServicesOpen(!isMobileServicesOpen)
+                      }
+                      className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left transition-all ${
+                        isServicesActive
+                          ? "bg-[#fff1f2] text-[#ff525d]"
+                          : "text-[#071124] hover:bg-[#fff7f8] hover:text-[#ff525d]"
+                      }`}
+                      aria-expanded={isMobileServicesOpen}
+                    >
+                      <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[#ff525d]/10 text-[#ff525d]">
+                        <FaPaintBrush size={20} />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-base font-black">
+                          Services
+                        </span>
+                        <span className="block truncate text-xs font-semibold text-[#64748b]">
+                          Branding, print, websites and marketing
+                        </span>
+                      </span>
+                      <FaChevronDown
+                        className={`h-5 w-5 flex-shrink-0 transition-transform duration-200 ${
+                          isMobileServicesOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {isMobileServicesOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.22, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-2 border-t border-[#edf1f7] bg-[#f8fafc] p-2">
+                            {serviceLinks.map((service) => {
+                              const isActive = location.pathname === service.path;
+
+                              return (
+                                <Link
+                                  key={service.name}
+                                  to={service.path}
+                                  className={`group flex items-start gap-3 rounded-xl border px-3 py-3 transition-all ${
+                                    isActive
+                                      ? "border-[#ff525d]/30 bg-white text-[#ff525d] shadow-sm"
+                                      : "border-transparent bg-white/70 text-[#536176] hover:border-[#ff525d]/20 hover:bg-white hover:text-[#ff525d]"
+                                  }`}
+                                  onClick={() => setIsOpen(false)}
+                                >
+                                  <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#ff525d]/10 text-[#ff525d] transition-all group-hover:bg-[#ff525d] group-hover:text-white">
+                                    {service.icon}
+                                  </span>
+                                  <span className="min-w-0">
+                                    <span className="block text-sm font-black text-[#071124] group-hover:text-[#ff525d]">
+                                      {service.name}
+                                    </span>
+                                    <span className="mt-0.5 block text-xs font-medium leading-5 text-[#64748b]">
+                                      {service.description}
+                                    </span>
+                                  </span>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <Link
+                    to="/contact"
+                    className="flex min-h-[54px] items-center justify-center gap-2 rounded-2xl bg-[#071124] px-4 py-3 text-center text-base font-black text-white shadow-lg shadow-slate-900/15 transition-all hover:-translate-y-0.5 hover:bg-[#ff525d] hover:shadow-[#ff525d]/20"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FaMessageCircle size={20} />
+                    Start a Project
+                  </Link>
+                </div>
 
                 {/* Social Media Icons in Mobile Menu */}
-                <div className="mt-4 border-t border-[#e2e7f0] pb-2 pt-5">
-                  <p className="mb-4 text-center text-sm font-semibold text-[#64748b]">
-                    Connect with us
-                  </p>
-                  <div className="flex flex-wrap items-center justify-center gap-3">
-                    {socialLinks.map((social, index) => {
-                      const IconComponent = social.Icon;
-                      return (
-                        <a
-                          key={index}
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={social.ariaLabel}
-                          className="social-icon-link flex h-12 w-12 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#536176] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg"
-                          style={{
-                            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-                            cursor: "pointer",
-                          }}
-                          onClick={(e) => e.stopPropagation()}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = social.color;
-                            e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "";
-                            e.currentTarget.style.boxShadow =
-                              "0 2px 10px rgba(0,0,0,0.05)";
-                          }}
-                        >
-                          <IconComponent size={22} />
-                        </a>
-                      );
-                    })}
+                <div className="border-t border-[#edf1f7] px-5 pb-5 pt-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm font-bold text-[#64748b]">
+                      Connect with us
+                    </p>
+                    <div className="flex items-center gap-2">
+                      {socialLinks.map((social, index) => {
+                        const IconComponent = social.Icon;
+                        return (
+                          <a
+                            key={index}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={social.ariaLabel}
+                            className="social-icon-link flex h-11 w-11 items-center justify-center rounded-full border border-[#e2e7f0] bg-white text-[#536176] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:text-white hover:shadow-lg"
+                            style={{
+                              boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
+                              cursor: "pointer",
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = social.color;
+                              e.currentTarget.style.boxShadow = `0 8px 25px ${social.color}40`;
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = "";
+                              e.currentTarget.style.boxShadow =
+                                "0 2px 10px rgba(0,0,0,0.05)";
+                            }}
+                          >
+                            <IconComponent size={20} />
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

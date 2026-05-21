@@ -99,11 +99,16 @@ const Footer = () => {
           {/* Logo and About */}
           <motion.div variants={itemVariants}>
             <div className="mb-6">
-              <img decoding="async" loading="lazy"
-                src={vibha}
-                alt="Vibha Art Logo"
-                className="h-16 w-auto object-contain mb-4"
-              />
+              <Link
+                to="/"
+                className="mb-4 inline-flex items-center rounded-2xl border border-[#edf1f7] bg-white px-3 py-2 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/20"
+              >
+                <img decoding="async" loading="lazy"
+                  src={vibha}
+                  alt="Vibha Art Logo"
+                  className="h-14 w-auto object-contain transition duration-300 hover:scale-[1.03]"
+                />
+              </Link>
               <p className="text-gray-300 mb-6">
                 Professional graphic design and printing services to elevate
                 your brand identity.

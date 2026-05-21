@@ -9,7 +9,7 @@ const WebsiteDesignGallery = createGalleryTemplate({
     { 
       title: "Corporate Websites", 
       description: "Professional and sleek business websites",
-      link: "https://alfanio.com/",
+      link: "https://ujagare.github.io/premier/",
       details: [
         "Clean, modern design",
         "Responsive layout",
@@ -21,7 +21,7 @@ const WebsiteDesignGallery = createGalleryTemplate({
     { 
       title: "E-commerce Platforms", 
       description: "Intuitive and conversion-focused online stores",
-      link: "https://touchandmove.in/",
+      link: "https://ujagare.github.io/obys-agenc/",
       details: [
         "User-friendly product browsing",
         "Secure checkout process",
@@ -33,7 +33,7 @@ const WebsiteDesignGallery = createGalleryTemplate({
     { 
       title: "Portfolio Websites", 
       description: "Creative personal and professional showcases",
-      link: "https://kappstonerealty.com/",
+      link: "https://ujagare.github.io/Sundown-Studio/",
       details: [
         "Elegant gallery layouts",
         "Smooth image transitions",
@@ -45,7 +45,7 @@ const WebsiteDesignGallery = createGalleryTemplate({
     { 
       title: "Landing Pages", 
       description: "High-converting and visually appealing landing pages",
-      link: "https://www.ddtech.in/",
+      link: "https://ujagare.github.io/Duo-Studio/",
       details: [
         "Compelling call-to-action",
         "Minimalist design",
@@ -57,7 +57,7 @@ const WebsiteDesignGallery = createGalleryTemplate({
     { 
       title: "Startup Websites", 
       description: "Modern and dynamic websites for emerging businesses",
-      link: "https://www.sarveshmopkar.co/",
+      link: "https://ujagare.github.io/Two-Good/",
       details: [
         "Innovative design",
         "Storytelling elements",
@@ -69,7 +69,7 @@ const WebsiteDesignGallery = createGalleryTemplate({
     { 
       title: "Responsive Design", 
       description: "Mobile-friendly and adaptive web interfaces",
-      link: "https://greenspacess.com/",
+      link: "https://ujagare.github.io/Anchor/#/",
       details: [
         "Cross-device compatibility",
         "Flexible grid layouts",

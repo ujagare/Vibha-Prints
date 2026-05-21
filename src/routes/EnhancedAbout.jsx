@@ -18,6 +18,7 @@ import {
   Star as FaStar,
   Users as FaUsers,
 } from "lucide-react";
+import AnimatedNumber from "../components/AnimatedNumber";
 import "./EnhancedAbout.css";
 import aboutHeroMobile from "../assets/About/Mobile/image-026.webp";
 
@@ -229,7 +230,7 @@ export default function EnhancedAbout() {
             src={heroBg}
             alt="Vibha Prints design, printing, digital marketing and web development showcase"
             className="about-hero-art"
-            fetchPriority="high"
+            fetchpriority="high"
           />
         </picture>
         <div className="about-container about-hero-grid">
@@ -314,7 +315,7 @@ export default function EnhancedAbout() {
           <div className="about-center-heading about-reveal">
             <span className="about-eyebrow">Our Experience Journey</span>
             <h2>
-              From <strong>2020</strong> to Beyond
+              From <strong><AnimatedNumber value="2020" /></strong> to Beyond
             </h2>
           </div>
           <div className="about-timeline">
@@ -324,7 +325,9 @@ export default function EnhancedAbout() {
                   icon={item.icon}
                   className={index === 1 || index === 3 ? "is-red" : ""}
                 />
-                <h3>{item.year}</h3>
+                <h3>
+                  <AnimatedNumber value={item.year} />
+                </h3>
                 <h4>{item.title}</h4>
                 <p>{item.copy}</p>
               </article>

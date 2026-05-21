@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import businessCardsImage from "../assets/Printing/Bussiness Card/image-262.webp";
+import flyerImage from "../assets/Printing/Pamphlet & Poster Printing/image-302.webp";
+import posterImage from "../assets/Printing/Pamphlet & Poster Printing/image-303.webp";
+import brochureImage from "../assets/Printing/Broucher & Booklet/image-259.webp";
+import menuImage from "../assets/Printing/Broucher & Booklet/image-260.webp";
+import realEstateImage from "../assets/Printing/Pamphlet & Poster Printing/image-304.webp";
+import educationImage from "../assets/Printing/Broucher & Booklet/image-258.webp";
+import conferenceImage from "../assets/Printing/Corporate Stationary/image-276.webp";
+import retailPromoImage from "../assets/Printing/Pamphlet & Poster Printing/image-305.webp";
 
 const DigitalPrintingGallery = () => {
   const digitalPrintItems = [
@@ -7,63 +16,63 @@ const DigitalPrintingGallery = () => {
       id: 1, 
       title: 'Business Cards', 
       category: 'Corporate', 
-      imageUrl: '/images/digital-print/business-cards.jpg',
+      imageUrl: businessCardsImage,
       description: 'Professional business card printing with high-quality finishes.'
     },
     { 
       id: 2, 
       title: 'Marketing Flyers', 
       category: 'Marketing', 
-      imageUrl: '/images/digital-print/marketing-flyers.jpg',
+      imageUrl: flyerImage,
       description: 'Vibrant and eye-catching marketing flyers for your business.'
     },
     { 
       id: 3, 
       title: 'Event Posters', 
       category: 'Event', 
-      imageUrl: '/images/digital-print/event-posters.jpg',
+      imageUrl: posterImage,
       description: 'High-resolution event posters for maximum visual impact.'
     },
     { 
       id: 4, 
       title: 'Product Brochures', 
       category: 'Product', 
-      imageUrl: '/images/digital-print/product-brochures.jpg',
+      imageUrl: brochureImage,
       description: 'Comprehensive product brochures with detailed information.'
     },
     { 
       id: 5, 
       title: 'Restaurant Menus', 
       category: 'Food', 
-      imageUrl: '/images/digital-print/restaurant-menus.jpg',
+      imageUrl: menuImage,
       description: 'Beautifully designed restaurant menus with appetizing layouts.'
     },
     { 
       id: 6, 
       title: 'Real Estate Flyers', 
       category: 'Real Estate', 
-      imageUrl: '/images/digital-print/real-estate-flyers.jpg',
+      imageUrl: realEstateImage,
       description: 'Professional property listing and real estate marketing materials.'
     },
     { 
       id: 7, 
       title: 'Educational Handouts', 
       category: 'Education', 
-      imageUrl: '/images/digital-print/educational-handouts.jpg',
+      imageUrl: educationImage,
       description: 'Informative and engaging educational printed materials.'
     },
     { 
       id: 8, 
       title: 'Conference Materials', 
       category: 'Corporate', 
-      imageUrl: '/images/digital-print/conference-materials.jpg',
+      imageUrl: conferenceImage,
       description: 'Professional printed materials for conferences and seminars.'
     },
     { 
       id: 9, 
       title: 'Retail Promotional Prints', 
       category: 'Retail', 
-      imageUrl: '/images/digital-print/retail-promos.jpg',
+      imageUrl: retailPromoImage,
       description: 'Attractive promotional prints for retail marketing campaigns.'
     }
   ];

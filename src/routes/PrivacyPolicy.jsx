@@ -1,14 +1,13 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 
 const PrivacyPolicy = () => {
   return (
-    <>
-      <Helmet>
-        <title>Privacy Policy</title>
-      </Helmet>
-      <section className="container mx-auto px-6 py-28 max-w-4xl">
-        <h1 className="text-4xl font-bold text-brand-primary-800 mb-6">
+    <section className="container mx-auto px-6 py-28 max-w-4xl">
+      <article aria-labelledby="privacy-title">
+        <h1
+          id="privacy-title"
+          className="text-4xl font-bold text-brand-primary-800 mb-6"
+        >
           Privacy Policy
         </h1>
         <p className="text-gray-700 mb-4">
@@ -30,8 +29,8 @@ const PrivacyPolicy = () => {
           </a>
           .
         </p>
-      </section>
-    </>
+      </article>
+    </section>
   );
 };
 

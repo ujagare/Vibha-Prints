@@ -92,12 +92,12 @@ import responsiveGallery2 from "../assets/Web-developmet/Galary/Risposive/image-
 import responsiveGallery3 from "../assets/Web-developmet/Galary/Risposive/image-421.webp";
 import responsiveGallery4 from "../assets/Web-developmet/Galary/Risposive/image-422.webp";
 import responsiveGallery5 from "../assets/Web-developmet/Galary/Risposive/image-423.webp";
-import customAppGallery1 from "../assets/Web-developmet/Galary/Custom App/image-407.webp";
-import customAppGallery2 from "../assets/Web-developmet/Galary/Custom App/image-408.webp";
-import customAppGallery3 from "../assets/Web-developmet/Galary/Custom App/image-409.webp";
-import customAppGallery4 from "../assets/Web-developmet/Galary/Custom App/image-410.webp";
-import customAppGallery5 from "../assets/Web-developmet/Galary/Custom App/image-411.webp";
-import customAppGallery6 from "../assets/Web-developmet/Galary/Custom App/image-412.webp";
+import customAppGallery1 from "../assets/Web-developmet/Galary/Custom App/Screenshot 2026-05-21 233836.jpg";
+import customAppGallery2 from "../assets/Web-developmet/Galary/Custom App/Screenshot 2026-05-21 234233.jpg";
+import customAppGallery3 from "../assets/Web-developmet/Galary/Custom App/Screenshot 2026-05-21 234416.jpg";
+import customAppGallery4 from "../assets/Web-developmet/Galary/Custom App/Screenshot 2026-05-21 234824.jpg";
+import customAppGallery5 from "../assets/Web-developmet/Galary/Custom App/Screenshot 2026-05-21 234907.jpg";
+import customAppGallery6 from "../assets/Web-developmet/Galary/Custom App/Screenshot 2026-05-21 235405.jpg";
 import apiGallery1 from "../assets/Web-developmet/Galary/API/image-395.webp";
 import apiGallery2 from "../assets/Web-developmet/Galary/API/image-396.webp";
 import apiGallery3 from "../assets/Web-developmet/Galary/API/image-397.webp";
@@ -854,26 +854,32 @@ const galleryConfigs = {
         {
           title: "Admin Dashboard",
           description: "Control panels for teams, metrics, and operations.",
+          link: "https://ujagare.github.io/premier/",
         },
         {
           title: "Customer Portal",
           description: "Secure user areas for customers and members.",
+          link: "https://ujagare.github.io/obys-agenc/",
         },
         {
           title: "Booking Flow",
           description: "Custom workflows for appointments and reservations.",
+          link: "https://ujagare.github.io/Sundown-Studio/",
         },
         {
           title: "Data Tables",
           description: "Organized records with search, filters, and actions.",
+          link: "https://ujagare.github.io/Duo-Studio/",
         },
         {
           title: "User Management",
           description: "Roles, permissions, and account workflows.",
+          link: "https://ujagare.github.io/Two-Good/",
         },
         {
           title: "Scalable App UI",
           description: "Interfaces designed for growing business needs.",
+          link: "https://ujagare.github.io/Anchor/#/",
         },
       ],
       customAppGalleryImages,

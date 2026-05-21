@@ -100,14 +100,15 @@ const DigitalPrint = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white py-16 px-4">
-      <motion.div 
+    <section className="min-h-screen bg-white py-16 px-4" aria-labelledby="digital-print-title">
+      <motion.div
         className="container mx-auto max-w-6xl"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <motion.h1 
+        <motion.h1
+          id="digital-print-title"
           className="text-5xl font-bold text-center mb-12 text-gray-800"
           variants={itemVariants}
         >
@@ -116,8 +117,8 @@ const DigitalPrint = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {digitalPrintServices.map((service, index) => (
-            <motion.div 
-              key={index}
+            <motion.article
+              key={service.title}
               className="bg-gray-100 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
@@ -130,7 +131,7 @@ const DigitalPrint = () => {
                   <li key={detailIndex}>{detail}</li>
                 ))}
               </ul>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
@@ -149,7 +150,7 @@ const DigitalPrint = () => {
           </button>
         </motion.div>
       </motion.div>
-    </div>
+    </section>
   );
 };
 

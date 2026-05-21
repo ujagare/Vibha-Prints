@@ -1,4 +1,8 @@
 import React from 'react';
+import bottleImage from "../assets/Printing/product packaging/image-307.webp";
+import tumblerImage from "../assets/Printing/Bags & T-Shirts/image-243.webp";
+import paperRefillImage from "../assets/Printing/Corporate Stationary/image-276.webp";
+import pencilImage from "../assets/Printing/Corporate Stationary/cup-mock-up.webp";
 
 // Sample product data - you can replace this with your actual products
 const products = [
@@ -6,28 +10,28 @@ const products = [
     id: 1,
     name: 'Earthen Bottle',
     price: 48,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-01.jpg',
+    imageSrc: bottleImage,
     imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.'
   },
   {
     id: 2,
     name: 'Nomad Tumbler',
     price: 35,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-02.jpg',
+    imageSrc: tumblerImage,
     imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.'
   },
   {
     id: 3,
     name: 'Focus Paper Refill',
     price: 89,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-03.jpg',
+    imageSrc: paperRefillImage,
     imageAlt: 'Person using a pen to cross a task off a productivity paper card.'
   },
   {
     id: 4,
     name: 'Machined Mechanical Pencil',
     price: 35,
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/category-page-04-image-card-04.jpg',
+    imageSrc: pencilImage,
     imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.'
   }
 ];

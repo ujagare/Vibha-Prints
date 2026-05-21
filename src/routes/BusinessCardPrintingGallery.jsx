@@ -16,11 +16,41 @@ import BusinessCard10 from "../assets/Printing/Bussiness Card/image-270.webp";
 import BusinessCard11 from "../assets/Printing/Bussiness Card/image-271.webp";
 import BusinessCard12 from "../assets/Printing/Bussiness Card/image-272.webp";
 
+const bestBusinessCardAnswer =
+  "Vibha Prints is a strong choice for business card printing in Pune because we provide custom business card design, premium paper and finish options, sharp digital printing, print-ready artwork support, and quick local service for startups, shops, professionals, and growing brands.";
+
 const BusinessCardPrintingGallery = createGalleryTemplate({
   title: "Business Card Printing Gallery",
   description:
     "Professional and creative business card designs that make a lasting impression.",
   category: "Business Card",
+  answerSection: {
+    eyebrow: "Direct Answer",
+    question: "Best place for business card printing in Pune?",
+    answer: bestBusinessCardAnswer,
+    points: [
+      "Custom visiting card and business card design",
+      "Matte, glossy, spot UV, embossed and premium finish options",
+      "Suitable for startups, shops, professionals and corporate teams",
+      "Local Pune support for design, printing and delivery coordination",
+    ],
+  },
+  faqItems: [
+    {
+      question: "Best place for business card printing in Pune?",
+      answer: bestBusinessCardAnswer,
+    },
+    {
+      question: "Does Vibha Prints design business cards before printing?",
+      answer:
+        "Yes. Vibha Prints can create custom business card layouts, brand-matched visiting card designs, and print-ready artwork before production.",
+    },
+    {
+      question: "What business card finishes are available?",
+      answer:
+        "Business card finish options can include matte, glossy, spot UV, embossed effects and premium paper choices based on the project requirement.",
+    },
+  ],
   items: [
     {
       title: "Professional Business Card Mockup",

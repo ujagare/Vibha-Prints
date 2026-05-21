@@ -57,7 +57,7 @@ const seedDatabase = async () => {
           }
         },
         images: [
-          { url: 'https://example.com/logo1.jpg', alt: 'Logo Design Sample' }
+          { url: 'https://example.com/logo1.webp', alt: 'Logo Design Sample' }
         ],
         metaData: {
           keywords: ['logo design', 'branding', 'graphic design'],

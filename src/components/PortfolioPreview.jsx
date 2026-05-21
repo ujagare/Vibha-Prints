@@ -2,9 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-import SEO from "./SEO";
   ArrowRight as FaArrowRight,
 } from "lucide-react";
+import corporateBrandingImage from "../assets/Corporate/image-060.webp";
+import productPackagingImage from "../assets/Packeging/image-200.webp";
+import marketingMaterialsImage from "../assets/Printing/Broucher & Booklet/image-259.webp";
+import eventCollateralImage from "../assets/Printing/Pamphlet & Poster Printing/image-302.webp";
 
 const PortfolioPreview = () => {
   // Portfolio items
@@ -13,32 +16,28 @@ const PortfolioPreview = () => {
       id: 1,
       title: "Corporate Branding",
       category: "Brand Identity",
-      image:
-        "https://images.unsplash.com/photo-1636633762833-5d1658f1e29b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600&q=80",
+      image: corporateBrandingImage,
       link: "/logo-design-gallery",
     },
     {
       id: 2,
       title: "Product Packaging",
       category: "Packaging Design",
-      image:
-        "https://images.unsplash.com/photo-1605236453806-6ff36851218e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600&q=80",
+      image: productPackagingImage,
       link: "/graphic-design",
     },
     {
       id: 3,
       title: "Marketing Materials",
       category: "Print Design",
-      image:
-        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600&q=80",
+      image: marketingMaterialsImage,
       link: "/printing",
     },
     {
       id: 4,
       title: "Event Collateral",
       category: "Print & Digital",
-      image:
-        "https://images.unsplash.com/photo-1540397106260-e24a507a08ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600&q=80",
+      image: eventCollateralImage,
       link: "/graphic-design",
     },
   ];

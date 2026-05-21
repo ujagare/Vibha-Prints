@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <link href="/src/assets/vibha.webp" rel="icon" type="image/svg+xml"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
 <meta content="#6A11CB" name="theme-color"/>
 <meta content="Vibha Art offers professional graphic design, printing, and branding services. From logo design to large format printing, we help businesses create stunning visual identities." name="description"/>
 <title>Vibha Art - Creative Design &amp; Printing Services</title>
@@ -39,7 +39,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta content="Vibha Art - Creative Design &amp; Printing Services" property="og:title"/>
 <meta content="Professional graphic design and printing services to elevate your brand identity" property="og:description"/>
 <meta content="/src/assets/vibha.webp" property="og:image"/>
-</head>
+    <meta name="mobile-web-app-capable" content="yes">
+  </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P4KGHLM6"

@@ -1,9 +1,17 @@
 ﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Eye, X } from "lucide-react";
 
 export const createGalleryTemplate = (config) => {
-  const { title, description, items, category = "Design" } = config;
+  const {
+    title,
+    description,
+    items,
+    category = "Design",
+    answerSection,
+    faqItems = [],
+  } = config;
 
   const GalleryComponent = () => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -50,6 +58,24 @@ export const createGalleryTemplate = (config) => {
 
     return (
       <div className="min-h-screen w-full overflow-hidden bg-[#f6f8fb] font-['Poppins'] text-[#071124]">
+        {faqItems.length > 0 && (
+          <Helmet>
+            <script type="application/ld+json">
+              {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                mainEntity: faqItems.map((item) => ({
+                  "@type": "Question",
+                  name: item.question,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: item.answer,
+                  },
+                })),
+              })}
+            </script>
+          </Helmet>
+        )}
         <section className="relative overflow-hidden border-b border-[#dde4ef] bg-[#071124] px-4 py-14 text-white sm:px-6 sm:py-16">
           <div className="absolute inset-0 opacity-[0.18]">
             <div
@@ -78,6 +104,36 @@ export const createGalleryTemplate = (config) => {
           </div>
         </section>
 
+        {answerSection && (
+          <section className="border-b border-[#e4ebf5] bg-white px-4 py-10 sm:px-6 sm:py-12">
+            <div className="container mx-auto">
+              <article className="mx-auto max-w-4xl rounded-lg border border-[#e6ebf3] bg-[#f8fafc] p-5 shadow-[0_20px_60px_rgba(7,17,36,0.08)] sm:p-8">
+                <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#d13339]">
+                  {answerSection.eyebrow}
+                </p>
+                <h2 className="text-2xl font-extrabold leading-tight text-[#071124] sm:text-3xl">
+                  {answerSection.question}
+                </h2>
+                <p className="mt-4 text-base font-semibold leading-8 text-[#344054]">
+                  {answerSection.answer}
+                </p>
+                {answerSection.points?.length > 0 && (
+                  <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                    {answerSection.points.map((point) => (
+                      <li
+                        key={point}
+                        className="rounded-md border border-[#edf0f6] bg-white px-4 py-3 text-sm font-semibold leading-6 text-[#536176]"
+                      >
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            </div>
+          </section>
+        )}
+
         <section className="relative px-4 py-12 sm:px-6 sm:py-16">
           <div className="container relative z-10 mx-auto">
             <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 xl:grid-cols-3">
@@ -87,7 +143,22 @@ export const createGalleryTemplate = (config) => {
                   initial={{ opacity: 0, y: 28 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.45 }}
-                  className="group relative overflow-hidden rounded-lg border border-[#e6ebf3] bg-white shadow-[0_24px_80px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ffd5db] hover:shadow-[0_34px_95px_rgba(7,17,36,0.14)]"
+                  onClick={() => {
+                    if (item.link) {
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (item.link && (e.key === "Enter" || e.key === " ")) {
+                      e.preventDefault();
+                      window.open(item.link, "_blank", "noopener,noreferrer");
+                    }
+                  }}
+                  role={item.link ? "link" : undefined}
+                  tabIndex={item.link ? 0 : undefined}
+                  className={`group relative overflow-hidden rounded-lg border border-[#e6ebf3] bg-white shadow-[0_24px_80px_rgba(7,17,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[#ffd5db] hover:shadow-[0_34px_95px_rgba(7,17,36,0.14)] ${
+                    item.link ? "cursor-pointer" : ""
+                  }`}
                 >
                   {item.link ? (
                     <a
@@ -97,7 +168,6 @@ export const createGalleryTemplate = (config) => {
                       className="relative block w-full overflow-hidden bg-[#edf2f7] text-left cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
-                        window.open(item.link, "_blank", "noopener,noreferrer");
                       }}
                     >
                       <div className="w-full overflow-hidden">
@@ -171,11 +241,6 @@ export const createGalleryTemplate = (config) => {
                           rel="noopener noreferrer"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.open(
-                              item.link,
-                              "_blank",
-                              "noopener,noreferrer",
-                            );
                           }}
                           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#edf0f6] bg-[#f8fafc] text-[#071124] transition hover:border-[#ffb7c0] hover:bg-[#ff3f51] hover:text-white"
                           aria-label={`Visit ${item.title}`}
@@ -207,11 +272,6 @@ export const createGalleryTemplate = (config) => {
                           rel="noopener noreferrer"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.open(
-                              item.link,
-                              "_blank",
-                              "noopener,noreferrer",
-                            );
                           }}
                           className="inline-flex items-center gap-2 text-sm font-extrabold text-[#071124] transition hover:text-[#ff3f51]"
                         >

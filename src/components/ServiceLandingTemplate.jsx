@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Star, Target } from "lucide-react";
+import AnimatedNumber from "./AnimatedNumber";
 
 const textFill = { WebkitTextFillColor: "currentColor" };
 
@@ -108,7 +109,11 @@ const ServiceLandingTemplate = ({ page }) => {
                   <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 bg-white/8 shadow-[0_18px_40px_rgba(0,0,0,0.22)] backdrop-blur" style={{ color: accent }}>
                     <IconSlot item={item} size={24} imageClassName="p-2" />
                   </div>
-                  <p className="text-sm font-extrabold leading-5 text-white">{item.title}</p>
+                  <AnimatedNumber
+                    value={item.title}
+                    as="p"
+                    className="text-sm font-extrabold leading-5 text-white"
+                  />
                   <p className="text-xs font-semibold leading-5 text-white/70">{item.label}</p>
                 </div>
               ))}
@@ -251,8 +256,7 @@ const ServiceLandingTemplate = ({ page }) => {
           decoding="async"
           loading="lazy"
           src={page.backgrounds.process}
-          alt=""
-          aria-hidden="true"
+          alt={`${page.processSection.title} ${page.processSection.highlight} ${page.processSection.suffix} by Vibha Art`}
           className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
         />
         <span className="pointer-events-none absolute inset-0 bg-[#06111f]/28" />
@@ -321,7 +325,12 @@ const ServiceLandingTemplate = ({ page }) => {
             <div className="mt-7 grid max-w-xl grid-cols-2 overflow-hidden rounded-lg border border-white/80 bg-white/75 shadow-[0_18px_55px_rgba(7,17,36,0.1)] backdrop-blur sm:mt-9 sm:grid-cols-4 sm:shadow-[0_24px_80px_rgba(7,17,36,0.1)]">
               {page.whyChoose.stats.map(([value, label]) => (
                 <div key={label} className="min-w-0 border-r border-b border-[#edf0f6] px-2 py-4 text-center even:border-r-0 last:border-r-0 sm:border-b-0 sm:even:border-r sm:last:border-r-0 sm:px-4 sm:py-5">
-                  <p className="text-xl font-extrabold sm:text-3xl" style={{ ...textFill, color: accent }}>{value}</p>
+                  <AnimatedNumber
+                    value={value}
+                    as="p"
+                    className="text-xl font-extrabold sm:text-3xl"
+                    style={{ ...textFill, color: accent }}
+                  />
                   <p className="mt-1 text-[9px] font-extrabold uppercase tracking-[0.08em] text-[#667085] sm:text-[11px] sm:tracking-[0.14em]">{label}</p>
                 </div>
               ))}
@@ -378,7 +387,11 @@ const ServiceLandingTemplate = ({ page }) => {
                 {page.impactSection.stats.map(([value, label, Icon]) => (
                   <div key={label} className="min-w-0 rounded-lg border border-white/12 bg-white/[0.045] p-4">
                     {Icon && <Icon className="mb-4" size={24} style={{ color: accent }} />}
-                    <p className="text-3xl font-extrabold text-white">{value}</p>
+                    <AnimatedNumber
+                      value={value}
+                      as="p"
+                      className="text-3xl font-extrabold text-white"
+                    />
                     <p className="mt-1 text-[11px] font-bold leading-5 text-white/70">{label}</p>
                   </div>
                 ))}

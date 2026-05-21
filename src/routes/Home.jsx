@@ -71,7 +71,7 @@ const Home = () => {
     "@type": "LocalBusiness",
     "@id": "https://www.vibhaprints.com/",
     name: "Vibha Prints",
-    image: "https://www.vibhaprints.com/logo.png",
+    image: "https://www.vibhaprints.com/assets/vibha-og.webp",
     description:
       "Professional graphic design and printing services. We specialize in logo design, branding, brochures, packaging, business cards, and digital/offset printing solutions for businesses.",
     url: "https://www.vibhaprints.com/",
@@ -117,7 +117,7 @@ const Home = () => {
     "@type": "Organization",
     name: "Vibha Prints",
     url: "https://www.vibhaprints.com/",
-    logo: "https://www.vibhaprints.com/logo.png",
+    logo: "https://www.vibhaprints.com/assets/vibha-og.webp",
     description: "Creative design and printing solutions for businesses",
     sameAs: [
       "https://www.facebook.com/vibhaprints",
@@ -251,7 +251,7 @@ const Home = () => {
         <meta property="og:url" content="https://www.vibhaprints.com/" />
         <meta
           property="og:image"
-          content="https://www.vibhaprints.com/og-image.jpg"
+          content="https://www.vibhaprints.com/assets/vibha-og.webp"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -270,7 +270,7 @@ const Home = () => {
         />
         <meta
           name="twitter:image"
-          content="https://www.vibhaprints.com/twitter-image.jpg"
+          content="https://www.vibhaprints.com/assets/vibha-og.webp"
         />
         <meta name="twitter:creator" content="@vibhaprints" />
 
@@ -325,7 +325,7 @@ const Home = () => {
 
         {/* ===== FAVICON & APP ICONS ===== */}
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" href="/src/assets/vibha.webp" />
 
         {/* ===== ADDITIONAL SEO ===== */}
         <meta name="format-detection" content="telephone=no" />

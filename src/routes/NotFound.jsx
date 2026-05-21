@@ -9,7 +9,10 @@ import {
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center px-4 relative overflow-hidden">
+    <section
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center px-4 relative overflow-hidden"
+      aria-labelledby="not-found-title"
+    >
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#E65056]/5 blur-3xl"></div>
@@ -48,7 +51,10 @@ const NotFound = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
         >
-          <h1 className="text-[150px] md:text-[200px] font-extrabold leading-none select-none">
+          <h1
+            id="not-found-title"
+            className="text-[150px] md:text-[200px] font-extrabold leading-none select-none"
+          >
             <span className="bg-gradient-to-br from-[#E65056] to-[#01334C] bg-clip-text text-transparent">
               404
             </span>
@@ -119,7 +125,7 @@ const NotFound = () => {
           </button>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 

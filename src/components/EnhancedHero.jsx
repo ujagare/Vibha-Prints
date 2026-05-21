@@ -24,6 +24,7 @@ import {
   Target as FiTarget,
 } from "lucide-react";
 import Testimonials from "./Testimonials";
+import AnimatedNumber from "./AnimatedNumber";
 import heroShowcase from "../assets/Home/image-162.webp";
 import heroShowcaseMobile from "../assets/Home/Mobile/image-181.webp";
 import darkPattern from "../assets/Home/image-163.webp";
@@ -247,9 +248,11 @@ const EnhancedHero = () => {
                   <div key={stat.label} className="flex items-center gap-3">
                     <Icon className="text-2xl text-[#ff525d]" />
                     <div className="min-w-0">
-                      <p className="text-xl font-extrabold text-white">
-                        {stat.value}
-                      </p>
+                      <AnimatedNumber
+                        value={stat.value}
+                        as="p"
+                        className="text-xl font-extrabold text-white"
+                      />
                       <p className="max-w-[110px] text-[10px] leading-tight text-white/65 sm:text-[11px]">
                         {stat.label}
                       </p>
@@ -537,9 +540,11 @@ const EnhancedHero = () => {
                     <Icon className="text-2xl sm:text-3xl" />
                   </div>
                   <div>
-                    <p className="text-2xl font-extrabold text-white sm:text-3xl">
-                      {stat.value}
-                    </p>
+                    <AnimatedNumber
+                      value={stat.value}
+                      as="p"
+                      className="text-2xl font-extrabold text-white sm:text-3xl"
+                    />
                     <p className="text-xs leading-snug text-white/65">{stat.label}</p>
                   </div>
                 </div>

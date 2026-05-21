@@ -61,83 +61,87 @@ import NotFound from "./routes/NotFound";
 import SEO from "./seo/SEO";
 
 const SERVICE_KEYWORDS =
-  "graphic design pune, printing services pune, branding pune, digital printing pune, logo design pune, business card printing pune";
+  "graphic design services pune, printing services pune, logo design pune, branding agency pune, digital printing pune, business card printing pune, brochure printing pune, flex banner printing pune, packaging design pune, website design pune, digital marketing pune";
 
 const pageSeo = {
   terms: {
     page: "services",
     path: "/terms",
-    title: "Terms and Conditions | Vibha Art",
+    title: "Terms and Conditions | Design and Printing Services | Vibha Art",
     description:
-      "Read Vibha Art terms for design, printing, delivery, payments, approvals, revisions and service usage.",
-    keywords: "vibha art terms, printing terms pune, design service terms",
+      "Read Vibha Art terms for graphic design, printing, branding, delivery, payments, approvals, revisions and project service usage in Pune.",
+    keywords:
+      "vibha art terms, design service terms pune, printing service terms pune, branding project terms, print order policy pune",
   },
   privacy: {
     page: "services",
     path: "/privacy-policy",
-    title: "Privacy Policy | Vibha Art",
+    title: "Privacy Policy | Design, Printing and Marketing Studio | Vibha Art",
     description:
-      "Learn how Vibha Art handles customer data, contact information, quote requests and website privacy.",
-    keywords: "vibha art privacy policy, printing company privacy, customer data policy",
+      "Learn how Vibha Art handles customer data, contact details, quote requests, project enquiries and website privacy for design and printing clients.",
+    keywords:
+      "vibha art privacy policy, printing company privacy policy, graphic design privacy policy, customer data policy pune, quote request privacy",
   },
   sitemap: {
     page: "services",
     path: "/sitemap",
-    title: "Sitemap | Vibha Art",
+    title: "Sitemap | Graphic Design, Printing and Marketing Pages | Vibha Art",
     description:
-      "Explore Vibha Art website pages for graphic design, printing, branding, web development and digital marketing services.",
-    keywords: "vibha art sitemap, design services sitemap, printing services sitemap",
+      "Explore Vibha Art pages for graphic design, logo design, printing services, branding, web development, digital marketing and portfolio galleries.",
+    keywords:
+      "vibha art sitemap, graphic design sitemap pune, printing services sitemap, logo design pages pune, branding portfolio sitemap",
   },
   printing: {
     page: "large-format-printing",
     path: "/printing",
     title: "Printing Services in Pune | Business Cards, Brochures, Flex | Vibha Art",
     description:
-      "Premium printing services in Pune for business cards, brochures, flex, vinyl, banners, packaging, labels, stickers and corporate stationery.",
+      "Premium printing services in Pune for business cards, brochures, flyers, flex banners, vinyl, packaging, labels, stickers, booklets and corporate stationery.",
     keywords:
-      "printing services pune, business card printing pune, brochure printing pune, flex printing pune, sticker printing pune",
+      "printing services pune, business card printing pune, brochure printing pune, flex printing pune, banner printing pune, sticker printing pune, label printing pune, packaging printing pune, booklet printing pune",
   },
   digitalMarketing: {
     page: "services",
     path: "/digital-marketing",
     title: "Digital Marketing Services in Pune | SEO, Ads, Social Media | Vibha Art",
     description:
-      "Grow your brand with SEO, Google Ads, social media creatives, content marketing, email marketing and reporting support from Vibha Art.",
+      "Grow your business with SEO, local SEO, Google Ads, social media marketing, content marketing, email campaigns, CRO, ORM and analytics support in Pune.",
     keywords:
-      "digital marketing pune, SEO services pune, social media marketing pune, Google ads pune, content marketing pune",
+      "digital marketing pune, SEO services pune, local SEO pune, social media marketing pune, Google ads agency pune, PPC services pune, content marketing pune, ORM services pune",
   },
   webDevelopment: {
     page: "services",
     path: "/web-development",
-    title: "Website Design and Development in Pune | Vibha Art",
+    title: "Website Design and Development in Pune | Business Websites | Vibha Art",
     description:
-      "Professional website design, landing pages, ecommerce development, responsive web design and maintenance support for Pune businesses.",
+      "Professional website design and development in Pune for business websites, landing pages, ecommerce stores, responsive UI, CMS sites, speed optimization and support.",
     keywords:
-      "website design pune, web development pune, ecommerce website pune, landing page design pune, responsive website pune",
+      "website design pune, web development pune, business website design pune, ecommerce website development pune, landing page design pune, responsive website design pune, website maintenance pune",
   },
   digitalPrint: {
     page: "large-format-printing",
     path: "/digital-print",
-    title: "Digital Printing Services in Pune | Vibha Art",
+    title: "Digital Printing Services in Pune | Fast Print Shop | Vibha Art",
     description:
-      "Fast digital printing in Pune for business materials, brochures, cards, flyers, labels and marketing collateral.",
-    keywords: "digital printing pune, fast printing pune, print shop pune, marketing material printing",
+      "Fast digital printing in Pune for business cards, flyers, brochures, posters, stickers, labels, booklets, catalogs and marketing collateral.",
+    keywords:
+      "digital printing pune, fast digital printing pune, print shop pune, flyer printing pune, poster printing pune, business card digital printing, brochure digital printing pune",
   },
   graphicDesign: {
     page: "logo-design",
     path: "/graphic-design",
     title: "Graphic Design Services in Pune | Logo, Branding, Packaging | Vibha Art",
     description:
-      "Creative graphic design services for logos, brand identity, company profiles, brochures, packaging and social media creatives.",
+      "Creative graphic design services in Pune for logos, brand identity, company profiles, brochures, packaging, business cards, social media creatives and print-ready artwork.",
     keywords:
-      "graphic design pune, logo design pune, branding agency pune, packaging design pune, brochure design pune",
+      "graphic design pune, logo design pune, branding agency pune, brand identity design pune, packaging design pune, brochure design pune, social media design pune, company profile design pune",
   },
   notFound: {
     page: "home",
     path: "/404",
     title: "Page Not Found | Vibha Art",
     description:
-      "The page you are looking for was not found. Explore Vibha Art design, printing and marketing services.",
+      "The page was not found. Explore Vibha Art graphic design, logo design, printing services, branding, web development and digital marketing in Pune.",
     keywords: SERVICE_KEYWORDS,
   },
 };
@@ -154,98 +158,98 @@ const galleryPages = {
   seo: gallerySeo(
     "/seo-gallery",
     "SEO Services Gallery",
-    "Explore SEO strategy, local search, content and reporting examples for businesses that want more online visibility.",
-    "SEO gallery, SEO services pune, local SEO pune, search engine optimization",
+    "Explore SEO strategy, local search optimization, keyword planning, content SEO and reporting examples for businesses that want stronger Google visibility.",
+    "SEO services pune, local SEO pune, search engine optimization pune, keyword research pune, Google ranking services, SEO portfolio",
   ),
   smm: gallerySeo(
     "/smm-gallery",
     "Social Media Marketing Gallery",
-    "Explore social media post, campaign and creative examples for Instagram, Facebook and business brand growth.",
-    "social media design pune, Instagram posts, Facebook creatives, SMM pune",
+    "Explore social media marketing creatives for Instagram, Facebook, LinkedIn, campaigns, reels, brand awareness and business growth.",
+    "social media marketing pune, Instagram post design pune, Facebook creatives pune, LinkedIn post design, SMM agency pune, social media portfolio",
   ),
   ppc: gallerySeo(
     "/ppc-gallery",
     "PPC Advertising Gallery",
-    "Explore paid ad creative and campaign concepts for Google Ads, Meta Ads, lead generation and remarketing.",
-    "PPC ads pune, Google ads creatives, paid advertising pune, Meta ads",
+    "Explore PPC ad creatives and campaign concepts for Google Ads, Meta Ads, remarketing, lead generation and conversion-focused landing pages.",
+    "PPC services pune, Google Ads agency pune, Meta Ads creatives, paid advertising pune, lead generation ads, remarketing campaign",
   ),
   contentMarketing: gallerySeo(
     "/content-marketing-gallery",
     "Content Marketing Gallery",
-    "Explore content marketing ideas for blogs, guides, social storytelling, lead capture and brand education.",
-    "content marketing pune, blog content, brand content, lead generation content",
+    "Explore content marketing ideas for blogs, SEO articles, guides, brand storytelling, lead magnets and audience education.",
+    "content marketing pune, SEO content writing pune, blog writing services, brand storytelling, lead generation content, content strategy pune",
   ),
   emailMarketing: gallerySeo(
     "/email-marketing-gallery",
     "Email Marketing Gallery",
-    "Explore email campaign examples for promotions, launches, lead nurturing, retention and repeat sales.",
-    "email marketing pune, email campaign design, newsletter design, lead nurturing",
+    "Explore email marketing campaign examples for newsletters, promotions, product launches, lead nurturing, customer retention and repeat sales.",
+    "email marketing pune, email campaign design, newsletter design pune, lead nurturing emails, promotional email design, retention marketing",
   ),
   cro: gallerySeo(
     "/cro-gallery",
     "Conversion Rate Optimization Gallery",
-    "Explore CRO concepts for landing pages, funnels, forms, calls to action and conversion tracking.",
-    "CRO services, conversion optimization, landing page optimization, funnel optimization",
+    "Explore conversion rate optimization concepts for landing pages, lead funnels, enquiry forms, calls to action, trust signals and tracking.",
+    "CRO services pune, conversion rate optimization, landing page optimization pune, funnel optimization, lead conversion design, CTA optimization",
   ),
   orm: gallerySeo(
     "/orm-gallery",
     "Online Reputation Management Gallery",
-    "Explore online reputation management ideas for reviews, brand trust, customer response and visibility.",
-    "online reputation management pune, ORM services, review management, brand trust",
+    "Explore online reputation management ideas for reviews, brand trust, business profiles, customer responses and stronger search visibility.",
+    "online reputation management pune, ORM services pune, review management, brand reputation, Google review strategy, business profile optimization",
   ),
   analytics: gallerySeo(
     "/analytics-reporting-gallery",
     "Analytics and Reporting Gallery",
-    "Explore reporting dashboard concepts for tracking traffic, leads, campaigns and business growth.",
-    "analytics reporting, marketing dashboard, Google Analytics reporting, campaign reporting",
+    "Explore analytics and reporting dashboard concepts for website traffic, leads, campaign ROI, conversions and monthly growth insights.",
+    "analytics reporting pune, Google Analytics reporting, marketing dashboard, campaign performance reporting, lead tracking, ROI reporting",
   ),
   webCustom: gallerySeo(
     "/custom-website-development-gallery",
     "Custom Website Development Gallery",
-    "Explore custom website development examples for service businesses, portfolios and lead generation websites.",
-    "custom website development pune, business website design, web development gallery",
+    "Explore custom website development examples for service businesses, portfolios, landing pages, lead generation and high-converting brand websites.",
+    "custom website development pune, business website design pune, lead generation website, service website development, web development portfolio",
   ),
   webEcommerce: gallerySeo(
     "/ecommerce-development-gallery",
     "Ecommerce Development Gallery",
-    "Explore ecommerce website concepts for product catalogs, checkout flows, product pages and online stores.",
-    "ecommerce development pune, online store design, ecommerce website gallery",
+    "Explore ecommerce website concepts for online stores, product catalogs, product pages, checkout flows, payment setup and sales dashboards.",
+    "ecommerce development pune, online store design pune, ecommerce website development, product catalog website, checkout flow design, payment integration",
   ),
   webResponsive: gallerySeo(
     "/responsive-web-design-gallery",
     "Responsive Web Design Gallery",
-    "Explore responsive website designs built for mobile, tablet and desktop business experiences.",
-    "responsive web design pune, mobile friendly website, website design gallery",
+    "Explore responsive website designs built for mobile, tablet and desktop experiences with fast loading, clean navigation and conversion-focused layouts.",
+    "responsive web design pune, mobile friendly website pune, adaptive website design, responsive UI design, mobile first website, website design gallery",
   ),
   webCms: gallerySeo(
     "/cms-development-gallery",
     "CMS Development Gallery",
-    "Explore CMS website concepts for editable pages, content workflows and business website management.",
-    "CMS development pune, WordPress website pune, editable website design",
+    "Explore CMS website concepts for editable pages, WordPress sites, content workflows, media libraries, admin training and business website management.",
+    "CMS development pune, WordPress website pune, editable website design, content management system, business CMS website, website admin training",
   ),
   webApp: gallerySeo(
     "/web-application-development-gallery",
     "Web Application Development Gallery",
-    "Explore web application concepts for dashboards, admin panels, portals and business workflows.",
-    "web application development pune, dashboard design, admin panel development",
+    "Explore web application concepts for dashboards, admin panels, customer portals, booking flows, user management and business workflows.",
+    "web application development pune, admin dashboard development, customer portal development, booking system website, business web app, dashboard UI design",
   ),
   webApi: gallerySeo(
     "/api-integration-development-gallery",
     "API Integration Development Gallery",
-    "Explore API integration concepts for payments, CRM, WhatsApp, analytics and business systems.",
-    "API integration pune, CRM integration, WhatsApp integration, payment integration",
+    "Explore API integration concepts for payment gateways, CRM sync, WhatsApp enquiry flows, analytics events, automation and connected business systems.",
+    "API integration pune, CRM integration pune, WhatsApp integration, payment gateway integration, business automation, custom API development",
   ),
   webSpeed: gallerySeo(
     "/website-speed-optimization-gallery",
     "Website Speed Optimization Gallery",
-    "Explore website speed optimization ideas for faster loading, better UX and stronger SEO performance.",
-    "website speed optimization pune, Core Web Vitals, performance optimization",
+    "Explore website speed optimization ideas for Core Web Vitals, faster loading, image optimization, caching, mobile performance and stronger SEO.",
+    "website speed optimization pune, Core Web Vitals optimization, performance optimization, image optimization website, fast loading website, mobile speed optimization",
   ),
   webMaintenance: gallerySeo(
     "/website-maintenance-support-gallery",
     "Website Maintenance Support Gallery",
-    "Explore website maintenance concepts for updates, backups, security checks and ongoing support.",
-    "website maintenance pune, website support, website security, web backups",
+    "Explore website maintenance concepts for updates, backups, security checks, bug fixes, uptime monitoring and ongoing website support.",
+    "website maintenance pune, website support pune, website security checks, website backup service, bug fixing support, uptime monitoring",
   ),
 };
 
@@ -266,8 +270,8 @@ const serviceGallerySEO = (path, label, keywords = SERVICE_KEYWORDS) =>
   gallerySeo(
     path,
     label,
-    `View ${label.toLowerCase()} examples from Vibha Art for professional design, printing, branding and marketing projects in Pune.`,
-    keywords,
+    `View ${label.toLowerCase()} examples from Vibha Art for professional graphic design, printing, branding, marketing and business growth projects in Pune.`,
+    `${keywords}, ${SERVICE_KEYWORDS}, portfolio examples, design portfolio pune, printing portfolio pune`,
   );
 
 // Security Configurations
@@ -435,12 +439,12 @@ function RootLayout() {
   const [loading, setLoading] = useState(true);
 
   const defaultSEO = {
-    title: "Vibha Prints - Creative Design & Printing Services",
+    title: "Vibha Art - Graphic Design, Printing and Branding in Pune",
     description:
-      "Vibha Prints offers professional graphic design, printing, and branding services. From logo design to large format printing, we help businesses create stunning visual identities.",
+      "Vibha Art offers graphic design, logo design, printing, branding, website design and digital marketing services in Pune for growing businesses.",
     keywords:
-      "graphic design, printing services, logo design, branding, marketing materials, digital printing, offset printing",
-    image: "/logo.png",
+      "graphic design pune, printing services pune, logo design pune, branding agency pune, website design pune, digital marketing pune, business card printing pune",
+    image: "https://www.vibhaprints.com/assets/vibha-og.webp",
     url: import.meta.env.VITE_APP_URL || "https://vibhaprints.com",
   };
 
@@ -553,45 +557,13 @@ function RootLayout() {
   );
 }
 
-// Home page with Helmet
-const HomePage = () => (
-  <>
-    <Helmet>
-      <title>Home</title>
-    </Helmet>
-    <Home />
-  </>
-);
+const HomePage = () => <Home />;
 
-// About page with Helmet
-const AboutPage = () => (
-  <>
-    <Helmet>
-      <title>About Us</title>
-    </Helmet>
-    <EnhancedAbout />
-  </>
-);
+const AboutPage = () => <EnhancedAbout />;
 
-// Contact page with Helmet
-const ContactPage = () => (
-  <>
-    <Helmet>
-      <title>Contact Us</title>
-    </Helmet>
-    <EnhancedContact />
-  </>
-);
+const ContactPage = () => <EnhancedContact />;
 
-// Graphic Design page with Helmet
-const GraphicDesignPage = () => (
-  <>
-    <Helmet>
-      <title>Graphic Design Services</title>
-    </Helmet>
-    <EnhancedGraphicDesign />
-  </>
-);
+const GraphicDesignPage = () => <EnhancedGraphicDesign />;
 
 // Create router with routes
 const router = createBrowserRouter(

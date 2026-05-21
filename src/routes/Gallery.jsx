@@ -29,6 +29,12 @@ import {
   Image as FaImage,
   Search as FaSearchPlus,
 } from "lucide-react";
+import digitalBrochureImage from "../assets/Printing/Broucher & Booklet/image-259.webp";
+import digitalPosterImage from "../assets/Printing/Pamphlet & Poster Printing/image-302.webp";
+import annualReportImage from "../assets/Corporate/image-060.webp";
+import magazineImage from "../assets/Brouchers/image-034.webp";
+import tradeBannerImage from "../assets/Printing/vinyl & Flex/image-345.webp";
+import outdoorAdImage from "../assets/Printing/vinyl & Flex/image-346.webp";
 
 const PrintingShowcase = () => {
   const [activeCategory, setActiveCategory] = useState('digital');
@@ -46,7 +52,7 @@ const PrintingShowcase = () => {
           name: 'Corporate Brochures',
           client: 'Tech Innovations Inc.',
           description: 'Professionally designed and printed corporate marketing materials',
-          image: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+          image: digitalBrochureImage,
           tags: ['Brochure', 'Digital Print', 'Marketing']
         },
         {
@@ -54,7 +60,7 @@ const PrintingShowcase = () => {
           name: 'Event Posters',
           client: 'Global Conference 2024',
           description: 'Vibrant and eye-catching event promotional materials',
-          image: 'https://images.unsplash.com/photo-1517245386807-bb43f5f29295?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+          image: digitalPosterImage,
           tags: ['Poster', 'Large Format', 'Event Marketing']
         }
       ]
@@ -70,7 +76,7 @@ const PrintingShowcase = () => {
           name: 'Annual Report',
           client: 'Global Innovations Inc.',
           description: 'Comprehensive annual report with high-quality offset printing',
-          image: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+          image: annualReportImage,
           tags: ['Annual Report', 'Offset Print', 'Corporate']
         },
         {
@@ -78,7 +84,7 @@ const PrintingShowcase = () => {
           name: 'Magazine Production',
           client: 'Creative Quarterly',
           description: 'High-quality magazine printing with precise color reproduction',
-          image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
+          image: magazineImage,
           tags: ['Magazine', 'Offset Print', 'Publishing']
         }
       ]
@@ -94,7 +100,7 @@ const PrintingShowcase = () => {
           name: 'Trade Show Banners',
           client: 'Tech Summit 2024',
           description: 'Massive, high-resolution banners for professional events',
-          image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1372&q=80',
+          image: tradeBannerImage,
           tags: ['Banner', 'Large Format', 'Event Signage']
         },
         {
@@ -102,7 +108,7 @@ const PrintingShowcase = () => {
           name: 'Outdoor Advertising',
           client: 'City Marketing Board',
           description: 'Durable and vibrant large-format prints for outdoor campaigns',
-          image: 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
+          image: outdoorAdImage,
           tags: ['Billboard', 'Large Format', 'Outdoor Advertising']
         }
       ]

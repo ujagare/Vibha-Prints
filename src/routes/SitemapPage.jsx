@@ -1,5 +1,4 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
 const links = [
@@ -17,25 +16,27 @@ const links = [
 
 const SitemapPage = () => {
   return (
-    <>
-      <Helmet>
-        <title>Sitemap</title>
-      </Helmet>
-      <section className="container mx-auto px-6 py-28 max-w-4xl">
-        <h1 className="text-4xl font-bold text-brand-primary-800 mb-6">
+    <section className="container mx-auto px-6 py-28 max-w-4xl">
+      <article aria-labelledby="sitemap-title">
+        <h1
+          id="sitemap-title"
+          className="text-4xl font-bold text-brand-primary-800 mb-6"
+        >
           Sitemap
         </h1>
-        <ul className="space-y-3">
-          {links.map((item) => (
-            <li key={item.path}>
-              <Link className="text-[#E65056] hover:underline" to={item.path}>
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </>
+        <nav aria-label="Sitemap links">
+          <ul className="space-y-3">
+            {links.map((item) => (
+              <li key={item.path}>
+                <Link className="text-[#E65056] hover:underline" to={item.path}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </article>
+    </section>
   );
 };
 

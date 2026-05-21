@@ -86,9 +86,10 @@ Dono files public/ folder mein already create ho gayi hain:
 ## STEP 4: Google Search Console
 
 1. https://search.google.com/search-console/ par jao
-2. "Add Property" → aapki website URL daalo
-3. Verify karo
-4. Sitemap submit karo: `https://vibha-prints.vercel.app/sitemap.xml`
+2. "Add Property" -> "URL prefix" me `https://www.vibhaprints.com/` add karo
+3. HTML file ya DNS method se verify karo
+4. Sitemap submit karo: `https://www.vibhaprints.com/sitemap.xml`
+5. "URL Inspection" me `https://www.vibhaprints.com/` inspect karke "Request Indexing" karo
 
 ---
 

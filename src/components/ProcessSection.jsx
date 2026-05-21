@@ -6,6 +6,7 @@ import {
   Monitor as FaDesktop,
   Check as FaCheck,
 } from "lucide-react";
+import AnimatedNumber from "./AnimatedNumber";
 
 const ProcessSection = () => {
   // Process steps
@@ -107,7 +108,7 @@ const ProcessSection = () => {
                 {/* Step Number - Inside the card at the top */}
                 <div className="flex justify-center mb-6">
                   <div className="w-16 h-16 rounded-full bg-[#01334C] text-[#E65056] flex items-center justify-center font-bold text-3xl shadow-lg">
-                    {step.id}
+                    <AnimatedNumber value={step.id} />
                   </div>
                 </div>
 
