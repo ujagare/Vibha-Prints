@@ -45,6 +45,7 @@ IMAP_HOST = os.environ.get("IMAP_HOST", "imap.zoho.in")
 IMAP_PORT = int(os.environ.get("IMAP_PORT", "993"))
 IMAP_USER = os.environ.get("IMAP_USER", "info@vibhaprints.com")
 IMAP_PASS = os.environ.get("IMAP_PASS", "")
+INBOUND_EMAIL_SEARCH_DAYS = int(os.environ.get("INBOUND_EMAIL_SEARCH_DAYS", "7"))
 
 # SMTP Configuration
 SMTP_HOST = os.environ.get("ZOHO_SMTP_HOST", "smtp.zoho.in")
@@ -435,8 +436,13 @@ def fetch_unread_emails() -> List[Dict]:
         # Select INBOX
         mail.select("INBOX")
         
-        # Search for unread emails
-        status, messages = mail.search(None, "UNSEEN")
+        # Search recent inbox emails instead of only UNSEEN. Some mail clients
+        # mark replies as read before the automation gets a chance to process.
+        if INBOUND_EMAIL_SEARCH_DAYS > 0:
+            since_date = (datetime.now() - timedelta(days=INBOUND_EMAIL_SEARCH_DAYS)).strftime("%d-%b-%Y")
+            status, messages = mail.search(None, "SINCE", since_date)
+        else:
+            status, messages = mail.search(None, "UNSEEN")
         
         if status != "OK":
             logger.error("❌ Failed to search for unread emails")
@@ -467,7 +473,7 @@ def fetch_unread_emails() -> List[Dict]:
                 body = get_email_body(msg)
                 
                 # Skip if already processed
-                if is_email_processed(email_id.decode()):
+                if is_email_processed(email_id.decode()) or (message_id and is_email_processed(message_id)):
                     logger.info(f"⏭️  Skipping already processed email: {subject}")
                     continue
                 
@@ -564,6 +570,12 @@ def process_inbound_emails() -> Dict:
                     email_data['from_email'],
                     email_data['subject']
                 )
+                if email_data.get('message_id'):
+                    mark_email_processed(
+                        email_data['message_id'],
+                        email_data['from_email'],
+                        email_data['subject']
+                    )
                 replied_count += 1
                 logger.info(f"✅ Reply sent successfully")
             else:

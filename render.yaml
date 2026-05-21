@@ -32,3 +32,5 @@ services:
         value: resend
       - key: RESEND_FROM
         value: Vibha Prints <info@vibhaprints.com>
+      - key: INBOUND_EMAIL_SEARCH_DAYS
+        value: "7"
