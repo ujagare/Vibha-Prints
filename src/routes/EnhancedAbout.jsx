@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import "./EnhancedAbout.css";
 import aboutHeroMobile from "../assets/About/Mobile/image-026.webp";
-import SEO from "../components/SEO";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -223,7 +222,6 @@ export default function EnhancedAbout() {
 
   return (
     <div className="about-page" ref={rootRef}>
-      <SEO page="about" />
       <section className="about-hero-v2">
         <picture>
           <source media="(max-width: 680px)" srcSet={aboutHeroMobile} />

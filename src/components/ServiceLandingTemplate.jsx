@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Star, Target } from "lucide-react";
-import SEO from "./SEO";
 
 const textFill = { WebkitTextFillColor: "currentColor" };
 
@@ -47,7 +46,6 @@ const ServiceLandingTemplate = ({ page }) => {
 
   return (
     <div className="w-full max-w-full overflow-x-hidden bg-white font-['Poppins'] text-[#071124]">
-      <SEO page="services" />
       <section className="relative mt-[96px] min-h-[calc(100svh-96px)] overflow-hidden bg-[#06111f] sm:mt-[104px] sm:min-h-[calc(100vh-104px)]">
         <picture>
           {page.backgrounds.heroMobile && (

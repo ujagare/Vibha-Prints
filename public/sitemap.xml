@@ -1,8 +1,454 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://vibha-prints.vercel.app/</loc><lastmod>2026-05-19</lastmod><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://vibha-prints.vercel.app/about</loc><lastmod>2026-05-19</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://vibha-prints.vercel.app/services</loc><lastmod>2026-05-19</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://vibha-prints.vercel.app/portfolio</loc><lastmod>2026-05-19</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://vibha-prints.vercel.app/contact</loc><lastmod>2026-05-19</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.vibhaprints.com</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/about</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/about"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/about?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/about"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/contact</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/contact"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/contact?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/contact"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/printing</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/printing"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/printing?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/printing"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/digital-marketing</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/digital-marketing"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/digital-marketing?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/digital-marketing"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/web-development</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/web-development"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/web-development?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/web-development"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/graphic-design</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/graphic-design"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/graphic-design?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/graphic-design"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/digital-print</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/digital-print"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/digital-print?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/digital-print"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/services/graphic-design</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/services/graphic-design"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/services/graphic-design?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/services/graphic-design"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/services/printing</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/services/printing"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/services/printing?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/services/printing"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/services/digital-marketing</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/services/digital-marketing"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/services/digital-marketing?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/services/digital-marketing"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/services/web-development</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/services/web-development"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/services/web-development?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/services/web-development"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/logo-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/logo-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/logo-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/logo-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/logo-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/logo-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/logo-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/logo-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/business-card-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/business-card-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/business-card-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/business-card-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/pamphlet-poster-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/pamphlet-poster-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/pamphlet-poster-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/pamphlet-poster-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/brochure-booklet-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/brochure-booklet-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/brochure-booklet-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/brochure-booklet-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/flex-vinyl-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/flex-vinyl-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/flex-vinyl-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/flex-vinyl-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/magazine-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/magazine-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/magazine-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/magazine-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/sticker-hangtags-lanyard-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/sticker-hangtags-lanyard-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/sticker-hangtags-lanyard-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/sticker-hangtags-lanyard-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/product-packaging-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/product-packaging-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/product-packaging-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/product-packaging-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/corporate-stationary-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/corporate-stationary-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/corporate-stationary-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/corporate-stationary-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/bags-tshirts-printing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/bags-tshirts-printing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/bags-tshirts-printing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/bags-tshirts-printing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/business-card-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/business-card-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/business-card-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/business-card-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/brochure-booklet-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/brochure-booklet-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/brochure-booklet-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/brochure-booklet-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/pamphlet-poster-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/pamphlet-poster-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/pamphlet-poster-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/pamphlet-poster-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/product-packaging-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/product-packaging-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/product-packaging-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/product-packaging-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/company-profile-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/company-profile-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/company-profile-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/company-profile-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/social-media-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/social-media-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/social-media-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/social-media-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/corporate-identity-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/corporate-identity-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/corporate-identity-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/corporate-identity-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/website-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/website-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/website-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/website-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/seo-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/seo-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/seo-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/seo-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/smm-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/smm-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/smm-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/smm-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/ppc-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/ppc-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/ppc-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/ppc-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/content-marketing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/content-marketing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/content-marketing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/content-marketing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/email-marketing-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/email-marketing-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/email-marketing-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/email-marketing-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/cro-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/cro-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/cro-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/cro-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/orm-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/orm-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/orm-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/orm-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/analytics-reporting-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/analytics-reporting-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/analytics-reporting-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/analytics-reporting-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/custom-website-development-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/custom-website-development-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/custom-website-development-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/custom-website-development-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/ecommerce-development-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/ecommerce-development-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/ecommerce-development-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/ecommerce-development-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/responsive-web-design-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/responsive-web-design-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/responsive-web-design-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/responsive-web-design-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/cms-development-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/cms-development-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/cms-development-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/cms-development-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/web-application-development-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/web-application-development-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/web-application-development-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/web-application-development-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/api-integration-development-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/api-integration-development-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/api-integration-development-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/api-integration-development-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/website-speed-optimization-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/website-speed-optimization-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/website-speed-optimization-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/website-speed-optimization-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/website-maintenance-support-gallery</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/website-maintenance-support-gallery"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/website-maintenance-support-gallery?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/website-maintenance-support-gallery"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/terms</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/terms"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/terms?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/terms"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/privacy-policy</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/privacy-policy?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/privacy-policy"/>
+  </url>
+  <url>
+    <loc>https://www.vibhaprints.com/sitemap</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.vibhaprints.com/sitemap"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.vibhaprints.com/sitemap?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vibhaprints.com/sitemap"/>
+  </url>
 </urlset>
