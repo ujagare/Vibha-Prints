@@ -61,62 +61,184 @@ CONVERSATIONS_DIR.mkdir(parents=True, exist_ok=True)
 
 # System prompt for AI
 SYSTEM_PROMPT = f"""
-You are a friendly and professional customer service representative for {BUSINESS_NAME}, 
-a design and printing company.
+You are {BUSINESS_NAME}' AI sales assistant for WhatsApp.
 
-Your responsibilities:
-1. Answer customer questions about our services
-2. Provide quotes and pricing information
-3. Help with order inquiries
-4. Provide design consultation
-5. Handle complaints professionally
-6. Qualify leads and understand their needs
+Primary goal:
+- Convert conversations into qualified project inquiries, not just reply.
+- Act like a professional consultant: identify intent, recommend, qualify gently, build trust, then capture lead details gradually.
 
-Services offered:
-- Logo Design & Branding
-- Business Cards & Stationery
-- Brochures & Packaging Design
-- Digital & Offset Printing
-- Social Media Graphics
-- Website Design
+Services:
+- Logo design, brand identity, company profile and corporate stationery
+- Business cards, brochures, pamphlets, posters, catalogs
+- Packaging, labels, stickers, hangtags, lanyards
+- Digital/offset printing, flex, vinyl, banners and large-format printing
+- Bags, T-shirts and merchandise printing
+- Social media creatives, website design/development, landing pages, ecommerce
+- SEO, paid ads, email marketing and digital marketing support
 
-Important guidelines:
-- Be friendly, professional, and helpful
-- Use Hinglish (mix of Hindi and English) when appropriate
-- Keep responses concise (2-3 sentences max for WhatsApp)
-- Ask clarifying questions to understand customer needs
-- Offer solutions and next steps
-- If you don't know something, offer to connect with the team
-- Always include contact info when relevant: {BUSINESS_PHONE}
+Conversation flow:
+1. Identify intent naturally.
+2. Recommend one useful option or package.
+3. Ask only 1-2 qualification questions.
+4. Build trust with process proof, such as mockup preview before printing.
+5. Capture name, business type and contact details when the user is ready.
+
+Tone rules:
+- Natural friendly Hindi + English mix in Roman script by default.
+- Use English if the user writes clearly in English.
+- Keep every reply short for WhatsApp: 2-4 short lines.
+- Do not sound like police interrogation or a menu bot.
+- Avoid repeating greetings and avoid asking the same requirement again.
+- Use previous conversation. If user already said "business card", ask finish/quantity next.
+
+Smart suggestions:
+- Business cards: suggest matte or soft-touch laminated finish for premium impression.
+- Social media posts: suggest Instagram/Facebook monthly post packages and ask business category.
+- Printing: ask item, quantity, size/finish only as needed.
+- Price concern: suggest small quantity or trial order where possible.
+- Objections about quality: mention mockup preview/proof before printing.
+- Objections about delivery: ask deadline and city, then say team can check priority.
+- High-intent signals: urgent, today, bulk, 1000+, deadline, ready artwork, order, call me. For these, suggest quick human follow-up.
+
+Safety:
+- Do not invent exact prices, delivery dates, discounts, guarantees, stock or client names.
+- Give only broad estimates if useful; final quote depends on specs.
+- Contact when relevant: {BUSINESS_PHONE}
 - Website: {BUSINESS_WEBSITE}
-
-Remember: You're having a real conversation, not sending templates!
+- If you don't know or it is outside scope, say exactly:
+  "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: {BUSINESS_PHONE}, team turant help karegi."
 """
 
 
-def _rule_based_reply(user_message: str) -> str:
+SERVICE_PATTERNS = {
+    "business_cards": ["business card", "visiting card", "name card"],
+    "social_media": ["social media", "instagram", "facebook", "post", "reel", "creative"],
+    "printing": ["print", "printing", "banner", "flex", "vinyl", "sticker", "brochure", "pamphlet"],
+    "logo": ["logo", "brand identity", "branding"],
+    "packaging": ["packaging", "package", "label", "box", "hangtag"],
+    "website": ["website", "web", "ecommerce", "landing page", "seo"],
+}
+
+HIGH_INTENT_KEYWORDS = [
+    "urgent",
+    "today",
+    "aaj",
+    "asap",
+    "jaldi",
+    "bulk",
+    "1000",
+    "5000",
+    "deadline",
+    "ready artwork",
+    "artwork ready",
+    "order",
+    "call me",
+    "quote",
+    "price",
+    "pricing",
+]
+
+
+def _detect_service_intent(text: str) -> str:
+    low = (text or "").lower()
+    for service, patterns in SERVICE_PATTERNS.items():
+        if any(pattern in low for pattern in patterns):
+            return service
+    return ""
+
+
+def _detect_previous_service(conversation_history: List[Dict]) -> str:
+    for msg in reversed(conversation_history or []):
+        service = _detect_service_intent(msg.get("content", ""))
+        if service:
+            return service
+    return ""
+
+
+def _is_high_intent(message: str) -> bool:
+    low = (message or "").lower()
+    return any(keyword in low for keyword in HIGH_INTENT_KEYWORDS)
+
+
+def _notify_admin_for_hot_lead(phone_number: str, user_name: str, message: str, service: str) -> bool:
+    """Best-effort admin alert for urgent/high-intent WhatsApp conversations."""
+    try:
+        from email_lead_automation import send_hot_lead_alert
+
+        lead_name = user_name or f"WhatsApp {phone_number}"
+        alert_message = (
+            f"High-intent WhatsApp lead.\n"
+            f"Phone: {phone_number}\n"
+            f"Service: {service or 'unknown'}\n"
+            f"Message: {message}"
+        )
+        score_override = {
+            "score": 90,
+            "priority": "hot",
+            "indicators": ["whatsapp_high_intent", service or "service_unknown"],
+        }
+        return bool(
+            send_hot_lead_alert(
+                lead_name,
+                "",
+                alert_message,
+                "whatsapp",
+                force_send=True,
+                score_override=score_override,
+            )
+        )
+    except Exception as exc:
+        logger.warning(f"Admin hot lead alert skipped: {exc}")
+        return False
+
+
+def _rule_based_reply(user_message: str, conversation_history: Optional[List[Dict]] = None) -> str:
     """Useful fallback when AI providers are unavailable."""
     text = (user_message or "").lower()
-    if any(word in text for word in ["print", "printing", "card", "brochure", "banner", "flex", "vinyl", "sticker"]):
+    conversation_history = conversation_history or []
+    service = _detect_service_intent(user_message) or _detect_previous_service(conversation_history)
+    high_intent = _is_high_intent(user_message)
+
+    if service == "business_cards":
+        if high_intent:
+            return (
+                "Business card printing ke liye team priority check kar sakti hai.\n"
+                "Matte ya soft-touch finish premium look deti hai.\n"
+                "Aap quantity, city aur deadline share kar dijiye."
+            )
         return (
-            "Namaste! Printing ke liye zaroor help karenge. "
-            "Please quantity, size, material aur delivery location share kar dijiye, "
-            "hum aapko best quote bhej denge."
+            "Business cards ke liye matte aur soft-touch finishes kaafi premium lagti hain.\n"
+            "Aapko approx kitni quantity chahiye?"
         )
-    if any(word in text for word in ["logo", "design", "branding", "packaging"]):
+    if service == "social_media":
         return (
-            "Namaste! Design requirement ke liye please brand name, style reference, "
-            "aur timeline share kar dijiye. Team aapko next steps aur quote bata degi."
+            "Instagram aur Facebook ke liye monthly post packages available hain.\n"
+            "Aap kis business category ke liye posts chahte hain?"
         )
-    if any(word in text for word in ["website", "web", "ecommerce", "seo"]):
+    if service == "packaging":
         return (
-            "Namaste! Website/digital work ke liye please project type, pages/features, "
-            "aur timeline share kar dijiye. Hum suitable package suggest karenge."
+            "Packaging/labels ke liye product type aur quantity se best material suggest hota hai.\n"
+            "Aap product category aur approx quantity share kar dijiye."
+        )
+    if service == "printing":
+        return (
+            "Sure, printing ke liye help kar denge.\n"
+            "Aap item aur approx quantity share kar dijiye.\n"
+            "Mockup/proof preview bhi printing se pehle share ho sakta hai."
+        )
+    if service == "logo":
+        return (
+            "Logo design ke liye hum brand style ke hisaab se concepts bana sakte hain.\n"
+            "Aapka business type kya hai?"
+        )
+    if service == "website":
+        return (
+            "Website/digital work ke liye suitable package business goal par depend karta hai.\n"
+            "Aap new website chahte hain ya redesign?"
         )
     return (
-        "Namaste! Thanks for contacting Vibha Prints. "
-        "Please apni requirement, quantity/timeline aur contact details share kar dijiye. "
-        f"Urgent ho to call: {BUSINESS_PHONE}"
+        "Sure, main guide kar deta hoon.\n"
+        "Aapko printing, branding, website ya digital marketing me kis type ki help chahiye?"
     )
 
 
@@ -181,6 +303,16 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
     
     # Load conversation history
     conversation_history = load_conversation(phone_number)
+    service_intent = _detect_service_intent(user_message) or _detect_previous_service(conversation_history)
+    is_high_intent = _is_high_intent(user_message)
+    admin_alert_sent = False
+    if is_high_intent:
+        admin_alert_sent = _notify_admin_for_hot_lead(
+            phone_number,
+            user_name,
+            user_message,
+            service_intent,
+        )
     
     # Add user message to history
     add_message(phone_number, "user", user_message)
@@ -229,7 +361,7 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
         # Fallback response
         else:
             logger.warning("⚠️  No AI client available, using fallback")
-            ai_response = _rule_based_reply(user_message)
+            ai_response = _rule_based_reply(user_message, conversation_history)
         
         # Add AI response to history
         add_message(phone_number, "assistant", ai_response)
@@ -242,19 +374,27 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
             "phone": phone_number,
             "name": user_name,
             "timestamp": datetime.now().isoformat(),
-            "conversation_length": len(load_conversation(phone_number))
+            "conversation_length": len(load_conversation(phone_number)),
+            "service_intent": service_intent,
+            "lead_priority": "hot" if is_high_intent else "normal",
+            "human_handoff_recommended": is_high_intent,
+            "admin_alert_sent": admin_alert_sent,
         }
     
     except Exception as e:
         logger.error(f"❌ Error generating response: {e}")
-        fallback = _rule_based_reply(user_message)
+        fallback = _rule_based_reply(user_message, conversation_history)
         add_message(phone_number, "assistant", fallback)
         
         return {
             "success": False,
             "error": str(e),
             "response": fallback,
-            "phone": phone_number
+            "phone": phone_number,
+            "service_intent": service_intent,
+            "lead_priority": "hot" if is_high_intent else "normal",
+            "human_handoff_recommended": is_high_intent,
+            "admin_alert_sent": admin_alert_sent,
         }
 
 

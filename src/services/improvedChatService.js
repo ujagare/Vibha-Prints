@@ -54,45 +54,49 @@ const storeChatHistory = (messages) => {
 // Predefined responses for the chatbot
 const botResponses = {
   greeting: [
-    "Namaste! Vibha Prints mein aapka swagat hai. Main aapki kaise madad kar sakta hoon?",
-    "Hi there! I'm Vibha's assistant. Aap mujhse kya pooch sakte ho?",
-    "Welcome to Vibha Prints! Aapke liye main kya kar sakta hoon?",
+    "Sure 😊\nAapko printing, branding, website ya digital marketing me kis type ki help chahiye?",
+    "Hi! Aap requirement bata dijiye, main right option suggest kar dunga.\nPrinting, design ya marketing me help chahiye?",
+    "Namaste! Aap kis kaam ke liye help chahte hain?\nMain quote aur best option guide kar dunga.",
   ],
   services: [
     "Hum ye services provide karte hain:\n\n- Logo Design\n- Business Cards\n- Brochures\n- Packaging Design\n- Brand Identity\n\nKaunsi service ke baare mein jaankari chahiye?",
     "Hamari services:\n- Graphic Design\n- Printing Services\n- Branding Solutions\n- Marketing Materials\n\nKya aap kisi specific service ke baare mein poochna chahte ho?",
   ],
   printing: [
-    "Hamari printing services mein ye sab included hain:\n\n- Digital Printing - fast aur cost-effective\n- Offset Printing - high volume ke liye\n- Business Cards - premium quality\n- Brochures & Booklets - professional design\n- Banners & Flex - large format printing\n- Packaging - custom boxes aur labels\n\nKaunsi printing service chahiye aapko?",
-    "Printing services ke liye hum quality output par focus karte hain:\n\n- Fast turnaround\n- Affordable pricing\n- Premium materials\n- Professional output\n\nAapko kaunsi printing chahiye? Business cards, brochures, banners, ya kuch aur?",
+    "Sure, printing me help kar denge 😊\nAapko business cards, brochures, banners/flex, stickers ya packaging me kya chahiye?",
+    "Printing ke liye best option quantity aur finish par depend karta hai.\nAap item aur approx quantity share kar dijiye.",
   ],
   logo: [
     "Logo design mein hum concept se lekar final delivery tak sab karte hain. Aapka brand identity banate hain jo memorable ho. Kya aap apna logo design karana chahte ho?",
     "Professional logo design jo aapke brand ko represent kare. Multiple revisions aur all formats mein delivery. Interested ho?",
   ],
   business_cards: [
-    "Business cards ke liye hum premium quality paper aur designs provide karte hain. Matte, glossy, ya specialty finishes - sab available hai. Kitne cards chahiye?",
-    "Professional business card design aur printing. Quick turnaround time. Aapke requirements kya hain?",
+    "Business cards ke liye matte aur soft-touch finishes kaafi premium look dete hain 😊\nApprox kitni quantity chahiye?",
+    "Business card printing ke liye matte finish chahiye ya glossy?\nHum print se pehle mockup preview bhi share kar dete hain.",
   ],
   brochures: [
     "Brochure design mein hum layout, content organization, aur print preparation sab handle karte hain. Tri-fold se lekar multi-page booklets tak. Kya chahiye aapko?",
     "Beautiful brochure designs jo aapke customers ko impress kare. Aapke budget aur timeline bataye?",
   ],
   packaging: [
-    "Packaging design jo aapke product ko shelf mein stand out kare. Boxes, labels, bags - sab ke liye designs. Aapka product kya hai?",
-    "Eye-catching packaging design jo sales badha de. Aapke product ke liye custom design banate hain.",
+    "Packaging/label ke liye design aur printing dono guide kar sakte hain.\nAapka product type kya hai aur approx quantity kitni rahegi?",
+    "Product packaging me material, size aur finish se premium feel decide hoti hai.\nAap product category share kar dijiye.",
+  ],
+  social_media: [
+    "Instagram aur Facebook ke liye monthly post packages available hain 😊\nAap kis business category ke liye posts chahte hain?",
+    "Social media creatives ke liye monthly packages better rahenge agar regular posting chahiye.\nAapko posts kis business ke liye chahiye?",
   ],
   contact: [
     "Aap hume contact kar sakte ho:\nEmail: info@vibhaprints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nYa main aapka contact form fill kar dunga?",
     "Contact karne ke liye:\nEmail: info@vibhaprints.com / vibhart07@gmail.com\nPhone/WhatsApp: +91 86249 48046\nWebsite: https://www.vibhaprints.com/\n\nKya aap apna number dena chahte ho?",
   ],
   pricing: [
-    "Pricing aapke project ke hisaab se hoti hai:\n\n- Logo Design: Rs 5,000 - Rs 15,000\n- Business Cards: Rs 2,000 - Rs 5,000\n- Brochures: Rs 3,000 - Rs 10,000\n- Printing: Rs 1,000 - Rs 50,000+ (volume ke hisaab se)\n\nCustom quote chahiye?",
-    "Pricing flexible hai. Aapke budget aur requirements bataye, hum quote denge.",
+    "Pricing quantity, size aur finish par depend karti hai.\nAap item + approx quantity bata dijiye, main quote ke liye right details ready kar dunga.",
+    "Small quantities bhi available hain 😊\nAap trial order se start kar sakte hain. Kis item ka rate chahiye?",
   ],
   turnaround: [
-    "Turnaround time:\n- Logo: 3-5 days\n- Business Cards: 2-3 days\n- Brochures: 3-7 days\n- Printing: 1-3 days (volume ke hisaab se)\n- Complex projects: 1-2 weeks\n\nAapka deadline kya hai?",
-    "Turnaround time project ke hisaab se hoti hai. Urgent kaam bhi kar sakte hain.",
+    "Timeline requirement par depend karegi, urgent kaam me team priority check kar sakti hai.\nAapko delivery kab tak chahiye?",
+    "Agar artwork ready hai to process faster ho sakta hai.\nAap deadline aur item share kar dijiye.",
   ],
   portfolio: [
     "Hamara portfolio website par dekh sakte ho. Logo design, business cards, brochures, printing samples - sab galleries hain. Dekhna chahte ho?",
@@ -172,6 +176,15 @@ const keywords = {
     "product packaging",
     "boxes",
   ],
+  social_media: [
+    "social media",
+    "instagram",
+    "facebook",
+    "post",
+    "posts",
+    "creative",
+    "reels",
+  ],
   contact: [
     "contact",
     "email",
@@ -237,6 +250,7 @@ const priorityCategories = [
   "business_cards",
   "brochures",
   "packaging",
+  "social_media",
   "pricing",
   "turnaround",
   "contact",
@@ -279,6 +293,33 @@ const shouldRejectApiResponse = (response, reply) => {
   if (unsafeAutomationActions.has(action)) return true;
 
   return looksLikeAutomationReply(reply);
+};
+
+const detectServiceFromText = (text = "") => {
+  const lowerText = text.toLowerCase();
+  for (const category of [
+    "business_cards",
+    "social_media",
+    "printing",
+    "logo",
+    "brochures",
+    "packaging",
+  ]) {
+    const categoryKeywords = keywords[category] || [];
+    if (categoryKeywords.some((keyword) => lowerText.includes(keyword))) {
+      return category;
+    }
+  }
+  return "";
+};
+
+const detectPreviousServiceIntent = () => {
+  const history = getStoredChatHistory();
+  for (const item of [...history].reverse()) {
+    const service = detectServiceFromText(item?.content || "");
+    if (service) return service;
+  }
+  return "";
 };
 
 // Post with timeout
@@ -447,6 +488,20 @@ const callExternalChatApi = async (message) => {
 // Get bot response
 export const getBotResponse = (message) => {
   const lowerMessage = message.toLowerCase().trim();
+  const currentService = detectServiceFromText(lowerMessage);
+  const previousService = detectPreviousServiceIntent();
+
+  if (!currentService && previousService) {
+    if (previousService === "business_cards") {
+      return "Business card printing ke liye aapko matte finish chahiye ya glossy?\nQuantity bhi share kar dijiye.";
+    }
+    if (previousService === "social_media") {
+      return "Social media posts ke liye category aur monthly quantity se package decide hota hai.\nAapka business type kya hai?";
+    }
+    if (previousService === "printing") {
+      return "Printing ke liye size, quantity aur finish bata dijiye.\nUske basis par quote guide ho jayega.";
+    }
+  }
 
   for (const category of priorityCategories) {
     const categoryKeywords = keywords[category] || [];
