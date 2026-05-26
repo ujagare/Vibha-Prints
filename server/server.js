@@ -572,58 +572,93 @@ const normalizeGroqMessages = (messages = []) => {
     .slice(-12);
 };
 
-const callGroqChat = async (input, requestedModel, conversationHistory = []) => {
-  const apiKey = process.env.GROQ_API_KEY || process.env.VITE_CHATBOT_API_KEY || "";
-  if (!apiKey || apiKey.includes("YOUR_")) {
-    throw new Error("GROQ_API_KEY is not configured");
+const buildGeminiContents = (historyMessages = [], currentInput = "") => {
+  const contents = [];
+
+  for (const msg of historyMessages) {
+    const role = msg.role === "assistant" ? "model" : "user";
+    if (contents.length > 0 && contents[contents.length - 1].role === role) {
+      contents.pop();
+    }
+    contents.push({
+      role,
+      parts: [{ text: msg.content }],
+    });
   }
 
-  const model =
-    requestedModel ||
-    process.env.GROQ_MODEL ||
-    process.env.VITE_CHATBOT_MODEL ||
-    "openai/gpt-oss-120b";
+  if (currentInput) {
+    if (contents.length > 0 && contents[contents.length - 1].role === "user") {
+      contents.pop();
+    }
+    contents.push({
+      role: "user",
+      parts: [{ text: currentInput }],
+    });
+  }
 
-  const groqResponse = await fetch(
-    process.env.GROQ_API_URL || "https://api.groq.com/openai/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          {
-            role: "system",
-            content: buildSystemPrompt(),
+  return contents.slice(-24);
+};
+
+const callGeminiChat = async (input, requestedModel, conversationHistory = []) => {
+  const apiKey = process.env.GOOGLE_AI_API_KEY || process.env.GEMINI_API_KEY || "";
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured");
+  }
+
+  const configuredModels = (requestedModel ||
+    process.env.GEMINI_MODEL ||
+    "gemini-2.0-flash,gemini-2.0-flash-lite,gemini-1.5-flash")
+    .split(",")
+    .map((m) => m.trim())
+    .filter(Boolean);
+
+  const models = [...new Set([...configuredModels, "gemini-2.0-flash-lite", "gemini-1.5-flash"])];
+
+  const historyMessages = normalizeGroqMessages(conversationHistory);
+  const contents = buildGeminiContents(historyMessages, input);
+
+  let lastError = null;
+
+  for (const model of models) {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: buildSystemPrompt() }],
           },
-          ...normalizeGroqMessages(conversationHistory),
-          ...(conversationHistory?.length
-            ? []
-            : [
-                {
-                  role: "user",
-                  content: input,
-                },
-              ]),
-        ],
-        temperature: 0.3,
-        max_tokens: 300,
-      }),
-    },
-  );
+          contents,
+          generationConfig: {
+            temperature: 0.45,
+            maxOutputTokens: 350,
+          },
+        }),
+      },
+    );
 
-  const result = await groqResponse.json();
-  if (!groqResponse.ok) {
-    throw new Error(result?.error?.message || "Groq request failed");
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      lastError = new Error(data?.error?.message || `${model} generateContent failed`);
+      console.warn(`Gemini model failed (${model}):`, lastError.message);
+      continue;
+    }
+
+    const text = data?.candidates?.[0]?.content?.parts
+      ?.map((part) => part.text || "")
+      .join("")
+      .trim();
+
+    if (text) return { text };
+
+    lastError = new Error(`${model} returned an empty response`);
   }
 
-  return {
-    text: result?.choices?.[0]?.message?.content || "",
-    result,
-  };
+  throw lastError || new Error("Gemini generateContent failed");
 };
 
 const createChatSession = async (socketId) => {
@@ -753,14 +788,14 @@ io.on('connection', async (socket) => {
       console.log(`Generating response for ${socket.id}`);
       let botResponse = "";
       try {
-        const groqReply = await callGroqChat(
+        const geminiReply = await callGeminiChat(
           data.message,
           undefined,
           activeSessions[socket.id].messages,
         );
-        botResponse = groqReply.text;
+        botResponse = geminiReply.text;
       } catch (error) {
-        console.warn("Groq socket reply unavailable, using local response:", error.message);
+        console.warn("Gemini socket reply unavailable, using local response:", error.message);
         botResponse = getBotResponse(data.message);
       }
 
@@ -866,8 +901,15 @@ app.get('/', (req, res) => {
 
 app.post("/api/groq/chat", async (req, res) => {
   try {
-    const input = req.body?.input || "write a haiku about ai";
-    const result = await callGroqChat(
+    const input = req.body?.input || req.body?.message || "";
+    if (!input) {
+      return res.json({
+        success: false,
+        reply: "Namaste! Aapko kis type ki help chahiye?",
+      });
+    }
+
+    const result = await callGeminiChat(
       input,
       req.body?.model,
       req.body?.messages || req.body?.conversationHistory || [],
@@ -875,15 +917,82 @@ app.post("/api/groq/chat", async (req, res) => {
 
     return res.json({
       success: true,
+      reply: result.text,
       text: result.text,
-      result: result.result,
     });
   } catch (error) {
-    console.error("Groq chat request failed:", error);
+    console.error("Gemini chat request failed:", error);
     return res.status(500).json({
       success: false,
-      message: "Failed to call Groq",
+      reply: "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi.",
+      message: "Failed to call Gemini",
     });
+  }
+});
+
+app.post("/api/chat", async (req, res) => {
+  try {
+    const message = req.body?.message || "";
+    const messages = req.body?.messages || [];
+    const sessionId = req.body?.session_id || "";
+
+    if (!message && messages.length === 0) {
+      return res.json({
+        success: false,
+        reply: "Namaste! Aapko printing, branding, website ya digital marketing me kis type ki help chahiye?",
+      });
+    }
+
+    const lastUserMessage = message || (
+      [...messages].reverse().find((m) => m.role === "user")?.content || ""
+    );
+
+    const result = await callGeminiChat(
+      lastUserMessage,
+      req.body?.model,
+      messages,
+    );
+
+    return res.json({
+      success: true,
+      reply: result.text,
+      session_id: sessionId,
+    });
+  } catch (error) {
+    console.error("Chat API request failed:", error);
+    return res.json({
+      success: false,
+      reply: "Is baare mein main sure nahi hoon - aap seedha WhatsApp karein: +91 86249 48046, team turant help karegi.",
+    });
+  }
+});
+
+app.post("/api/create-lead", async (req, res) => {
+  try {
+    const { name, email, phone, mobile, message, source } = req.body || {};
+    const phoneNumber = phone || mobile || "";
+    const leadMessage = message || "Chat widget contact request";
+
+    if (!name || !email || !phoneNumber) {
+      return res.json({ success: false, message: "Name, email, and phone are required" });
+    }
+
+    try {
+      await sendContactAutomationEmails({
+        name,
+        email,
+        mobile: phoneNumber,
+        message: leadMessage,
+        source: source || "vibha-prints-website",
+      });
+    } catch (emailError) {
+      console.error("Lead email failed:", emailError.message);
+    }
+
+    return res.json({ success: true, ok: true, message: "Form submitted successfully" });
+  } catch (error) {
+    console.error("Create lead failed:", error);
+    return res.json({ success: true, ok: true, message: "Form captured" });
   }
 });
 
