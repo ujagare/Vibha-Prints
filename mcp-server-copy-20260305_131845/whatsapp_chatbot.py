@@ -11,6 +11,7 @@ Features:
 import os
 import json
 import logging
+import re
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -86,7 +87,8 @@ Conversation flow:
 Tone rules:
 - Natural friendly Hindi + English mix in Roman script by default.
 - Use English if the user writes clearly in English.
-- Keep every reply short for WhatsApp: 2-4 short lines.
+- Keep every reply very short like ChatGPT: 1-2 short lines by default.
+- Give a direct answer first, then ask only one useful next question if needed.
 - Do not sound like police interrogation or a menu bot.
 - Avoid repeating greetings and avoid asking the same requirement again.
 - Use previous conversation. If user already said "business card", ask finish/quantity next.
@@ -112,11 +114,36 @@ Safety:
 
 SERVICE_PATTERNS = {
     "business_cards": ["business card", "visiting card", "name card"],
+    "digital_marketing": [
+        "digital marketing",
+        "seo",
+        "google ranking",
+        "google rank",
+        "paid ads",
+        "facebook ads",
+        "instagram ads",
+        "google ads",
+        "ppc",
+        "lead generation",
+        "online marketing",
+        "email marketing",
+    ],
+    "graphic_design": [
+        "graphic design",
+        "graphics",
+        "creative design",
+        "poster design",
+        "brochure design",
+        "pamphlet design",
+        "company profile",
+        "catalog design",
+        "flyer design",
+    ],
     "social_media": ["social media", "instagram", "facebook", "post", "reel", "creative"],
     "printing": ["print", "printing", "banner", "flex", "vinyl", "sticker", "brochure", "pamphlet"],
     "logo": ["logo", "brand identity", "branding"],
     "packaging": ["packaging", "package", "label", "box", "hangtag"],
-    "website": ["website", "web", "ecommerce", "landing page", "seo"],
+    "website": ["website", "web", "ecommerce", "landing page", "web development", "web design"],
 }
 
 HIGH_INTENT_KEYWORDS = [
@@ -139,6 +166,25 @@ HIGH_INTENT_KEYWORDS = [
 ]
 
 
+def normalize_conversation_id(phone_number: str) -> str:
+    """Create a stable, filesystem-safe conversation key."""
+    value = (phone_number or "").strip()
+    if not value:
+        return "unknown"
+    if value.endswith("@c.us") or value.endswith("@g.us"):
+        return re.sub(r"[^A-Za-z0-9@._-]", "_", value)
+    digits = "".join(ch for ch in value if ch.isdigit())
+    if digits and len(digits) >= 8:
+        if not digits.startswith("91"):
+            digits = "91" + digits
+        return f"{digits}@c.us"
+    return re.sub(r"[^A-Za-z0-9@._-]", "_", value)[:120] or "unknown"
+
+
+def _conversation_file(phone_number: str) -> Path:
+    return CONVERSATIONS_DIR / f"{normalize_conversation_id(phone_number)}.json"
+
+
 def _detect_service_intent(text: str) -> str:
     low = (text or "").lower()
     for service, patterns in SERVICE_PATTERNS.items():
@@ -158,6 +204,70 @@ def _detect_previous_service(conversation_history: List[Dict]) -> str:
 def _is_high_intent(message: str) -> bool:
     low = (message or "").lower()
     return any(keyword in low for keyword in HIGH_INTENT_KEYWORDS)
+
+
+def _combined_text(user_message: str, conversation_history: Optional[List[Dict]]) -> str:
+    parts = [
+        msg.get("content", "")
+        for msg in (conversation_history or [])
+        if msg.get("role") == "user"
+    ]
+    parts.append(user_message or "")
+    return "\n".join(parts).lower()
+
+
+def _extract_known_details(user_message: str, conversation_history: Optional[List[Dict]]) -> Dict[str, str]:
+    text = _combined_text(user_message, conversation_history)
+    service = _detect_service_intent(text)
+
+    quantity_match = re.search(
+        r"\b([1-9]\d{1,5})\s*(pcs|pieces|card|cards|copy|copies|print|prints)?\b",
+        text,
+    )
+    quantity = quantity_match.group(1) if quantity_match else ""
+
+    design_status = ""
+    if any(marker in text for marker in ["design ready", "artwork ready", "file ready", "cdr ready", "pdf ready"]):
+        design_status = "ready"
+    elif any(marker in text for marker in ["design banana", "design bhi", "need design", "create design"]):
+        design_status = "needed"
+
+    finish = ""
+    for option in ["matte", "soft-touch", "soft touch", "glossy", "lamination", "laminated"]:
+        if option in text:
+            finish = option
+            break
+
+    city = ""
+    city_match = re.search(r"\b(?:in|at|city|delivery)\s+([a-z][a-z\s]{2,25})\b", text)
+    if city_match:
+        city = city_match.group(1).strip()
+
+    deadline = ""
+    if any(marker in text for marker in ["today", "aaj", "tomorrow", "kal", "urgent", "asap"]):
+        deadline = "urgent"
+    elif re.search(r"\b\d{1,2}\s*(day|days|din)\b", text):
+        deadline = "mentioned"
+
+    return {
+        "service": service,
+        "quantity": quantity,
+        "design_status": design_status,
+        "finish": finish,
+        "city": city,
+        "deadline": deadline,
+    }
+
+
+def _known_details_prompt(details: Dict[str, str]) -> str:
+    known = [f"{key}={value}" for key, value in details.items() if value]
+    if not known:
+        return "Known customer details: none yet. Reply in 1-2 short lines and ask only one next question."
+    return (
+        "Known customer details from this conversation: "
+        + ", ".join(known)
+        + ". Do not ask again for details already known. Reply in 1-2 short lines and ask only the next missing detail."
+    )
 
 
 def _notify_admin_for_hot_lead(phone_number: str, user_name: str, message: str, service: str) -> bool:
@@ -194,47 +304,79 @@ def _notify_admin_for_hot_lead(phone_number: str, user_name: str, message: str, 
 
 def _rule_based_reply(user_message: str, conversation_history: Optional[List[Dict]] = None) -> str:
     """Useful fallback when AI providers are unavailable."""
-    text = (user_message or "").lower()
     conversation_history = conversation_history or []
-    service = _detect_service_intent(user_message) or _detect_previous_service(conversation_history)
+    details = _extract_known_details(user_message, conversation_history)
+    service = details.get("service") or _detect_previous_service(conversation_history)
     high_intent = _is_high_intent(user_message)
 
     if service == "business_cards":
         if high_intent:
             return (
-                "Business card printing ke liye team priority check kar sakti hai.\n"
-                "Matte ya soft-touch finish premium look deti hai.\n"
-                "Aap quantity, city aur deadline share kar dijiye."
+                "Haan, business cards priority me ho sakte hain.\n"
+                "City aur deadline bata dijiye."
+            )
+        if not details.get("quantity"):
+            return (
+                "Haan, business cards ban jayenge.\n"
+                "Approx quantity kitni chahiye?"
+            )
+        if not details.get("design_status"):
+            return (
+                f"Samajh gaya, {details['quantity']} cards note kar liye.\n"
+                "Design ready hai ya design bhi banana hai?"
+            )
+        if not details.get("finish"):
+            return (
+                "Perfect. Finish kaunsi chahiye: matte, glossy ya soft-touch?"
             )
         return (
-            "Business cards ke liye matte aur soft-touch finishes kaafi premium lagti hain.\n"
-            "Aapko approx kitni quantity chahiye?"
+            "Great, basic details mil gaye.\n"
+            "City aur deadline bata dijiye."
         )
     if service == "social_media":
         return (
-            "Instagram aur Facebook ke liye monthly post packages available hain.\n"
-            "Aap kis business category ke liye posts chahte hain?"
+            "Haan, Instagram/Facebook creatives aur monthly posts ho sakte hain.\n"
+            "Business category kya hai?"
+        )
+    if service == "digital_marketing":
+        return (
+            "Digital marketing me SEO, ads aur lead generation cover ho sakta hai.\n"
+            "Goal kya hai: ranking ya leads?"
+        )
+    if service == "graphic_design":
+        return (
+            "Haan, brochure, poster, company profile aur social media designs ban sakte hain.\n"
+            "Kaunsa design chahiye?"
         )
     if service == "packaging":
         return (
-            "Packaging/labels ke liye product type aur quantity se best material suggest hota hai.\n"
-            "Aap product category aur approx quantity share kar dijiye."
+            "Haan, label aur packaging design/printing ho sakti hai.\n"
+            "Product type kya hai?"
         )
     if service == "printing":
         return (
-            "Sure, printing ke liye help kar denge.\n"
-            "Aap item aur approx quantity share kar dijiye.\n"
-            "Mockup/proof preview bhi printing se pehle share ho sakta hai."
+            "Haan, printing ke liye help kar denge.\n"
+            "Item aur quantity bata dijiye."
         )
     if service == "logo":
+        if any(marker in _combined_text(user_message, conversation_history) for marker in ["startup", "business", "company", "brand"]):
+            return (
+                "Haan, logo design ho jayega.\n"
+                "Style modern, premium ya minimal chahiye?"
+            )
         return (
-            "Logo design ke liye hum brand style ke hisaab se concepts bana sakte hain.\n"
-            "Aapka business type kya hai?"
+            "Haan, logo design ke concepts bana sakte hain.\n"
+            "Business type kya hai?"
         )
     if service == "website":
+        if "ecommerce" in _combined_text(user_message, conversation_history):
+            return (
+                "Haan, ecommerce website with cart/payment/admin panel ho sakti hai.\n"
+                "Approx products kitne hain?"
+            )
         return (
-            "Website/digital work ke liye suitable package business goal par depend karta hai.\n"
-            "Aap new website chahte hain ya redesign?"
+            "Haan, business website, landing page ya redesign ho sakta hai.\n"
+            "New website chahiye ya redesign?"
         )
     return (
         "Sure, main guide kar deta hoon.\n"
@@ -244,13 +386,13 @@ def _rule_based_reply(user_message: str, conversation_history: Optional[List[Dic
 
 def load_conversation(phone_number: str) -> List[Dict]:
     """Load conversation history for a phone number"""
-    conv_file = CONVERSATIONS_DIR / f"{phone_number}.json"
+    conv_file = _conversation_file(phone_number)
     
     if not conv_file.exists():
         return []
     
     try:
-        with open(conv_file, 'r') as f:
+        with open(conv_file, 'r', encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
         logger.error(f"Error loading conversation: {e}")
@@ -259,11 +401,11 @@ def load_conversation(phone_number: str) -> List[Dict]:
 
 def save_conversation(phone_number: str, messages: List[Dict]):
     """Save conversation history"""
-    conv_file = CONVERSATIONS_DIR / f"{phone_number}.json"
+    conv_file = _conversation_file(phone_number)
     
     try:
-        with open(conv_file, 'w') as f:
-            json.dump(messages, f, indent=2)
+        with open(conv_file, 'w', encoding="utf-8") as f:
+            json.dump(messages, f, indent=2, ensure_ascii=False)
     except Exception as e:
         logger.error(f"Error saving conversation: {e}")
 
@@ -301,25 +443,29 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
     logger.info(f"📱 Processing WhatsApp message from {phone_number}")
     logger.info(f"   Message: {user_message}")
     
+    conversation_id = normalize_conversation_id(phone_number)
+
     # Load conversation history
-    conversation_history = load_conversation(phone_number)
-    service_intent = _detect_service_intent(user_message) or _detect_previous_service(conversation_history)
+    conversation_history = load_conversation(conversation_id)
+    known_details = _extract_known_details(user_message, conversation_history)
+    service_intent = known_details.get("service") or _detect_previous_service(conversation_history)
     is_high_intent = _is_high_intent(user_message)
     admin_alert_sent = False
     if is_high_intent:
         admin_alert_sent = _notify_admin_for_hot_lead(
-            phone_number,
+            conversation_id,
             user_name,
             user_message,
             service_intent,
         )
     
     # Add user message to history
-    add_message(phone_number, "user", user_message)
+    add_message(conversation_id, "user", user_message)
     
     # Prepare messages for AI
     messages = [
-        {"role": "system", "content": SYSTEM_PROMPT}
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": _known_details_prompt(known_details)}
     ]
     
     # Add conversation history (last 10 messages)
@@ -364,18 +510,19 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
             ai_response = _rule_based_reply(user_message, conversation_history)
         
         # Add AI response to history
-        add_message(phone_number, "assistant", ai_response)
+        add_message(conversation_id, "assistant", ai_response)
         
         logger.info(f"✅ Response generated: {ai_response[:50]}...")
         
         return {
             "success": True,
             "response": ai_response,
-            "phone": phone_number,
+            "phone": conversation_id,
             "name": user_name,
             "timestamp": datetime.now().isoformat(),
-            "conversation_length": len(load_conversation(phone_number)),
+            "conversation_length": len(load_conversation(conversation_id)),
             "service_intent": service_intent,
+            "known_details": known_details,
             "lead_priority": "hot" if is_high_intent else "normal",
             "human_handoff_recommended": is_high_intent,
             "admin_alert_sent": admin_alert_sent,
@@ -384,14 +531,15 @@ def get_ai_response(user_message: str, phone_number: str, user_name: str = "") -
     except Exception as e:
         logger.error(f"❌ Error generating response: {e}")
         fallback = _rule_based_reply(user_message, conversation_history)
-        add_message(phone_number, "assistant", fallback)
+        add_message(conversation_id, "assistant", fallback)
         
         return {
             "success": False,
             "error": str(e),
             "response": fallback,
-            "phone": phone_number,
+            "phone": conversation_id,
             "service_intent": service_intent,
+            "known_details": known_details,
             "lead_priority": "hot" if is_high_intent else "normal",
             "human_handoff_recommended": is_high_intent,
             "admin_alert_sent": admin_alert_sent,
@@ -431,7 +579,7 @@ def get_conversation_history(phone_number: str, limit: int = 20) -> List[Dict]:
 
 def clear_conversation(phone_number: str) -> bool:
     """Clear conversation history"""
-    conv_file = CONVERSATIONS_DIR / f"{phone_number}.json"
+    conv_file = _conversation_file(phone_number)
     
     try:
         if conv_file.exists():

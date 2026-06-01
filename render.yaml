@@ -34,3 +34,13 @@ services:
         value: Vibha Prints <info@vibhaprints.com>
       - key: INBOUND_EMAIL_SEARCH_DAYS
         value: "7"
+      - key: WHATSAPP_AUTO_REPLY_ENABLED
+        value: "true"
+      - key: WHATSAPP_REPLY_MODE
+        value: auto
+      - key: WHATSAPP_WEBSITE_AUTO_REPLY_ONLY
+        value: "false"
+      - key: WHATSAPP_WEBSITE_SESSION_TTL_SECONDS
+        value: "86400"
+      - key: WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS
+        value: "86400"

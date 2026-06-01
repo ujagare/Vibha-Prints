@@ -17,6 +17,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from typing import Dict, Optional
 from urllib.parse import quote
+from uuid import uuid4
 
 load_dotenv(Path(__file__).parent / ".env")
 load_dotenv(Path(__file__).parent.parent / ".env")
@@ -29,6 +30,7 @@ logger = logging.getLogger("whatsapp_automation")
 WHATSAPP_PHONE = os.environ.get("WHATSAPP_PHONE_NUMBER", "8624948046")
 WHATSAPP_API_URL = os.environ.get("WHATSAPP_API_URL", "https://api.whatsapp.com/send")
 WHATSAPP_ENABLED = os.environ.get("WHATSAPP_ENABLED", "true").lower() in ("true", "1", "yes")
+WHATSAPP_DRY_RUN = os.environ.get("WHATSAPP_DRY_RUN", "false").lower() in ("true", "1", "yes")
 GREEN_API_INSTANCE_ID = os.environ.get("GREEN_API_INSTANCE_ID", "").strip()
 GREEN_API_TOKEN = os.environ.get("GREEN_API_TOKEN", "").strip()
 GREEN_API_BASE_URL = os.environ.get("GREEN_API_BASE_URL", "https://api.green-api.com").rstrip("/")
@@ -80,6 +82,44 @@ def _green_api_configured() -> bool:
     return bool(GREEN_API_INSTANCE_ID and GREEN_API_TOKEN and GREEN_API_BASE_URL)
 
 
+class GreenAPIError(RuntimeError):
+    def __init__(self, status_code: int, payload: Dict):
+        self.status_code = status_code
+        self.payload = payload
+        super().__init__(f"Green API send failed: {status_code} {payload}")
+
+
+def _build_whatsapp_link(phone_number: str, message: str) -> str:
+    encoded_message = quote(message)
+    return f"{WHATSAPP_API_URL}?phone={phone_number.replace('+', '')}&text={encoded_message}"
+
+
+def _record_whatsapp_message(
+    message_id: str,
+    display_phone: str,
+    chat_id: str,
+    message: str,
+    message_type: str,
+    whatsapp_link: str,
+    status: str,
+    green_response: Optional[Dict] = None,
+    error: str = "",
+):
+    log = load_whatsapp_log()
+    log[message_id] = {
+        "phone": display_phone,
+        "chat_id": chat_id,
+        "message": message,
+        "type": message_type,
+        "sent_at": datetime.now().isoformat(),
+        "link": whatsapp_link,
+        "status": status,
+        "green_api": green_response,
+        "error": error,
+    }
+    save_whatsapp_log(log)
+
+
 def _send_green_api_message(chat_id: str, message: str) -> Dict:
     url = (
         f"{GREEN_API_BASE_URL}/waInstance{GREEN_API_INSTANCE_ID}"
@@ -96,8 +136,19 @@ def _send_green_api_message(chat_id: str, message: str) -> Dict:
     except Exception:
         payload = {"raw": response.text}
     if response.status_code >= 400:
-        raise RuntimeError(f"Green API send failed: {response.status_code} {payload}")
+        raise GreenAPIError(response.status_code, payload)
     return payload
+
+
+def _extract_green_api_status(payload: Dict) -> str:
+    if not isinstance(payload, dict):
+        return ""
+    statuses = []
+    for key in ("invokeStatus", "correspondentsStatus"):
+        status = (payload.get(key) or {}).get("status")
+        if status:
+            statuses.append(str(status))
+    return ", ".join(statuses)
 
 
 def send_whatsapp_message(phone_number: str, message: str, message_type: str = "text") -> Dict:
@@ -121,7 +172,15 @@ def send_whatsapp_message(phone_number: str, message: str, message_type: str = "
         }
     
     chat_id = _normalize_chat_id(phone_number)
+    if not chat_id or chat_id == "@c.us":
+        return {
+            "success": False,
+            "error": "valid phone number required"
+        }
+
     display_phone = chat_id.replace("@c.us", "")
+    whatsapp_link = _build_whatsapp_link(display_phone, message)
+    message_id = f"WA-{datetime.now().strftime('%Y%m%d%H%M%S%f')}-{uuid4().hex[:6]}"
     
     logger.info(f"📱 Sending WhatsApp message to {phone_number}")
     logger.info(f"   Type: {message_type}")
@@ -130,28 +189,22 @@ def send_whatsapp_message(phone_number: str, message: str, message_type: str = "
     try:
         green_response = None
         delivery_status = "pending"
-        if _green_api_configured():
+        if WHATSAPP_DRY_RUN:
+            delivery_status = "dry_run"
+        elif _green_api_configured():
             green_response = _send_green_api_message(chat_id, message)
             delivery_status = "sent"
 
-        # Create WhatsApp link as a fallback/debug value
-        encoded_message = quote(message)
-        whatsapp_link = f"{WHATSAPP_API_URL}?phone={display_phone}&text={encoded_message}"
-        
-        # Log message
-        log = load_whatsapp_log()
-        message_id = f"WA-{int(datetime.now().timestamp())}"
-        log[message_id] = {
-            "phone": display_phone,
-            "chat_id": chat_id,
-            "message": message,
-            "type": message_type,
-            "sent_at": datetime.now().isoformat(),
-            "link": whatsapp_link,
-            "status": delivery_status,
-            "green_api": green_response
-        }
-        save_whatsapp_log(log)
+        _record_whatsapp_message(
+            message_id,
+            display_phone,
+            chat_id,
+            message,
+            message_type,
+            whatsapp_link,
+            delivery_status,
+            green_response=green_response,
+        )
         
         logger.info(f"✅ WhatsApp message prepared: {message_id}")
         logger.info(f"   Link: {whatsapp_link}")
@@ -168,11 +221,58 @@ def send_whatsapp_message(phone_number: str, message: str, message_type: str = "
             "green_api": green_response
         }
     
-    except Exception as e:
-        logger.error(f"❌ Error sending WhatsApp message: {e}")
+    except GreenAPIError as e:
+        logger.error("Green API rejected WhatsApp message: %s", e)
+        green_status = _extract_green_api_status(e.payload)
+        _record_whatsapp_message(
+            message_id,
+            display_phone,
+            chat_id,
+            message,
+            message_type,
+            whatsapp_link,
+            "failed",
+            green_response=e.payload,
+            error=str(e),
+        )
         return {
             "success": False,
-            "error": str(e)
+            "error": str(e),
+            "message_id": message_id,
+            "phone": display_phone,
+            "chat_id": chat_id,
+            "link": whatsapp_link,
+            "message": message,
+            "type": message_type,
+            "delivery": "failed",
+            "fallback_available": True,
+            "green_api": e.payload,
+            "green_api_status": green_status,
+            "quota_exceeded": "QUOTE" in green_status.upper() or e.status_code == 466,
+        }
+
+    except Exception as e:
+        logger.error("Error sending WhatsApp message: %s", e)
+        _record_whatsapp_message(
+            message_id,
+            display_phone,
+            chat_id,
+            message,
+            message_type,
+            whatsapp_link,
+            "failed",
+            error=str(e),
+        )
+        return {
+            "success": False,
+            "error": str(e),
+            "message_id": message_id,
+            "phone": display_phone,
+            "chat_id": chat_id,
+            "link": whatsapp_link,
+            "message": message,
+            "type": message_type,
+            "delivery": "failed"
         }
 
 
@@ -470,13 +570,12 @@ def get_whatsapp_link(phone_number: str, message: str) -> str:
         WhatsApp link
     """
     
-    if not phone_number.startswith("+"):
-        if not phone_number.startswith("91"):
-            phone_number = "91" + phone_number
-        phone_number = "+" + phone_number
-    
-    encoded_message = quote(message)
-    return f"{WHATSAPP_API_URL}?phone={phone_number.replace('+', '')}&text={encoded_message}"
+    chat_id = _normalize_chat_id(phone_number)
+    display_phone = chat_id.replace("@c.us", "") if chat_id else phone_number
+    if not display_phone.startswith("+") and not display_phone.endswith("@g.us"):
+        display_phone = "+" + display_phone
+
+    return _build_whatsapp_link(display_phone, message)
 
 
 def get_whatsapp_history(limit: int = 100) -> list:

@@ -6,6 +6,20 @@ const WHATSAPP_CHAT_API_URL =
   import.meta.env.VITE_WHATSAPP_CHAT_API_URL ||
   "https://vibha-art-backend.onrender.com/api/whatsapp/chat";
 
+const CHAT_STORAGE_KEY = "vibhaWhatsAppChatMessages";
+const SESSION_STORAGE_KEY = "vibhaWhatsAppChatSessionId";
+const getWebsiteChatSessionId = () => {
+  let sessionId = localStorage.getItem(SESSION_STORAGE_KEY);
+  if (!sessionId) {
+    const randomId =
+      window.crypto?.randomUUID?.() ||
+      `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    sessionId = `wa-web-${randomId}`;
+    localStorage.setItem(SESSION_STORAGE_KEY, sessionId);
+  }
+  return sessionId;
+};
+
 const WhatsAppChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -25,7 +39,27 @@ const WhatsAppChatbot = () => {
   };
 
   useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CHAT_STORAGE_KEY) || "[]");
+      if (Array.isArray(saved) && saved.length > 0) {
+        setMessages(
+          saved.map((message) => ({
+            ...message,
+            timestamp: message.timestamp ? new Date(message.timestamp) : new Date(),
+          })),
+        );
+      }
+    } catch {
+      localStorage.removeItem(CHAT_STORAGE_KEY);
+    }
+  }, []);
+
+  useEffect(() => {
     scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
   }, [messages]);
 
   const handleSendMessage = async (e) => {
@@ -45,8 +79,7 @@ const WhatsAppChatbot = () => {
     setIsLoading(true);
 
     try {
-      // Get phone number from localStorage or use default
-      const phoneNumber = localStorage.getItem("userPhone") || "9876543210";
+      const phoneNumber = localStorage.getItem("userPhone") || getWebsiteChatSessionId();
 
       // Call WhatsApp chatbot API
       const response = await fetch(WHATSAPP_CHAT_API_URL, {
@@ -56,6 +89,7 @@ const WhatsAppChatbot = () => {
         },
         body: JSON.stringify({
           phone: phoneNumber,
+          session_id: phoneNumber,
           message: inputValue,
           name: localStorage.getItem("userName") || "Customer",
           source: "vibha-prints-website",

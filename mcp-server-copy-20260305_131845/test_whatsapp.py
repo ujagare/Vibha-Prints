@@ -13,6 +13,11 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
 load_dotenv(Path(__file__).parent.parent / ".env")
 
+# Keep tests from consuming Green API quota unless explicitly requested.
+os.environ.setdefault("WHATSAPP_DRY_RUN", "true")
+if os.environ.get("WHATSAPP_TEST_SEND_REAL", "").lower() in ("true", "1", "yes"):
+    os.environ["WHATSAPP_DRY_RUN"] = "false"
+
 from whatsapp_automation import (
     send_whatsapp_message,
     send_lead_notification,
