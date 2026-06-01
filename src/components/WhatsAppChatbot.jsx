@@ -54,6 +54,8 @@ const WhatsAppChatbot = () => {
           phone: phoneNumber,
           message: inputValue,
           name: localStorage.getItem("userName") || "Customer",
+          source: "vibha-prints-website",
+          mode: "website_chat",
         }),
       });
 

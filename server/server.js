@@ -94,7 +94,70 @@ app.use(cors());
 app.use(express.json());
 const server = http.createServer(app);
 
+const getEmailProvider = () =>
+  String(process.env.EMAIL_PROVIDER || "smtp").trim().toLowerCase();
+
+const buildResendAttachment = (attachment) => {
+  if (!attachment?.path) return null;
+
+  return {
+    filename: attachment.filename || path.basename(attachment.path),
+    content: fs.readFileSync(attachment.path).toString("base64"),
+  };
+};
+
+const sendMailWithResend = async ({
+  from,
+  to,
+  subject,
+  text,
+  html,
+  replyTo,
+  attachments = [],
+}) => {
+  const apiKey = process.env.RESEND_API_KEY || "";
+  const apiUrl = process.env.RESEND_API_URL || "https://api.resend.com/emails";
+
+  if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
+
+  const payload = {
+    from: process.env.RESEND_FROM || from,
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    text,
+  };
+
+  if (html) payload.html = html;
+  if (replyTo) payload.reply_to = replyTo;
+
+  const resendAttachments = attachments
+    .map(buildResendAttachment)
+    .filter(Boolean);
+  if (resendAttachments.length) payload.attachments = resendAttachments;
+
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data?.message || data?.error || "Resend email failed");
+  }
+
+  return { messageId: data?.id || "" };
+};
+
 const createMailTransporter = () => {
+  if (getEmailProvider() === "resend") {
+    if (!process.env.RESEND_API_KEY) return null;
+    return { sendMail: sendMailWithResend };
+  }
+
   const host = process.env.ZOHO_SMTP_HOST;
   const port = Number(process.env.ZOHO_SMTP_PORT || 587);
   const user = process.env.ZOHO_SMTP_USER;
@@ -111,7 +174,10 @@ const createMailTransporter = () => {
 };
 
 const getMailIdentity = () => ({
-  from: process.env.MAIL_FROM || process.env.ZOHO_SMTP_USER,
+  from:
+    process.env.RESEND_FROM ||
+    process.env.MAIL_FROM ||
+    process.env.ZOHO_SMTP_USER,
   adminTo: process.env.MAIL_TO || process.env.ZOHO_SMTP_USER,
 });
 
@@ -154,7 +220,7 @@ const textFromLines = (lines) => lines.filter(Boolean).join("\n");
 
 const sendContactAutomationEmails = async ({ name, email, mobile, message, source }) => {
   const transporter = createMailTransporter();
-  if (!transporter) throw new Error("SMTP is not configured");
+  if (!transporter) throw new Error("Email provider is not configured");
 
   const { from, adminTo } = getMailIdentity();
   const adminText = textFromLines([
@@ -220,7 +286,7 @@ const sendBrochureAutomationEmails = async ({
   source,
 }) => {
   const transporter = createMailTransporter();
-  if (!transporter) throw new Error("SMTP is not configured");
+  if (!transporter) throw new Error("Email provider is not configured");
 
   const { from, adminTo } = getMailIdentity();
   const brochurePath = process.env.BROCHURE_PATH || "";
@@ -298,6 +364,105 @@ const normalizeIndianChatId = (phoneOrChatId) => {
   return `${withCountryCode}@c.us`;
 };
 
+const whatsappWebsiteSessions = new Map();
+const whatsappWebsiteAutoReplyOnly = !["0", "false", "no"].includes(
+  String(process.env.WHATSAPP_WEBSITE_AUTO_REPLY_ONLY || "true")
+    .trim()
+    .toLowerCase(),
+);
+const whatsappWebsiteSessionTtlSeconds = Number(
+  process.env.WHATSAPP_WEBSITE_SESSION_TTL_SECONDS || 86400,
+);
+const whatsappWebsiteSessionTtlMs = Math.max(
+  300,
+  Number.isFinite(whatsappWebsiteSessionTtlSeconds)
+    ? whatsappWebsiteSessionTtlSeconds
+    : 86400,
+) * 1000;
+const whatsappManualTakeoverTtlSeconds = Number(
+  process.env.WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS ||
+    process.env.WHATSAPP_WEBSITE_SESSION_TTL_SECONDS ||
+    86400,
+);
+const whatsappManualTakeoverTtlMs = Math.max(
+  300,
+  Number.isFinite(whatsappManualTakeoverTtlSeconds)
+    ? whatsappManualTakeoverTtlSeconds
+    : 86400,
+) * 1000;
+const whatsappManualPausedSessions = new Map();
+
+const pruneWhatsAppSessionMap = (sessions, ttlMs) => {
+  const now = Date.now();
+  for (const [key, seenAt] of sessions.entries()) {
+    if (now - seenAt > ttlMs) sessions.delete(key);
+  }
+};
+
+const rememberWebsiteWhatsAppSession = (phoneOrChatId) => {
+  const chatId = normalizeIndianChatId(phoneOrChatId);
+  if (chatId) whatsappWebsiteSessions.set(chatId, Date.now());
+};
+
+const forgetWebsiteWhatsAppSession = (phoneOrChatId) => {
+  const chatId = normalizeIndianChatId(phoneOrChatId);
+  if (chatId) whatsappWebsiteSessions.delete(chatId);
+};
+
+const hasRecentWebsiteWhatsAppSession = (chatId) => {
+  pruneWhatsAppSessionMap(whatsappWebsiteSessions, whatsappWebsiteSessionTtlMs);
+
+  const seenAt = whatsappWebsiteSessions.get(chatId);
+  return Boolean(seenAt && Date.now() - seenAt <= whatsappWebsiteSessionTtlMs);
+};
+
+const pauseWhatsAppAutoReplyForManualTakeover = (phoneOrChatId) => {
+  const chatId = normalizeIndianChatId(phoneOrChatId);
+  if (!chatId) return "";
+  whatsappManualPausedSessions.set(chatId, Date.now());
+  forgetWebsiteWhatsAppSession(chatId);
+  return chatId;
+};
+
+const isWhatsAppAutoReplyPaused = (phoneOrChatId) => {
+  const chatId = normalizeIndianChatId(phoneOrChatId);
+  if (!chatId) return false;
+  pruneWhatsAppSessionMap(whatsappManualPausedSessions, whatsappManualTakeoverTtlMs);
+
+  const pausedAt = whatsappManualPausedSessions.get(chatId);
+  return Boolean(pausedAt && Date.now() - pausedAt <= whatsappManualTakeoverTtlMs);
+};
+
+const isWebsiteOriginWhatsAppMessage = (payload, message) => {
+  const senderData = payload?.senderData || {};
+  const messageData = payload?.messageData || {};
+  const haystack = [
+    payload?.source,
+    payload?.origin,
+    payload?.mode,
+    payload?.referrer,
+    payload?.utm_source,
+    senderData.source,
+    senderData.origin,
+    messageData.source,
+    message,
+  ]
+    .map((value) => String(value || "").toLowerCase())
+    .join(" ");
+
+  return [
+    "website",
+    "vibha-prints-website",
+    "vibhaprints.com",
+    "vibha prints website",
+    "vibha art website",
+    "website chat",
+    "sent from vibha art website",
+    "contacting you from your website",
+    "from your website",
+  ].some((marker) => haystack.includes(marker));
+};
+
 const getGreenApiConfig = () => {
   const instanceId = process.env.GREEN_API_INSTANCE_ID || "";
   const token = process.env.GREEN_API_TOKEN || process.env.GREEN_API_TOKEN_INSTANCE || "";
@@ -351,6 +516,20 @@ const extractGreenApiText = (payload) => {
   }
 
   return "";
+};
+
+const extractGreenApiChatId = (payload) => (
+  payload?.senderData?.chatId ||
+  payload?.chatId ||
+  payload?.messageData?.chatId ||
+  payload?.recipientData?.chatId ||
+  ""
+);
+
+const isManualOutgoingGreenApiWebhook = (payload) => {
+  const typeWebhook = String(payload?.typeWebhook || "");
+  if (!typeWebhook || typeWebhook.toLowerCase().includes("api")) return false;
+  return typeWebhook === "outgoingMessageReceived";
 };
 
 const generateGeminiReply = async ({ message, senderName }) => {
@@ -431,11 +610,22 @@ const handleGreenApiAutoReply = async (payload) => {
     return;
   }
 
+  if (isManualOutgoingGreenApiWebhook(payload)) {
+    const pausedChatId = pauseWhatsAppAutoReplyForManualTakeover(extractGreenApiChatId(payload));
+    if (pausedChatId) {
+      console.log(
+        "WhatsApp auto-reply paused: manual takeover",
+        JSON.stringify({ chatId: pausedChatId }),
+      );
+    }
+    return;
+  }
+
   if (payload?.typeWebhook !== "incomingMessageReceived") {
     return;
   }
 
-  const chatId = payload?.senderData?.chatId || "";
+  const chatId = extractGreenApiChatId(payload);
   const senderName =
     payload?.senderData?.senderContactName ||
     payload?.senderData?.senderName ||
@@ -446,6 +636,30 @@ const handleGreenApiAutoReply = async (payload) => {
   if (!chatId || !message) {
     console.log("WhatsApp auto-reply skipped: missing chatId or text message");
     return;
+  }
+
+  if (isWhatsAppAutoReplyPaused(chatId)) {
+    console.log(
+      "WhatsApp auto-reply skipped: manual takeover active",
+      JSON.stringify({ chatId, inbound: message }),
+    );
+    return;
+  }
+
+  const isWebsiteOrigin =
+    hasRecentWebsiteWhatsAppSession(chatId) ||
+    isWebsiteOriginWhatsAppMessage(payload, message);
+
+  if (whatsappWebsiteAutoReplyOnly && !isWebsiteOrigin) {
+    console.log(
+      "WhatsApp auto-reply skipped: not website-origin",
+      JSON.stringify({ chatId, inbound: message }),
+    );
+    return;
+  }
+
+  if (isWebsiteOrigin) {
+    rememberWebsiteWhatsAppSession(chatId);
   }
 
   const reply = await generateGeminiReply({ message, senderName });

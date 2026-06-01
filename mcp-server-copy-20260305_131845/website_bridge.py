@@ -97,6 +97,31 @@ INBOUND_EMAIL_POLL_SECONDS = max(60, int(os.environ.get("INBOUND_EMAIL_POLL_SECO
 GREEN_API_PROCESSED_MESSAGES = set()
 
 
+def _positive_int_env(name: str, default: int, minimum: int) -> int:
+    try:
+        return max(minimum, int(os.environ.get(name, str(default))))
+    except Exception:
+        return max(minimum, default)
+
+
+WEBSITE_WHATSAPP_SESSIONS: dict[str, float] = {}
+MANUAL_PAUSED_WHATSAPP_SESSIONS: dict[str, float] = {}
+WHATSAPP_WEBSITE_AUTO_REPLY_ONLY = os.environ.get(
+    "WHATSAPP_WEBSITE_AUTO_REPLY_ONLY",
+    "true",
+).strip().lower() in {"1", "true", "yes"}
+WHATSAPP_WEBSITE_SESSION_TTL_SECONDS = _positive_int_env(
+    "WHATSAPP_WEBSITE_SESSION_TTL_SECONDS",
+    86400,
+    300,
+)
+WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS = _positive_int_env(
+    "WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS",
+    WHATSAPP_WEBSITE_SESSION_TTL_SECONDS,
+    300,
+)
+
+
 @app.after_request
 def add_cors_headers(response):
     request_origin = request.headers.get("Origin", "")
@@ -124,6 +149,104 @@ def _normalize_mcp_output(result: Dict[str, Any]) -> Dict[str, Any]:
 
 def _json_error(message: str, status_code: int):
     return jsonify({"success": False, "error": message}), status_code
+
+
+def _normalize_website_chat_id(value: str) -> str:
+    value = (value or "").strip()
+    if value.endswith("@c.us") or value.endswith("@g.us"):
+        return value
+    digits = "".join(ch for ch in value if ch.isdigit())
+    if digits and not digits.startswith("91"):
+        digits = "91" + digits
+    return f"{digits}@c.us" if digits else ""
+
+
+def _remember_website_whatsapp_session(phone_or_chat_id: str):
+    chat_id = _normalize_website_chat_id(phone_or_chat_id)
+    if chat_id:
+        WEBSITE_WHATSAPP_SESSIONS[chat_id] = time.time()
+
+
+def _forget_website_whatsapp_session(phone_or_chat_id: str):
+    chat_id = _normalize_website_chat_id(phone_or_chat_id)
+    if chat_id:
+        WEBSITE_WHATSAPP_SESSIONS.pop(chat_id, None)
+
+
+def _prune_whatsapp_sessions(sessions: dict[str, float], ttl_seconds: int):
+    now = time.time()
+    expired = [
+        key for key, seen_at in sessions.items()
+        if now - seen_at > ttl_seconds
+    ]
+    for key in expired:
+        sessions.pop(key, None)
+
+
+def _has_recent_website_whatsapp_session(chat_id: str) -> bool:
+    if not chat_id:
+        return False
+
+    _prune_whatsapp_sessions(
+        WEBSITE_WHATSAPP_SESSIONS,
+        WHATSAPP_WEBSITE_SESSION_TTL_SECONDS,
+    )
+
+    seen_at = WEBSITE_WHATSAPP_SESSIONS.get(chat_id)
+    return bool(seen_at and time.time() - seen_at <= WHATSAPP_WEBSITE_SESSION_TTL_SECONDS)
+
+
+def _pause_whatsapp_auto_reply_for_manual_takeover(phone_or_chat_id: str) -> str:
+    chat_id = _normalize_website_chat_id(phone_or_chat_id)
+    if not chat_id:
+        return ""
+    MANUAL_PAUSED_WHATSAPP_SESSIONS[chat_id] = time.time()
+    _forget_website_whatsapp_session(chat_id)
+    return chat_id
+
+
+def _is_whatsapp_auto_reply_paused(phone_or_chat_id: str) -> bool:
+    chat_id = _normalize_website_chat_id(phone_or_chat_id)
+    if not chat_id:
+        return False
+    _prune_whatsapp_sessions(
+        MANUAL_PAUSED_WHATSAPP_SESSIONS,
+        WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS,
+    )
+    paused_at = MANUAL_PAUSED_WHATSAPP_SESSIONS.get(chat_id)
+    return bool(paused_at and time.time() - paused_at <= WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS)
+
+
+def _is_website_origin_whatsapp_message(data: Dict[str, Any], message: str) -> bool:
+    sender_data = data.get("senderData") or {}
+    message_data = data.get("messageData") or {}
+    text = " ".join(
+        str(value or "").lower()
+        for value in [
+            data.get("source"),
+            data.get("origin"),
+            data.get("mode"),
+            data.get("referrer"),
+            data.get("utm_source"),
+            sender_data.get("source"),
+            sender_data.get("origin"),
+            message_data.get("source"),
+            message,
+        ]
+    )
+
+    website_markers = [
+        "website",
+        "vibha-prints-website",
+        "vibhaprints.com",
+        "vibha prints website",
+        "vibha art website",
+        "website chat",
+        "sent from vibha art website",
+        "contacting you from your website",
+        "from your website",
+    ]
+    return any(marker in text for marker in website_markers)
 
 
 def _parse_time_hhmm(value: str) -> tuple[int, int]:
@@ -1047,6 +1170,7 @@ def whatsapp_chat():
         phone = (data.get("phone") or "").strip()
         message = (data.get("message") or "").strip()
         name = (data.get("name") or "").strip()
+        source = (data.get("source") or "vibha-prints-website").strip()
 
         if not phone or not message:
             return jsonify({
@@ -1054,7 +1178,10 @@ def whatsapp_chat():
                 "error": "phone and message required"
             }), 400
 
+        _remember_website_whatsapp_session(phone)
         result = handle_whatsapp_message(phone, message, name)
+        if isinstance(result, dict):
+            result["source"] = source
         return jsonify(result)
     except Exception as e:
         return jsonify({
@@ -1080,8 +1207,29 @@ def _extract_green_api_text(message_data):
     return ""
 
 
+def _extract_green_api_chat_id(data):
+    sender_data = data.get("senderData") or {}
+    message_data = data.get("messageData") or {}
+    recipient_data = data.get("recipientData") or {}
+    return (
+        sender_data.get("chatId")
+        or data.get("chatId")
+        or message_data.get("chatId")
+        or recipient_data.get("chatId")
+        or ""
+    ).strip()
+
+
+def _is_manual_outgoing_green_api_webhook(data):
+    type_webhook = str(data.get("typeWebhook") or "")
+    if not type_webhook or "api" in type_webhook.lower():
+        return False
+    return type_webhook == "outgoingMessageReceived"
+
+
 @app.route("/api/green-api/webhook", methods=["POST", "OPTIONS"])
 @app.route("/api/whatsapp/green-webhook", methods=["POST", "OPTIONS"])
+@app.route("/webhook", methods=["POST", "OPTIONS"])
 def green_api_webhook():
     """Receive Green API incoming WhatsApp messages and send AI auto-replies."""
     if request.method == "OPTIONS":
@@ -1096,18 +1244,48 @@ def green_api_webhook():
     if data.get("body") and isinstance(data.get("body"), dict):
         data = data["body"]
 
+    if _is_manual_outgoing_green_api_webhook(data):
+        paused_chat_id = _pause_whatsapp_auto_reply_for_manual_takeover(
+            _extract_green_api_chat_id(data)
+        )
+        return jsonify({
+            "success": True,
+            "paused": "manual_takeover",
+            "chat_id": paused_chat_id,
+        })
+
     if data.get("typeWebhook") != "incomingMessageReceived":
         return jsonify({"success": True, "skipped": data.get("typeWebhook", "unknown")})
 
     sender_data = data.get("senderData") or {}
     message_data = data.get("messageData") or {}
-    chat_id = (sender_data.get("chatId") or "").strip()
+    chat_id = _extract_green_api_chat_id(data)
     sender_name = (sender_data.get("senderName") or "").strip()
     message = _extract_green_api_text(message_data)
     message_id = (data.get("idMessage") or message_data.get("idMessage") or "").strip()
 
     if not chat_id or not message:
         return jsonify({"success": True, "skipped": "no_chat_or_text"})
+
+    if _is_whatsapp_auto_reply_paused(chat_id):
+        return jsonify({
+            "success": True,
+            "skipped": "manual_takeover_active",
+            "chat_id": chat_id,
+        })
+
+    is_website_origin = (
+        _has_recent_website_whatsapp_session(chat_id)
+        or _is_website_origin_whatsapp_message(data, message)
+    )
+    if WHATSAPP_WEBSITE_AUTO_REPLY_ONLY and not is_website_origin:
+        return jsonify({
+            "success": True,
+            "skipped": "not_website_origin",
+            "chat_id": chat_id,
+        })
+    if is_website_origin:
+        _remember_website_whatsapp_session(chat_id)
 
     if message_id:
         dedupe_key = f"{chat_id}:{message_id}"
