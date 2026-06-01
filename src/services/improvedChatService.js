@@ -59,12 +59,20 @@ const botResponses = {
     "Namaste! Aap kis kaam ke liye help chahte hain?\nMain quote aur best option guide kar dunga.",
   ],
   services: [
-    "Hum ye services provide karte hain:\n\n- Logo Design\n- Business Cards\n- Brochures\n- Packaging Design\n- Brand Identity\n\nKaunsi service ke baare mein jaankari chahiye?",
-    "Hamari services:\n- Graphic Design\n- Printing Services\n- Branding Solutions\n- Marketing Materials\n\nKya aap kisi specific service ke baare mein poochna chahte ho?",
+    "Hum design, printing, website, branding aur digital marketing services provide karte hain.\nAap kis service ke baare mein jaankari chahte hain?",
+    "Vibha Prints mein logo/branding, business cards, brochures, packaging, website aur digital marketing support milta hai.\nKaunsi service discuss karni hai?",
   ],
   printing: [
     "Sure, printing me help kar denge 😊\nAapko business cards, brochures, banners/flex, stickers ya packaging me kya chahiye?",
     "Printing ke liye best option quantity aur finish par depend karta hai.\nAap item aur approx quantity share kar dijiye.",
+  ],
+  website: [
+    "Website design/development ke liye pages, features aur content readiness se quote decide hota hai.\nAap business website, landing page ya ecommerce chahte hain?",
+    "Website ke liye hum design, development, responsive layout aur basic SEO setup guide kar sakte hain.\nAapko kitne pages ki website chahiye?",
+  ],
+  digital_marketing: [
+    "Digital marketing ke liye goal, platform aur monthly budget se plan decide hota hai.\nAap SEO, social media ya ads mein help chahte hain?",
+    "Marketing support mein social media creatives, SEO guidance aur campaign planning kar sakte hain.\nAapka main goal leads hai ya brand awareness?",
   ],
   logo: [
     "Logo design mein hum concept se lekar final delivery tak sab karte hain. Aapka brand identity banate hain jo memorable ho. Kya aap apna logo design karana chahte ho?",
@@ -128,8 +136,6 @@ const keywords = {
     "service",
     "offer",
     "provide",
-    "design",
-    "print",
     "what do you do",
     "kya karte ho",
     "services",
@@ -143,6 +149,31 @@ const keywords = {
     "print services",
     "printing ke baare",
     "printing chahiye",
+  ],
+  website: [
+    "website",
+    "web site",
+    "web design",
+    "website design",
+    "web development",
+    "website development",
+    "site banana",
+    "site banwana",
+    "landing page",
+    "ecommerce",
+    "e-commerce",
+    "online store",
+    "web",
+  ],
+  digital_marketing: [
+    "digital marketing",
+    "seo",
+    "google ads",
+    "ads",
+    "advertising",
+    "marketing",
+    "lead generation",
+    "social media marketing",
   ],
   logo: [
     "logo",
@@ -245,6 +276,8 @@ const getRandomResponse = (responses) => {
 };
 
 const priorityCategories = [
+  "website",
+  "digital_marketing",
   "printing",
   "logo",
   "business_cards",
@@ -295,11 +328,27 @@ const shouldRejectApiResponse = (response, reply) => {
   return looksLikeAutomationReply(reply);
 };
 
+const serviceMismatchKeywords = {
+  website: ["printing ke liye", "business card", "matte", "glossy", "finish bata"],
+  digital_marketing: ["printing ke liye", "business card", "matte", "glossy"],
+  printing: ["website ke liye", "web development", "landing page", "ecommerce"],
+};
+
+const isMismatchedServiceReply = (service, reply = "") => {
+  if (!service || !serviceMismatchKeywords[service]) return false;
+  const normalizedReply = reply.toLowerCase();
+  return serviceMismatchKeywords[service].some((keyword) =>
+    normalizedReply.includes(keyword),
+  );
+};
+
 const detectServiceFromText = (text = "") => {
   const lowerText = text.toLowerCase();
   for (const category of [
     "business_cards",
     "social_media",
+    "website",
+    "digital_marketing",
     "printing",
     "logo",
     "brochures",
@@ -489,6 +538,17 @@ const callExternalChatApi = async (message) => {
 export const getBotResponse = (message) => {
   const lowerMessage = message.toLowerCase().trim();
   const currentService = detectServiceFromText(lowerMessage);
+  const matchedCategory = priorityCategories.find((category) => {
+    const categoryKeywords = keywords[category] || [];
+    return categoryKeywords.some((keyword) => lowerMessage.includes(keyword));
+  });
+
+  if (matchedCategory) {
+    const response = getRandomResponse(botResponses[matchedCategory]);
+    console.log(`Matched: ${matchedCategory}`);
+    return response;
+  }
+
   const previousService = detectPreviousServiceIntent();
 
   if (!currentService && previousService) {
@@ -498,17 +558,14 @@ export const getBotResponse = (message) => {
     if (previousService === "social_media") {
       return "Social media posts ke liye category aur monthly quantity se package decide hota hai.\nAapka business type kya hai?";
     }
+    if (previousService === "website") {
+      return "Website ke liye pages, features aur deadline share kar dijiye.\nUske basis par package guide ho jayega.";
+    }
+    if (previousService === "digital_marketing") {
+      return "Digital marketing ke liye platform, goal aur monthly budget range bata dijiye.\nUske basis par plan suggest karenge.";
+    }
     if (previousService === "printing") {
       return "Printing ke liye size, quantity aur finish bata dijiye.\nUske basis par quote guide ho jayega.";
-    }
-  }
-
-  for (const category of priorityCategories) {
-    const categoryKeywords = keywords[category] || [];
-    if (categoryKeywords.some((keyword) => lowerMessage.includes(keyword))) {
-      const response = getRandomResponse(botResponses[category]);
-      console.log(`Matched: ${category}`);
-      return response;
     }
   }
 
@@ -521,12 +578,22 @@ export const getDelayedBotResponse = async (message) => {
   return new Promise((resolve) => {
     setTimeout(
       async () => {
+        const explicitService = detectServiceFromText(message);
+        if (explicitService) {
+          resolve(getBotResponse(message));
+          return;
+        }
+
         try {
           // Try API first
           const apiReply = await callExternalChatApi(message);
           if (apiReply && apiReply.trim()) {
-            resolve(apiReply);
-            return;
+            if (isMismatchedServiceReply(explicitService, apiReply)) {
+              console.warn("Rejected mismatched service response, using local chatbot fallback");
+            } else {
+              resolve(apiReply);
+              return;
+            }
           }
         } catch (error) {
           console.warn("API failed, using local response:", error.message);
