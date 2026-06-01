@@ -70,6 +70,18 @@ const botResponses = {
     "Website design/development ke liye pages, features aur content readiness se quote decide hota hai.\nAap business website, landing page ya ecommerce chahte hain?",
     "Website ke liye hum design, development, responsive layout aur basic SEO setup guide kar sakte hain.\nAapko kitne pages ki website chahiye?",
   ],
+  website_ecommerce: [
+    "Ecommerce website ke liye product count, payment gateway, delivery/shipping aur admin panel details chahiye.\nApprox kitne products list karne hain?",
+    "Sure, ecommerce website ke liye product categories, payment mode aur delivery setup important hota hai.\nAapko online payment chahiye ya inquiry/order form?",
+  ],
+  website_business: [
+    "Business website ke liye usually Home, About, Services, Gallery/Portfolio aur Contact pages hote hain.\nAapko approx kitne pages chahiye?",
+    "Business website ke liye pages, content aur reference style share kar dijiye.\nAapko basic company site chahiye ya lead-generation site?",
+  ],
+  website_landing: [
+    "Landing page ke liye single-page layout, offer, CTA aur contact/lead form decide karna hota hai.\nAap kis product/service ke liye landing page chahte hain?",
+    "Landing page quick campaign ke liye best rahega.\nAapka main goal leads, WhatsApp clicks ya product inquiry hai?",
+  ],
   digital_marketing: [
     "Digital marketing ke liye goal, platform aur monthly budget se plan decide hota hai.\nAap SEO, social media ya ads mein help chahte hain?",
     "Marketing support mein social media creatives, SEO guidance aur campaign planning kar sakte hain.\nAapka main goal leads hai ya brand awareness?",
@@ -152,6 +164,7 @@ const keywords = {
   ],
   website: [
     "website",
+    "webstite",
     "web site",
     "web design",
     "website design",
@@ -164,6 +177,34 @@ const keywords = {
     "e-commerce",
     "online store",
     "web",
+  ],
+  website_ecommerce: [
+    "ecommerce",
+    "e-commerce",
+    "e commerce",
+    "eommerce",
+    "eommerce webstite",
+    "online store",
+    "shopping website",
+    "product website",
+    "cart",
+    "payment gateway",
+  ],
+  website_business: [
+    "business website",
+    "company website",
+    "corporate website",
+    "business webstite",
+    "company site",
+    "profile website",
+    "service website",
+  ],
+  website_landing: [
+    "landing page",
+    "single page website",
+    "one page website",
+    "campaign page",
+    "lead page",
   ],
   digital_marketing: [
     "digital marketing",
@@ -276,6 +317,9 @@ const getRandomResponse = (responses) => {
 };
 
 const priorityCategories = [
+  "website_ecommerce",
+  "website_business",
+  "website_landing",
   "website",
   "digital_marketing",
   "printing",
@@ -347,6 +391,9 @@ const detectServiceFromText = (text = "") => {
   for (const category of [
     "business_cards",
     "social_media",
+    "website_ecommerce",
+    "website_business",
+    "website_landing",
     "website",
     "digital_marketing",
     "printing",
@@ -566,7 +613,7 @@ export const getBotResponse = (message) => {
       return "Social media posts ke liye category aur monthly quantity se package decide hota hai.\nAapka business type kya hai?";
     }
     if (previousService === "website") {
-      return "Website ke liye pages, features aur deadline share kar dijiye.\nUske basis par package guide ho jayega.";
+      return "Website ke liye pages, features aur deadline share kar dijiye.\nAap business website, landing page ya ecommerce chahte hain?";
     }
     if (previousService === "digital_marketing") {
       return "Digital marketing ke liye platform, goal aur monthly budget range bata dijiye.\nUske basis par plan suggest karenge.";
