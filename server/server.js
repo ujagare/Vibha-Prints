@@ -469,10 +469,32 @@ const isWebsiteOriginWhatsAppMessage = (payload, message) => {
 };
 
 const websiteWhatsAppIntroReply = [
-  "Namaste! Vibha Art / Vibha Prints Pune me graphic design, printing, branding, packaging, social media creatives, website development aur digital marketing services provide karta hai.",
-  "Hum logo, business cards, brochures, pamphlets, posters, catalogs, labels, stickers, flex/banner, stationery aur custom print work me help karte hain.",
-  "Aap info@vibhaprints.com par email ya +91 86249 48046 par call/WhatsApp kar sakte hain.",
-  "Main aapki kis prakar madad kar sakti hu?",
+  "Namaste! 🙏 Swagat hai aapka Vibha Prints mein.",
+  "Hum aapke business ko ek strong identity dete hain — chahe aapko ek logo chahiye, ek website, social media presence, ya kuch print karvana ho. Aapka brand, hamari zimmedaari.",
+  "",
+  "🎨 Design & Branding",
+  "Logo design",
+  "Brand identity",
+  "Packaging & labels",
+  "Stationery",
+  "",
+  "🖨 Print Work",
+  "Business cards",
+  "Brochures & pamphlets",
+  "Posters, flex & banners",
+  "Catalogs & stickers",
+  "",
+  "📱 Digital Services",
+  "Social media creatives",
+  "Website development",
+  "Digital marketing",
+  "Online branding",
+  "",
+  "Aaj hi baat karein — hum aapki zaroorat samajhkar best solution suggest karenge. 😊",
+  "",
+  "info@vibhaprints.com",
+  "+91 86249 48046",
+  "(Call / WhatsApp)",
 ].join("\n");
 
 const isWebsiteIntroRequest = (message) => {

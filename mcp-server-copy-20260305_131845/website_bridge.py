@@ -253,12 +253,27 @@ def _is_website_origin_whatsapp_message(data: Dict[str, Any], message: str) -> b
 
 
 WEBSITE_WHATSAPP_INTRO_REPLY = (
-    "Namaste! Vibha Art / Vibha Prints Pune me graphic design, printing, branding, packaging, "
-    "social media creatives, website development aur digital marketing services provide karta hai.\n"
-    "Hum logo, business cards, brochures, pamphlets, posters, catalogs, labels, stickers, "
-    "flex/banner, stationery aur custom print work me help karte hain.\n"
-    "Aap info@vibhaprints.com par email ya +91 86249 48046 par call/WhatsApp kar sakte hain.\n"
-    "Main aapki kis prakar madad kar sakti hu?"
+    "Namaste! 🙏 Swagat hai aapka Vibha Prints mein.\n"
+    "Hum aapke business ko ek strong identity dete hain — chahe aapko ek logo chahiye, ek website, social media presence, ya kuch print karvana ho. Aapka brand, hamari zimmedaari.\n\n"
+    "🎨 Design & Branding\n"
+    "Logo design\n"
+    "Brand identity\n"
+    "Packaging & labels\n"
+    "Stationery\n\n"
+    "🖨 Print Work\n"
+    "Business cards\n"
+    "Brochures & pamphlets\n"
+    "Posters, flex & banners\n"
+    "Catalogs & stickers\n\n"
+    "📱 Digital Services\n"
+    "Social media creatives\n"
+    "Website development\n"
+    "Digital marketing\n"
+    "Online branding\n\n"
+    "Aaj hi baat karein — hum aapki zaroorat samajhkar best solution suggest karenge. 😊\n\n"
+    "info@vibhaprints.com\n"
+    "+91 86249 48046\n"
+    "(Call / WhatsApp)"
 )
 
 
