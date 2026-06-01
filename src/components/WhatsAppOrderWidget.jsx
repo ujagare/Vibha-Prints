@@ -5,7 +5,7 @@ import {
 
 const PHONE_NUMBER = "918624948046";
 const BASE_TEXT =
-  "Hello! I'm contacting you from your website. I want to place an order.";
+  "Namaste Vibha Art, maine aapki website se WhatsApp kiya hai. Mujhe aapki services ke baare me jankari chahiye.";
 
 const buildWhatsAppUrl = (message) =>
   `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;

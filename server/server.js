@@ -468,6 +468,21 @@ const isWebsiteOriginWhatsAppMessage = (payload, message) => {
   ].some((marker) => haystack.includes(marker));
 };
 
+const websiteWhatsAppIntroReply = [
+  "Namaste! Vibha Art / Vibha Prints Pune me graphic design, printing, branding, packaging, social media creatives, website development aur digital marketing services provide karta hai.",
+  "Hum logo, business cards, brochures, pamphlets, posters, catalogs, labels, stickers, flex/banner, stationery aur custom print work me help karte hain.",
+  "Aap info@vibhaprints.com par email ya +91 86249 48046 par call/WhatsApp kar sakte hain.",
+  "Main aapki kis prakar madad kar sakti hu?",
+].join("\n");
+
+const isWebsiteIntroRequest = (message) => {
+  const text = String(message || "").toLowerCase();
+  return (
+    text.includes("website") &&
+    ["jankari", "jaankari", "services", "service"].some((marker) => text.includes(marker))
+  );
+};
+
 const getGreenApiConfig = () => {
   const instanceId = process.env.GREEN_API_INSTANCE_ID || "";
   const token = process.env.GREEN_API_TOKEN || process.env.GREEN_API_TOKEN_INSTANCE || "";
@@ -667,7 +682,9 @@ const handleGreenApiAutoReply = async (payload) => {
     rememberWebsiteWhatsAppSession(chatId);
   }
 
-  const reply = await generateGeminiReply({ message, senderName });
+  const reply = isWebsiteIntroRequest(message)
+    ? websiteWhatsAppIntroReply
+    : await generateGeminiReply({ message, senderName });
   if (whatsappReplyMode === "manual") {
     console.log(
       "WhatsApp auto-reply drafted:",

@@ -749,7 +749,8 @@ const EnhancedChatBot = () => {
   // Handle direct WhatsApp chat
   const handleDirectWhatsApp = () => {
     // Create a direct WhatsApp chat message
-    const message = "Hello! I'm contacting you from your website.";
+    const message =
+      "Namaste Vibha Art, maine aapki website se WhatsApp kiya hai. Mujhe aapki services ke baare me jankari chahiye.";
     setWhatsAppMessage(message);
 
     // Open WhatsApp modal
@@ -896,7 +897,7 @@ const EnhancedChatBot = () => {
                             <FaPhone className="mr-1" size={10} /> Call 1
                           </a>
                           <a
-                            href="https://wa.me/918624948046?text=Hello%21%20I%27m%20contacting%20you%20from%20your%20website."
+                            href="https://wa.me/918624948046?text=Namaste%20Vibha%20Art%2C%20maine%20aapki%20website%20se%20WhatsApp%20kiya%20hai.%20Mujhe%20aapki%20services%20ke%20baare%20me%20jankari%20chahiye."
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"

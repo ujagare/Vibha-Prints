@@ -197,7 +197,7 @@ export const createDirectWhatsAppChat = (userInfo = {}, query = '') => {
   const { name, email, phone } = userInfo;
 
   // Create a formatted message
-  let message = "Hello! I'm contacting you from your website.";
+  let message = "Namaste Vibha Art, maine aapki website se WhatsApp kiya hai. Mujhe aapki services ke baare me jankari chahiye.";
 
   // Add user info if available
   if (name) message += `\nName: ${name}`;

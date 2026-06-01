@@ -252,6 +252,24 @@ def _is_website_origin_whatsapp_message(data: Dict[str, Any], message: str) -> b
     return any(marker in text for marker in website_markers)
 
 
+WEBSITE_WHATSAPP_INTRO_REPLY = (
+    "Namaste! Vibha Art / Vibha Prints Pune me graphic design, printing, branding, packaging, "
+    "social media creatives, website development aur digital marketing services provide karta hai.\n"
+    "Hum logo, business cards, brochures, pamphlets, posters, catalogs, labels, stickers, "
+    "flex/banner, stationery aur custom print work me help karte hain.\n"
+    "Aap info@vibhaprints.com par email ya +91 86249 48046 par call/WhatsApp kar sakte hain.\n"
+    "Main aapki kis prakar madad kar sakti hu?"
+)
+
+
+def _is_website_intro_request(message: str) -> bool:
+    text = (message or "").lower()
+    return (
+        "website" in text
+        and any(marker in text for marker in ("jankari", "jaankari", "services", "service"))
+    )
+
+
 def _parse_time_hhmm(value: str) -> tuple[int, int]:
     parts = value.split(":")
     if len(parts) != 2:
@@ -1298,8 +1316,11 @@ def green_api_webhook():
         if len(GREEN_API_PROCESSED_MESSAGES) > 500:
             GREEN_API_PROCESSED_MESSAGES.clear()
 
-    result = handle_whatsapp_message(chat_id, message, sender_name)
-    reply = (result.get("response") or "").strip()
+    if _is_website_intro_request(message):
+        reply = WEBSITE_WHATSAPP_INTRO_REPLY
+    else:
+        result = handle_whatsapp_message(chat_id, message, sender_name)
+        reply = (result.get("response") or "").strip()
     if not reply:
         return jsonify({"success": False, "error": "empty_ai_reply"}), 500
 
