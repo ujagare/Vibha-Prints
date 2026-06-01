@@ -10,6 +10,7 @@ import {
   MessageCircle as FaWhatsapp,
   ArrowRight as FaArrowRight,
   Check as FaCheck,
+  Send as FaSend,
 } from "lucide-react";
 import {
   logChatInteraction,
@@ -113,6 +114,39 @@ const EnhancedChatBot = () => {
     if (isOpen) {
       inputRef.current?.focus();
     }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined") return;
+
+    const scrollY = window.scrollY;
+    const { style } = document.body;
+    const originalStyles = {
+      overflow: style.overflow,
+      position: style.position,
+      top: style.top,
+      width: style.width,
+      paddingRight: style.paddingRight,
+    };
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    style.overflow = "hidden";
+    style.position = "fixed";
+    style.top = `-${scrollY}px`;
+    style.width = "100%";
+    if (scrollbarWidth > 0) {
+      style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      style.overflow = originalStyles.overflow;
+      style.position = originalStyles.position;
+      style.top = originalStyles.top;
+      style.width = originalStyles.width;
+      style.paddingRight = originalStyles.paddingRight;
+      window.scrollTo(0, scrollY);
+    };
   }, [isOpen]);
 
   // Initialize socket connection
@@ -813,51 +847,59 @@ const EnhancedChatBot = () => {
       />
 
       {/* Chat Button */}
-      <motion.button
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-[#E65056] text-white shadow-lg flex items-center justify-center"
-        whileHover={{
-          scale: 1.1,
-          boxShadow: "0 10px 25px -5px rgba(230, 80, 86, 0.4)",
-        }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <FaTimes size={24} /> : <FaComments size={24} />}
-      </motion.button>
+      {!isOpen && (
+        <motion.button
+          className="fixed bottom-24 right-4 z-[80] flex h-14 w-14 items-center justify-center rounded-full bg-[#E65056] text-white shadow-[0_18px_40px_rgba(230,80,86,0.35)] ring-4 ring-white/90 transition-colors hover:bg-[#d94349] sm:right-6 sm:h-16 sm:w-16"
+          whileHover={{
+            scale: 1.1,
+            boxShadow: "0 10px 25px -5px rgba(230, 80, 86, 0.4)",
+          }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setIsOpen(true)}
+          aria-label="Open chat"
+        >
+          <FaComments size={24} />
+        </motion.button>
+      )}
 
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 h-[500px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200"
+            className="vibha-chat-panel fixed z-[70] flex flex-col overflow-hidden border border-slate-200 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.22)]"
+            onWheel={(event) => event.stopPropagation()}
+            onTouchMove={(event) => event.stopPropagation()}
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             {/* Chat Header */}
-            <div className="bg-[#E65056] text-white p-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
+            <div className="flex flex-shrink-0 items-center justify-between bg-gradient-to-r from-[#D63E45] to-[#E65056] px-4 py-3.5 text-white shadow-sm sm:px-5">
+              <div className="flex min-w-0 items-center">
+                <div className="mr-3 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white/18 ring-1 ring-white/30">
                   <FaComments size={20} />
                 </div>
-                <div>
-                  <h3 className="font-bold">Vibha Art Assistant</h3>
-                  <p className="text-xs opacity-80">
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-semibold sm:text-base">
+                    Vibha Art Assistant
+                  </h3>
+                  <p className="truncate text-[11px] opacity-85 sm:text-xs">
                     Online | Typically replies instantly
                   </p>
                 </div>
               </div>
               <button
-                className="text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                className="ml-2 rounded-full p-2 text-white transition-colors hover:bg-white/20"
                 onClick={() => setIsOpen(false)}
+                aria-label="Close chat"
               >
                 <FaTimes size={16} />
               </button>
             </div>
 
             {/* Chat Messages */}
-            <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+            <div className="vibha-chat-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain bg-slate-50 px-3 py-4 sm:px-4">
               <div className="space-y-4">
                 {messages.map((message) => (
                   <div
@@ -865,13 +907,13 @@ const EnhancedChatBot = () => {
                     className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                      className={`max-w-[88%] break-words px-4 py-3 text-sm leading-relaxed shadow-sm sm:max-w-[82%] ${
                         message.sender === "user"
-                          ? "bg-[#E65056] text-white rounded-tr-none"
-                          : "bg-white text-gray-800 rounded-tl-none shadow-md"
+                          ? "rounded-2xl rounded-tr-md bg-[#E65056] text-white"
+                          : "rounded-2xl rounded-tl-md border border-slate-100 bg-white text-slate-800"
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-line">
+                      <p className="whitespace-pre-line">
                         {message.text}
                       </p>
 
@@ -943,7 +985,7 @@ const EnhancedChatBot = () => {
                       )}
 
                       <p
-                        className={`text-xs mt-1 ${message.sender === "user" ? "text-white/70" : "text-gray-500"}`}
+                        className={`mt-2 text-[11px] ${message.sender === "user" ? "text-white/70" : "text-slate-400"}`}
                       >
                         {formatTime(message.timestamp)}
                       </p>
@@ -954,7 +996,7 @@ const EnhancedChatBot = () => {
                 {/* Bot typing indicator */}
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="bg-white text-gray-800 rounded-2xl rounded-tl-none px-4 py-3 max-w-[80%] shadow-md">
+                    <div className="max-w-[80%] rounded-2xl rounded-tl-md border border-slate-100 bg-white px-4 py-3 text-slate-800 shadow-sm">
                       <div className="flex space-x-2">
                         <div
                           className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
@@ -979,7 +1021,7 @@ const EnhancedChatBot = () => {
 
             {/* Contact Form */}
             {showContactForm ? (
-              <div className="p-4 bg-white border-t border-gray-200 overflow-y-auto max-h-[300px]">
+              <div className="vibha-chat-scroll max-h-[48dvh] flex-shrink-0 overflow-y-auto border-t border-slate-200 bg-white p-4">
                 <form onSubmit={handleContactFormSubmit}>
                   <div className="space-y-3">
                     <div>
@@ -1092,14 +1134,14 @@ const EnhancedChatBot = () => {
                     <div className="flex justify-between items-center pt-2">
                       <button
                         type="button"
-                        className="text-sm text-gray-500 hover:text-gray-700"
+                        className="text-sm font-medium text-gray-500 hover:text-gray-700"
                         onClick={() => setShowContactForm(false)}
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="bg-[#E65056] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#E65056]/90 transition-colors flex items-center"
+                        className="flex items-center rounded-lg bg-[#E65056] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#d94349]"
                       >
                         Submit <FaArrowRight className="ml-2" size={12} />
                       </button>
@@ -1111,15 +1153,15 @@ const EnhancedChatBot = () => {
               <>
                 {/* Quick Replies */}
                 {messages.length > 0 && messages.length < 3 && (
-                  <div className="p-3 bg-white border-t border-gray-100">
-                    <p className="text-xs text-gray-500 mb-2">
+                  <div className="flex-shrink-0 border-t border-slate-100 bg-white px-3 py-3">
+                    <p className="mb-2 text-xs font-medium text-slate-500">
                       Suggested questions:
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {quickReplies.map((reply) => (
                         <button
                           key={reply.id}
-                          className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-full transition-colors"
+                          className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:border-[#E65056]/30 hover:bg-[#E65056]/10 hover:text-[#c8252e]"
                           onClick={() => handleQuickReply(reply.text)}
                         >
                           {reply.text}
@@ -1130,39 +1172,37 @@ const EnhancedChatBot = () => {
                 )}
 
                 {/* Chat Input */}
-                <div className="p-3 bg-white border-t border-gray-200">
+                <div className="flex-shrink-0 border-t border-slate-200 bg-white p-3">
                   <div className="flex flex-col gap-2">
-                    <div className="flex items-center bg-gray-100 rounded-full px-4 py-3 border border-gray-200 shadow-sm">
+                    <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-2 shadow-inner focus-within:border-[#E65056]/45 focus-within:bg-white focus-within:ring-4 focus-within:ring-[#E65056]/10 sm:px-4">
                       <input
                         ref={inputRef}
                         type="text"
                         placeholder="Type your message..."
-                        className="flex-1 bg-transparent outline-none text-gray-800 text-sm"
+                        className="min-w-0 flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyDown}
                       />
                       <button
-                        className="ml-2 px-4 h-10 rounded-full flex items-center justify-center transition-colors bg-[#E65056] text-white hover:bg-[#E65056]/90 shadow-md"
+                        className="ml-2 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#E65056] text-white shadow-md transition-colors hover:bg-[#d94349] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:shadow-none"
                         onClick={handleSendMessage}
                         disabled={!inputValue.trim()}
                         aria-label="Send message"
                       >
-                        <span className="text-white font-bold text-sm">
-                          Send
-                        </span>
+                        <FaSend size={17} />
                       </button>
                     </div>
                     <button
                       onClick={handleWhatsAppConnect}
-                      className="flex items-center justify-center py-2.5 px-4 bg-green-500 hover:bg-green-600 text-white text-sm rounded-full transition-colors shadow-md font-medium"
+                      className="flex items-center justify-center rounded-full bg-[#16a34a] px-4 py-2.5 text-sm font-medium text-white shadow-md transition-colors hover:bg-[#12803b]"
                     >
                       <FaWhatsapp className="mr-2" size={16} /> Connect on
                       WhatsApp
                     </button>
                   </div>
                   <div className="text-center mt-2">
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-400">
                       Powered by Vibha Art
                     </p>
                   </div>

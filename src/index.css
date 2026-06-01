@@ -439,6 +439,58 @@ html.lenis {
   animation: scroll 2s ease-in-out infinite;
 }
 
+.vibha-chat-panel {
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 5.25rem;
+  width: auto;
+  height: min(620px, calc(100dvh - 6.5rem));
+  max-height: calc(100dvh - 6.5rem);
+  border-radius: 18px;
+}
+
+.vibha-chat-scroll {
+  scrollbar-color: #e65056 #f1f5f9;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vibha-chat-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.vibha-chat-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.vibha-chat-scroll::-webkit-scrollbar-thumb {
+  background: #e65056;
+  border: 2px solid #f1f5f9;
+  border-radius: 999px;
+}
+
+@media (max-width: 380px) {
+  .vibha-chat-panel {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 5rem;
+    height: min(610px, calc(100dvh - 6rem));
+    max-height: calc(100dvh - 6rem);
+  }
+}
+
+@media (min-width: 640px) {
+  .vibha-chat-panel {
+    left: auto;
+    right: 1.5rem;
+    bottom: 6rem;
+    width: min(420px, calc(100vw - 3rem));
+    height: min(660px, calc(100vh - 7.5rem));
+    max-height: calc(100vh - 7.5rem);
+    border-radius: 22px;
+  }
+}
+
 :root {
   --primary-color: #f05257;
   --primary-color-light: #ff7b80;
