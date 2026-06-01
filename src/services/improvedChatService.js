@@ -371,6 +371,16 @@ const detectPreviousServiceIntent = () => {
   return "";
 };
 
+const detectMatchedCategory = (text = "") => {
+  const lowerText = text.toLowerCase().trim();
+  return (
+    priorityCategories.find((category) => {
+      const categoryKeywords = keywords[category] || [];
+      return categoryKeywords.some((keyword) => lowerText.includes(keyword));
+    }) || ""
+  );
+};
+
 // Post with timeout
 const postWithTimeout = async (
   url,
@@ -538,10 +548,7 @@ const callExternalChatApi = async (message) => {
 export const getBotResponse = (message) => {
   const lowerMessage = message.toLowerCase().trim();
   const currentService = detectServiceFromText(lowerMessage);
-  const matchedCategory = priorityCategories.find((category) => {
-    const categoryKeywords = keywords[category] || [];
-    return categoryKeywords.some((keyword) => lowerMessage.includes(keyword));
-  });
+  const matchedCategory = detectMatchedCategory(message);
 
   if (matchedCategory) {
     const response = getRandomResponse(botResponses[matchedCategory]);
@@ -579,7 +586,8 @@ export const getDelayedBotResponse = async (message) => {
     setTimeout(
       async () => {
         const explicitService = detectServiceFromText(message);
-        if (explicitService) {
+        const explicitCategory = detectMatchedCategory(message);
+        if (explicitService || explicitCategory) {
           resolve(getBotResponse(message));
           return;
         }
