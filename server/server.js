@@ -391,6 +391,11 @@ const whatsappManualTakeoverTtlMs = Math.max(
     : 86400,
 ) * 1000;
 const whatsappManualPausedSessions = new Map();
+const whatsappReplyMode = ["manual", "draft"].includes(
+  String(process.env.WHATSAPP_REPLY_MODE || "auto").trim().toLowerCase(),
+)
+  ? "manual"
+  : "auto";
 
 const pruneWhatsAppSessionMap = (sessions, ttlMs) => {
   const now = Date.now();
@@ -663,6 +668,14 @@ const handleGreenApiAutoReply = async (payload) => {
   }
 
   const reply = await generateGeminiReply({ message, senderName });
+  if (whatsappReplyMode === "manual") {
+    console.log(
+      "WhatsApp auto-reply drafted:",
+      JSON.stringify({ chatId, inbound: message, reply }),
+    );
+    return;
+  }
+
   const result = await sendGreenApiMessage({ chatId, message: reply });
 
   console.log(

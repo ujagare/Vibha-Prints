@@ -4,7 +4,8 @@ import {
 } from "lucide-react";
 
 const PHONE_NUMBER = "918624948046";
-const BASE_TEXT = "Hi Vibha Art! I want to place an order.";
+const BASE_TEXT =
+  "Hello! I'm contacting you from your website. I want to place an order.";
 
 const buildWhatsAppUrl = (message) =>
   `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;

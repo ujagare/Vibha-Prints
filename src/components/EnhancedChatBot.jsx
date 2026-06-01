@@ -896,7 +896,7 @@ const EnhancedChatBot = () => {
                             <FaPhone className="mr-1" size={10} /> Call 1
                           </a>
                           <a
-                            href="https://wa.me/918624948046"
+                            href="https://wa.me/918624948046?text=Hello%21%20I%27m%20contacting%20you%20from%20your%20website."
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-2 py-1 rounded-full transition-colors"

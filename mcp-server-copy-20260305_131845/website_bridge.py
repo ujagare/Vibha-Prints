@@ -120,6 +120,9 @@ WHATSAPP_MANUAL_TAKEOVER_TTL_SECONDS = _positive_int_env(
     WHATSAPP_WEBSITE_SESSION_TTL_SECONDS,
     300,
 )
+WHATSAPP_REPLY_MODE = os.environ.get("WHATSAPP_REPLY_MODE", "auto").strip().lower()
+if WHATSAPP_REPLY_MODE not in {"auto", "manual", "draft"}:
+    WHATSAPP_REPLY_MODE = "auto"
 
 
 @app.after_request
@@ -1299,6 +1302,19 @@ def green_api_webhook():
     reply = (result.get("response") or "").strip()
     if not reply:
         return jsonify({"success": False, "error": "empty_ai_reply"}), 500
+
+    if WHATSAPP_REPLY_MODE in {"manual", "draft"}:
+        return jsonify({
+            "success": True,
+            "chat_id": chat_id,
+            "reply": reply,
+            "drafted": True,
+            "send_result": {
+                "success": True,
+                "delivery": "manual_draft",
+                "message": "Auto-send disabled by WHATSAPP_REPLY_MODE",
+            },
+        })
 
     send_result = send_whatsapp_message(chat_id, reply, "auto_reply")
     return jsonify({

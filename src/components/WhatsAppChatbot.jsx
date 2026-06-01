@@ -2,6 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, X, MessageCircle } from "lucide-react";
 
+const WHATSAPP_CHAT_API_URL =
+  import.meta.env.VITE_WHATSAPP_CHAT_API_URL ||
+  "https://vibha-art-backend.onrender.com/api/whatsapp/chat";
+
 const WhatsAppChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -45,7 +49,7 @@ const WhatsAppChatbot = () => {
       const phoneNumber = localStorage.getItem("userPhone") || "9876543210";
 
       // Call WhatsApp chatbot API
-      const response = await fetch("http://localhost:8000/api/whatsapp/chat", {
+      const response = await fetch(WHATSAPP_CHAT_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
